@@ -1,10 +1,23 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <SearchBar />
+  <NavBar />
+  <div class="view-area">
+    <router-view />
   </div>
-  <router-view />
 </template>
+
+<script>
+import NavBar from "@/components/NavBar.vue";
+import SearchBar from "@/components/SearchBar.vue";
+
+export default {
+  name: "Home",
+  components: {
+    NavBar,
+    SearchBar,
+  },
+};
+</script>
 
 <style lang="scss">
 #app {
@@ -12,19 +25,15 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+  color: color.$black;
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  grid-template-rows: 70px 1fr;
+  grid-template-areas:
+    "navBar searchBar"
+    "navBar view-area";
+  .view-area {
+    grid-area: view-area;
   }
 }
 </style>

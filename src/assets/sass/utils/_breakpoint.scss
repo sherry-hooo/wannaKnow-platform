@@ -1,0 +1,16 @@
+//斷點
+$media-tablet: 576px;
+$media-desktop: 992px;
+
+@mixin tablet {
+  @media (min-width: $media-tablet) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: $media-desktop) {
+    @content;
+  }
+}
+

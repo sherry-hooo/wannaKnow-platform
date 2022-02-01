@@ -1,0 +1,42 @@
+@use "../utils/breakpoint";
+
+%strong-title {
+  font-size: 20px;
+  font-weight: 700;
+  @include breakpoint.tablet {
+    font-size: 22px;
+  }
+  @include breakpoint.desktop {
+    font-size: 24px;
+  }
+}
+
+%title {
+  font-size: 20px;
+  @include breakpoint.tablet {
+    font-size: 22px;
+  }
+  @include breakpoint.desktop {
+    font-size: 24px;
+  }
+}
+
+%sub-title {
+  font-size: 14px;
+  @include breakpoint.tablet {
+    font-size: 16px;
+  }
+  @include breakpoint.desktop {
+    font-size: 16px;
+  }
+}
+
+%body {
+  font-size: 12px;
+  @include breakpoint.tablet {
+    font-size: 14px;
+  }
+  @include breakpoint.desktop {
+    font-size: 14px;
+  }
+}
