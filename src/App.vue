@@ -28,7 +28,8 @@ export default {
   color: color.$black;
   display: grid;
   grid-template-columns: 90px 1fr;
-  grid-template-rows: 70px 1fr;
+  // 從70px改成50px
+  grid-template-rows: 50px 1fr;
   grid-template-areas:
     "navBar searchBar"
     "navBar view-area";

@@ -3,6 +3,8 @@ import {
   faCalendarAlt,
   faListAlt,
   faFileAlt,
+  faChevronLeft,
+  faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faCalendarAlt as farFaCalendarAlt,
@@ -14,7 +16,10 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 library.add(faCalendarAlt);
 library.add(faListAlt);
 library.add(faFileAlt);
+library.add(faChevronLeft);
+library.add(faChevronRight);
 library.add(farFaCalendarAlt);
 library.add(farFaListAlt);
 library.add(farFileAlt);
+
 export default FontAwesomeIcon;
