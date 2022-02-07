@@ -72,6 +72,12 @@
 // 引入flex小工具
 @use "src/assets/sass/utils/_flex.scss";
 
+%hover {
+  transition: filter 0.25s;
+  &:hover {
+    filter: brightness(110%) contrast(110%);
+  }
+}
 // 輸入框樣式
 @mixin input-border($color) {
   min-width: 100px;
@@ -81,17 +87,20 @@
 }
 @mixin submit-button($color) {
   @extend %sub-title;
+  @extend %hover;
   width: 60px;
   height: 30px;
   border-radius: 20px;
   background-color: $color;
   color: #fff;
+  cursor: pointer;
 }
 @mixin flex-size($basis: 30%) {
   @extend %sub-title;
   flex: 0 1 $basis;
 }
-// 表單尺寸
+
+// 表單尺寸 & 關閉按鈕
 .applyForm {
   box-shadow: 0 0 10px #555;
   position: relative;
@@ -102,6 +111,7 @@
   padding: 2rem 3rem;
   border-radius: 40px;
   .close_btn {
+    @extend %hover;
     position: absolute;
     top: 1.5rem;
     right: 1.5rem;
@@ -127,11 +137,11 @@
   }
 }
 
-//  applyFrom_info
-
+// 表單info
 .applyForm_info {
   margin-bottom: 1rem;
 }
+
 @include breakpoint.tablet {
   .applyForm_info {
     @include flex.flex(center, stretch, row);
@@ -143,6 +153,7 @@
     }
   }
 }
+
 .applyForm_info_main {
   > div {
     @include flex.flex(start, center, row);
@@ -152,16 +163,26 @@
     }
     label {
       @extend %sub-title;
-      flex: 0 1 30%;
+      flex: 0 1 25%;
       text-align: right;
     }
     input {
       @include input-border(color.$green-400);
-      flex: 0 1 70%;
+      flex: 0 1 75%;
+      max-width: 180px;
+      padding: 0.5rem;
+      &:focus {
+        box-shadow: 0 0 3px color.$green-300;
+      }
     }
     select {
       @include input-border(color.$green-400);
-      flex: 0 1 70%;
+      flex: 0 1 75%;
+      max-width: 180px;
+      padding: 0.5rem;
+      &:focus {
+        box-shadow: 0 0 3px color.$green-300;
+      }
     }
   }
 }
@@ -173,11 +194,11 @@
   gap: 1rem;
   margin-bottom: 0.5rem;
   span {
-    flex: 0 1 30%;
+    flex: 0 1 25%;
     text-align: right;
   }
   &_radio {
-    flex: 0 1 70%;
+    flex: 0 1 75%;
     text-align: left;
   }
   input[type="radio"] {
@@ -206,11 +227,16 @@
   @extend %sub-title;
   gap: 1rem;
   label {
-    flex: 0 1 30%;
+    flex: 0 1 25%;
     text-align: right;
   }
+  input {
+    &::placeholder {
+      color: #ccc;
+    }
+  }
   .tag_area {
-    flex: 0 1 70%;
+    flex: 0 1 75%;
     text-align: left;
   }
 }
@@ -218,12 +244,16 @@
 // 簡介輸入框
 .topic_intro {
   display: block;
-  border: 2px solid color.$green-300;
   width: 100%;
   height: 250px;
   margin: 0 auto 2rem auto;
+  padding: 1rem;
+  border: 2px solid color.$green-300;
   border-radius: 25px;
   resize: none;
+  &:focus {
+    box-shadow: 0 0 3px color.$green-300;
+  }
 }
 .applyForm_submit {
   @include submit-button(color.$green-300);
