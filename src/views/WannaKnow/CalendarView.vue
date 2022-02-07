@@ -1,63 +1,51 @@
 <template>
   <!-- Sherry負責 -->
-  <router-link :to="{ name: 'ListView' }" class="calendar_icon">
-    <font-awesome-icon icon="list-alt" size="lg"></font-awesome-icon>
-  </router-link>
   <div class="calendar">
-    <div class="calendar_header">
-      <div class="calendar_chevron" @click="previousMonth">
-        <font-awesome-icon icon="chevron-left"></font-awesome-icon>
-      </div>
-      <div class="calendar_header_title">
-        <p class="calendar_header_title_year">{{ year }}</p>
-        <p class="calendar_header_title_month">{{ monthInEng }}</p>
-      </div>
-      <div class="calendar_chevron" @click="nextMonth">
-        <font-awesome-icon icon="chevron-right"></font-awesome-icon>
-      </div>
-    </div>
-    <ol class="calendar_weekDays">
-      <li v-for="(weekday, index) in weekdays" :key="index">
-        {{ weekday }}
-      </li>
-    </ol>
+    <router-link :to="{ name: 'ListView' }" class="calendar_icon">
+      <font-awesome-icon icon="list-alt" size="lg"></font-awesome-icon>
+    </router-link>
+    <CalendarSelector
+      :calendarDay="calendarDay"
+      @previousMonth="previousMonth"
+      @nextMonth="nextMonth"
+    />
+    <CalendarWeekDays />
     <div class="calendar_body">
       <ul
         class="calendar_body_day"
         v-for="(day, index) in monthDays"
         :key="index"
         :class="[
-          { hightLightToday: calendarDay + '-' + day === today },
+          { today: calendarDay + '-' + day === today },
           { datesCols: day > 0 },
         ]"
       >
         <span>
           {{ day }}
         </span>
-        <template v-if="hasEvent(day)">
-          <CalendarEvent
-            v-for="event in wannaKnowEvents(day)"
-            :key="event.id"
-            :wannaKnowEvent="event"
-          ></CalendarEvent>
-        </template>
+        <CalendarEvent
+          v-for="event in wannaKnowEventsObj[day]"
+          :key="event.id"
+          :wannaKnowEvent="event"
+        ></CalendarEvent>
       </ul>
     </div>
   </div>
 </template>
 
 <script>
-import CalendarEvent from "@/components/CalendarEvent";
+import CalendarWeekDays from "@/components/calendar/CalendarWeekDays";
+import CalendarSelector from "@/components/calendar/CalendarSelector";
+import CalendarEvent from "@/components/calendar/CalendarEvent";
 import dayjs from "dayjs";
 import weekday from "dayjs/plugin/weekday";
 dayjs.extend(weekday);
 
 export default {
   name: "CalendarView",
-  components: { CalendarEvent },
+  components: { CalendarSelector, CalendarWeekDays, CalendarEvent },
   data() {
     return {
-      weekdays: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
       calendarDay: dayjs().format("YYYY-MM"),
       today: dayjs().format("YYYY-MM-D"),
       testWannaKnowList: [
@@ -92,12 +80,6 @@ export default {
     };
   },
   computed: {
-    monthInEng() {
-      return dayjs(this.calendarDay).format("MMMM");
-    },
-    year() {
-      return dayjs(this.calendarDay).year();
-    },
     monthDays() {
       const firstWeekDayOfMonth = dayjs(this.calendarDay).weekday();
       const emptyBeginCols =
@@ -114,6 +96,17 @@ export default {
       return this.testWannaKnowList.map(
         (event) => +dayjs(event.date).format("D")
       );
+    },
+    wannaKnowEventsObj() {
+      return this.testWannaKnowList.reduce((acc, dateObj) => {
+        let key = dayjs(dateObj.date).format("D");
+        console.log(key);
+        if (!acc[key]) {
+          acc[key] = [];
+        }
+        acc[key].push(dateObj);
+        return acc;
+      }, {});
     },
   },
   methods: {
@@ -142,50 +135,11 @@ export default {
 <style scoped lang="scss">
 .calendar {
   padding: 30px;
-}
-
-.calendar_header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 30px 0;
-  > * {
-    cursor: pointer;
-  }
-  &_title {
-    display: flex;
-    justify-content: center;
-    width: 170px;
-    margin: 0 10px;
-    &_year {
-      @extend %title;
-    }
-    &_month {
-      @extend %title;
-      margin-left: 5px;
-    }
-  }
-  .calendar_chevron {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 30px;
-    height: 30px;
-    &:hover {
-      background: rgba(211, 211, 211, 0.5);
-      border-radius: 50%;
-    }
-  }
-}
-
-.calendar_weekDays {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 1px;
-  padding: 5px 0;
-  li {
-    height: 30px;
-    border-bottom: 1px solid gray;
+  position: relative;
+  &_icon {
+    position: absolute;
+    top: 30px;
+    right: 30px;
   }
 }
 
@@ -214,12 +168,13 @@ export default {
   }
 }
 
-.hightLightToday {
+.today {
   > span {
     background: orange;
     border-radius: 50%;
     width: 20px;
     height: 20px;
+    padding: 2px;
   }
 }
 </style>
