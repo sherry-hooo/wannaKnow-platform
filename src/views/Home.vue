@@ -1,8 +1,9 @@
 <template>
-  <section></section>
-  想知道論壇首頁
-  <Banner></Banner>
-  <Board></Board>
+  <div class="home">
+    <Banner></Banner>
+    <Board></Board>
+    <section></section>
+  </div>
 </template>
 
 <script>
@@ -19,16 +20,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
-div {
-  width: 80%;
-  border: 1px solid black;
-  margin: 0 auto;
+.home {
+  @include breakpoint.tablet {
+    padding: 10px 30px;
+  }
 }
-
-.banner {
-  height: 300px;
-}
-
 .board {
   height: 500px;
 }

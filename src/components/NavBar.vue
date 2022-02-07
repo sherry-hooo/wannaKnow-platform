@@ -24,13 +24,30 @@ export default {};
 </script>
 
 <style scoped lang="scss">
-nav {
-  grid-area: navBar;
-  background: color.$green-200;
-  width: 90px;
-  min-height: 100vh;
+.showNav {
   display: flex;
   flex-direction: column;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  transition: all 0.3s ease-in-out;
+  @include breakpoint.tablet {
+    position: unset;
+    grid-area: navBar;
+  }
+}
+nav {
+  display: none;
+  width: 90px;
+  min-height: 100vh;
+  background: color.$green-200;
+
+  @include breakpoint.tablet {
+    display: flex;
+    flex-direction: column;
+    grid-area: navBar;
+  }
   a {
     width: 100%;
     font-weight: bold;
