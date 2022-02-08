@@ -4,7 +4,7 @@
     <router-link :to="{ name: 'Home' }">
       <img src="@/assets/logo.svg" alt="好想工作室logo" />
     </router-link>
-    <router-link :to="{ name: wannaKnowPage }">
+    <router-link :to="{ name: 'WannaKnow' }">
       <img class="nav_icon" src="@/assets/wannaKnow.svg" alt="想知道嗎icon" />
       想知道嗎
     </router-link>
@@ -22,15 +22,7 @@
 <script>
 export default {
   data() {
-    return {
-      wannaKnowPage: "ListView",
-    };
-  },
-  watch: {
-    "$route.name": function (pageName) {
-      this.wannaKnowPage =
-        pageName === "ListView" ? "ListView" : "CalendarView";
-    },
+    return {};
   },
 };
 </script>
@@ -70,7 +62,7 @@ nav {
     & + a {
       margin-top: 20px;
     }
-    &.router-link-exact-active {
+    &.router-link-active {
       background: color.$green-300;
     }
     img {

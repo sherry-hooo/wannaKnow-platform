@@ -3,13 +3,11 @@
   <!-- font-aweome icon 可以自由移動位置~ -->
   <ul class="wannaKnowCatalogs">
     <li>全部</li>
-    <li><font-awesome-icon :icon="['fas', 'user-friends']" />專案經驗</li>
-    <li>
-      <font-awesome-icon :icon="['fas', 'chalkboard-teacher']" />學習小心得
-    </li>
-    <li><font-awesome-icon :icon="['fas', 'cogs']" />技術剖析</li>
-    <li><font-awesome-icon :icon="['fas', 'briefcase']" />職場工作</li>
-    <li><font-awesome-icon :icon="['fas', 'umbrella-beach']" />生活頻道</li>
+    <li>專案經驗</li>
+    <li>學習小心得</li>
+    <li>技術剖析</li>
+    <li>職場工作</li>
+    <li>生活頻道</li>
   </ul>
 
   <div class="wrapTab">

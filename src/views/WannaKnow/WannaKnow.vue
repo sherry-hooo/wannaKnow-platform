@@ -1,11 +1,19 @@
 <template>
   <div class="wannaKnow">
     <router-link
-      :to="{ name: $route.name === 'ListView' ? 'CalendarView' : 'ListView' }"
+      v-if="$route.name === 'ListView'"
+      :to="{ name: 'CalendarView' }"
       class="layout_toggle_btn"
     >
       <font-awesome-icon
-        :icon="btnIcon"
+        icon="calendar-alt"
+        size="lg"
+        color="#79BC89"
+      ></font-awesome-icon>
+    </router-link>
+    <router-link v-else :to="{ name: 'ListView' }" class="layout_toggle_btn">
+      <font-awesome-icon
+        icon="list-alt"
         size="lg"
         color="#79BC89"
       ></font-awesome-icon>
@@ -18,14 +26,7 @@
 export default {
   components: {},
   data() {
-    return {
-      btnIcon: "calendar-alt",
-    };
-  },
-  watch: {
-    "$route.name": function (page) {
-      this.btnIcon = page === "ListView" ? "calendar-alt" : "list-alt";
-    },
+    return {};
   },
 };
 </script>

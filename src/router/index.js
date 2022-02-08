@@ -20,7 +20,7 @@ const routes = [
     redirect: { name: "ListView" },
     children: [
       {
-        path: "",
+        path: "/list",
         name: "ListView",
         component: () => import("@/views/WannaKnow/ListView.vue"),
       },

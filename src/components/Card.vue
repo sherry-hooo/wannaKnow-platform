@@ -6,10 +6,7 @@
         >鐵人戰情爬蟲API之關關難過、關關不說又關關過鐵人戰情爬蟲API之關關難過、關關不說又關關過
       </h3>
       <div class="card_wrapNameDate">
-        <div class="card_wrapNameDate_name nowrap">
-          <font-awesome-icon :icon="['fas', 'user-circle']" />
-          號稱165的大叔
-        </div>
+        <div class="card_wrapNameDate_name nowrap">號稱165的大叔</div>
         <div class="card_wrapNameDate_date nowrap">06-09-2055</div>
       </div>
     </div>
@@ -26,9 +23,8 @@
       </div>
 
       <div class="card_icon_social nowrap">
-        <span><font-awesome-icon :icon="['far', 'thumbs-up']" /> 10</span>
-        <span><font-awesome-icon :icon="['fas', 'comment-dots']" /> 10</span>
-        <font-awesome-icon :icon="['fas', 'bookmark']" />
+        <span>10</span>
+        <span>10</span>
       </div>
     </div>
   </div>
