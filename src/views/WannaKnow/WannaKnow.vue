@@ -29,7 +29,6 @@ export default {
   },
 };
 </script>
-
 <style scoped lang="scss">
 .wannaKnow {
   padding: 0 50px;
