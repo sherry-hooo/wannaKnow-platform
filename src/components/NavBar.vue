@@ -4,7 +4,7 @@
     <router-link :to="{ name: 'Home' }">
       <img src="@/assets/logo.svg" alt="好想工作室logo" />
     </router-link>
-    <router-link :to="{ name: 'WannaKnow' }">
+    <router-link :to="{ name: wannaKnowPage }">
       <img class="nav_icon" src="@/assets/wannaKnow.svg" alt="想知道嗎icon" />
       想知道嗎
     </router-link>
@@ -20,7 +20,19 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      wannaKnowPage: "ListView",
+    };
+  },
+  watch: {
+    "$route.name": function (pageName) {
+      this.wannaKnowPage =
+        pageName === "ListView" ? "ListView" : "CalendarView";
+    },
+  },
+};
 </script>
 
 <style scoped lang="scss">
@@ -30,7 +42,7 @@ export default {};
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 2;
+  z-index: 10;
   transition: all 0.3s ease-in-out;
   @include breakpoint.tablet {
     position: unset;
@@ -58,12 +70,8 @@ nav {
     & + a {
       margin-top: 20px;
     }
-    &:hover {
-      transform: translate(2px, -5px);
-      border: none;
-    }
     &.router-link-exact-active {
-      border: 1px solid color.$black;
+      background: color.$green-300;
     }
     img {
       width: 100%;

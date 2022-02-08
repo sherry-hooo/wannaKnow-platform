@@ -1,13 +1,46 @@
 <template>
   <div class="calendar_header">
-    <div class="calendar_header_chevron" @click="previousMonth">
+    <div class="calendar_header_chevron" @click="clickPrevious('month')">
       <font-awesome-icon icon="chevron-left"></font-awesome-icon>
     </div>
-    <div class="calendar_header_title">
+    <div class="calendar_header_title" @click="openDropDown = !openDropDown">
       <p>{{ displayDate }}</p>
     </div>
-    <div class="calendar_header_chevron" @click="nextMonth">
+    <div class="calendar_header_chevron" @click="clickNext('month')">
       <font-awesome-icon icon="chevron-right"></font-awesome-icon>
+    </div>
+    <div
+      class="calendar_header_dropDown"
+      :class="{ 'calendar_header_dropDown-active': openDropDown }"
+    >
+      <div class="dropDown_year">
+        <font-awesome-icon
+          icon="chevron-left"
+          size="xs"
+          @click="clickPrevious('year')"
+          class="dropDown_chevron"
+        ></font-awesome-icon>
+        <p>{{ displayYear }}</p>
+        <font-awesome-icon
+          icon="chevron-right"
+          size="xs"
+          @click="clickNext('year')"
+          class="dropDown_chevron"
+        ></font-awesome-icon>
+      </div>
+      <ul class="dropDown_months">
+        <li
+          v-for="month in monthsList"
+          :key="month"
+          :class="[
+            { 'dropDown_months_item-active': selectedMonth === month },
+            'dropDown_months_item',
+          ]"
+          @click="selectMonth(displayYear, month)"
+        >
+          {{ month }}
+        </li>
+      </ul>
     </div>
   </div>
 </template>
@@ -17,19 +50,46 @@ import dayjs from "dayjs";
 export default {
   props: ["calendarDay"],
   data() {
-    return {};
+    return {
+      monthsList: [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ],
+      openDropDown: false,
+      selectedMonth: "",
+    };
   },
   computed: {
     displayDate() {
       return dayjs(this.calendarDay).format("YYYY MMMM");
     },
+    displayYear() {
+      return dayjs(this.calendarDay).format("YYYY");
+    },
+    displayMonth() {
+      return dayjs(this.calendarDay).format("MMMM");
+    },
   },
   methods: {
-    previousMonth() {
-      this.$emit("previousMonth");
+    clickPrevious(time) {
+      this.$emit("clickPrevious", time);
     },
-    nextMonth() {
-      this.$emit("nextMonth");
+    clickNext(time) {
+      this.$emit("clickNext", time);
+    },
+    selectMonth(year, month) {
+      this.selectedMonth = month;
+      this.$emit("selectMonth", year + month);
     },
   },
 };
@@ -40,7 +100,10 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0px 0 30px;
+  width: fit-content;
+  padding: 0px 0 10px;
+  margin: 0 auto 20px;
+
   &_title {
     display: flex;
     justify-content: center;
@@ -60,6 +123,56 @@ export default {
     &:hover {
       background: rgba(211, 211, 211, 0.5);
       border-radius: 50%;
+    }
+  }
+}
+
+// 日期選擇視窗
+.calendar_header {
+  position: relative;
+  &_dropDown {
+    display: none;
+    position: absolute;
+    z-index: 2;
+    top: 100%;
+    width: 100%;
+
+    &-active {
+      display: block;
+      background-color: color.$white;
+      border-radius: 5px;
+      box-shadow: 0 1px 10px 0 rgb(0 0 0 / 25%);
+    }
+  }
+
+  // dropDown 月份樣式
+  .dropDown {
+    &_year {
+      padding: 10px 20px;
+      border-bottom: 1px solid color.$white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    &_months {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 10px 5px;
+      &_item {
+        width: calc(100% / 4);
+        padding: 5px;
+        &:hover {
+          color: color.$green-200;
+          cursor: pointer;
+        }
+        &-active {
+          color: color.$green-300;
+          font-weight: 700;
+        }
+      }
+    }
+    &_chevron {
+      cursor: pointer;
     }
   }
 }

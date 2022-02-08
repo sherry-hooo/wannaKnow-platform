@@ -5,7 +5,6 @@ import router from "./router";
 import store from "./store";
 import "./assets/sass/_reset.scss";
 import FontAwesomeIcon from "./plugins/font-awesome.js";
-import "./plugins/day.js";
 
 createApp(App)
   .use(store)

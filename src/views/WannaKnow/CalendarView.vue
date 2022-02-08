@@ -1,35 +1,56 @@
 <template>
-  <!-- Sherry負責 -->
   <div class="calendar">
-    <router-link :to="{ name: 'ListView' }" class="calendar_icon">
+    <!-- <router-link
+      :to="{ name: 'ListView' }"
+      class="calendar_icon"
+      target="回列表"
+    >
       <font-awesome-icon icon="list-alt" size="lg"></font-awesome-icon>
-    </router-link>
+    </router-link> -->
     <CalendarSelector
       :calendarDay="calendarDay"
-      @previousMonth="previousMonth"
-      @nextMonth="nextMonth"
+      @clickPrevious="clickPrevious"
+      @clickNext="clickNext"
+      @selectMonth="selectMonth"
     />
     <CalendarWeekDays />
     <div class="calendar_body">
       <ul
-        class="calendar_body_day"
         v-for="(day, index) in monthDays"
         :key="index"
         :class="[
           { today: calendarDay + '-' + day === today },
-          { datesCols: day > 0 },
+          'calendar_body_day',
         ]"
       >
         <span>
           {{ day }}
         </span>
-        <CalendarEvent
-          v-for="event in wannaKnowEventsObj[day]"
-          :key="event.id"
-          :wannaKnowEvent="event"
-        ></CalendarEvent>
+        <template v-if="device !== 'mobile'">
+          <CalendarEvent
+            v-for="event in wannaKnowEventsObj[day]"
+            :key="event.id"
+            :wannaKnowEvent="event"
+          ></CalendarEvent>
+        </template>
+        <template v-else>
+          <div
+            v-if="wannaKnowEventsObj[day]"
+            class="event_mark"
+            @click="showEvents(day)"
+          ></div>
+        </template>
       </ul>
     </div>
+  </div>
+  <div class="calendar_events_detail" v-if="device === 'mobile'">
+    <ul>
+      <CalendarEvent
+        v-for="event in wannaKnowEventsObj[clickDay]"
+        :key="event.id"
+        :wannaKnowEvent="event"
+      ></CalendarEvent>
+    </ul>
   </div>
 </template>
 
@@ -37,13 +58,18 @@
 import CalendarWeekDays from "@/components/calendar/CalendarWeekDays";
 import CalendarSelector from "@/components/calendar/CalendarSelector";
 import CalendarEvent from "@/components/calendar/CalendarEvent";
+// import CalendarDate from "@/components/calendar/CalendarDate";
 import dayjs from "dayjs";
 import weekday from "dayjs/plugin/weekday";
 dayjs.extend(weekday);
 
 export default {
   name: "CalendarView",
-  components: { CalendarSelector, CalendarWeekDays, CalendarEvent },
+  components: {
+    CalendarSelector,
+    CalendarWeekDays,
+    CalendarEvent,
+  },
   data() {
     return {
       calendarDay: dayjs().format("YYYY-MM"),
@@ -71,12 +97,15 @@ export default {
         },
         {
           id: 4,
-          title:
-            "Javascript 你是誰我是誰誰是誰(call by value、reference)javascript",
+          title: "你所不知道的javascript",
           speaker: "PG",
           date: "2/15",
         },
       ],
+      windowWidth: window.innerWidth,
+      device: window.innerWidth > 576 ? "tablet" : "mobile",
+      eventsPerDay: [],
+      clickDay: "",
     };
   },
   computed: {
@@ -84,7 +113,7 @@ export default {
       const firstWeekDayOfMonth = dayjs(this.calendarDay).weekday();
       const emptyBeginCols =
         firstWeekDayOfMonth === 0
-          ? []
+          ? Array(6).fill("")
           : Array(firstWeekDayOfMonth - 1).fill("");
       const totalDaysInMonth = dayjs(this.calendarDay).daysInMonth();
       const totalDaysInMonthArr = Array(totalDaysInMonth)
@@ -92,15 +121,9 @@ export default {
         .map((day, index) => index + 1);
       return [...emptyBeginCols, ...totalDaysInMonthArr];
     },
-    eventDays() {
-      return this.testWannaKnowList.map(
-        (event) => +dayjs(event.date).format("D")
-      );
-    },
     wannaKnowEventsObj() {
       return this.testWannaKnowList.reduce((acc, dateObj) => {
         let key = dayjs(dateObj.date).format("D");
-        console.log(key);
         if (!acc[key]) {
           acc[key] = [];
         }
@@ -110,36 +133,53 @@ export default {
     },
   },
   methods: {
-    previousMonth() {
+    clickPrevious(time) {
       this.calendarDay = dayjs(this.calendarDay)
-        .subtract(1, "month")
+        .subtract(1, time)
         .format("YYYY-MM");
     },
-    nextMonth() {
-      this.calendarDay = dayjs(this.calendarDay)
-        .add(1, "month")
-        .format("YYYY-MM");
+    clickNext(time) {
+      this.calendarDay = dayjs(this.calendarDay).add(1, time).format("YYYY-MM");
     },
-    wannaKnowEvents(date) {
-      return this.testWannaKnowList.filter(
-        (event) => +dayjs(event.date).format("D") === date
-      );
+    selectMonth(time) {
+      console.log(dayjs(time));
+      this.calendarDay = dayjs(time);
     },
-    hasEvent(date) {
-      return this.eventDays.includes(date);
+    // wannaKnowEvents(date) {
+    //   return this.testWannaKnowList.filter(
+    //     (event) => +dayjs(event.date).format("D") === date
+    //   );
+    // },
+    showEvents(day) {
+      this.clickDay = day;
     },
+    checkResize(e) {
+      const currentWidth = e.target.innerWidth;
+      if (currentWidth < 576) {
+        this.device = "mobile";
+      } else if (576 <= currentWidth < 992) {
+        this.device = "tablet";
+      } else {
+        this.device = "desktop";
+      }
+      this.windowWidth = currentWidth;
+    },
+  },
+  created() {
+    window.addEventListener("resize", this.checkResize);
+  },
+  unmounted() {
+    window.removeEventListener("resize", this.checkResize);
   },
 };
 </script>
 
 <style scoped lang="scss">
 .calendar {
-  padding: 30px;
-  position: relative;
-  &_icon {
-    position: absolute;
-    top: 30px;
-    right: 30px;
+  padding-top: 10px;
+  @include breakpoint.tablet {
+    padding-top: 15px;
+    height: initial;
   }
 }
 
@@ -152,29 +192,58 @@ export default {
   flex-wrap: wrap;
   &_day {
     width: calc(100% / 7);
-    min-height: 120px;
-    max-height: 180px;
-    overflow: scroll;
+    height: 50px;
+    padding: 2px 5px;
+    overflow: auto;
     background: color.$white;
-    padding: 5px 5px 10px;
     border-bottom: 1px solid gray;
+    @include breakpoint.tablet {
+      min-height: 120px;
+      max-height: 180px;
+      padding: 5px 5px 10px;
+    }
     span {
       display: block;
       margin: 0 auto 5px;
     }
-    li + li {
-      margin-top: 5px;
+    &::-webkit-scrollbar {
+      display: none;
     }
+  }
+  li + li {
+    margin-top: 5px;
   }
 }
 
 .today {
   > span {
-    background: orange;
+    background: rgba(211, 211, 211, 0.7);
     border-radius: 50%;
     width: 20px;
     height: 20px;
-    padding: 2px;
+    padding: 3px;
+    @include breakpoint.tablet {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+.event_mark {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: color.$green-200;
+  margin: 0 auto;
+  cursor: pointer;
+}
+
+.calendar_events_detail {
+  min-height: 300px;
+  padding: 20px 10px;
+  ul {
+    li + li {
+      margin-top: 5px;
+    }
   }
 }
 </style>

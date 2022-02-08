@@ -17,14 +17,16 @@ export default {
 
 <style scoped lang="scss">
 .wannaKnowEvent {
+  // @include breakpoint.tablet {
   display: flex;
-  flex-direction: column;
   max-height: 60px;
+  padding: 3px;
+  background: color.$green-200;
+  flex-direction: column;
   overflow: hidden;
   text-overflow: ellipsis;
   border-radius: 5px;
-  background: color.$green-200;
-  padding: 3px;
+  // }
   > p {
     white-space: nowrap;
     text-overflow: ellipsis;

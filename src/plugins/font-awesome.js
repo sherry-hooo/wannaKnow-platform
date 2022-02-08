@@ -6,6 +6,7 @@ import {
   faChevronLeft,
   faChevronRight,
   faBars,
+  faSearch,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faCalendarAlt as farFaCalendarAlt,
@@ -23,5 +24,6 @@ library.add(farFaCalendarAlt);
 library.add(farFaListAlt);
 library.add(farFileAlt);
 library.add(faBars);
+library.add(faSearch);
 
 export default FontAwesomeIcon;
