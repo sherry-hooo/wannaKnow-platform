@@ -1,0 +1,8 @@
+@mixin submit-button($color) {
+  width: 60px;
+  height: 30px;
+  border-radius: 20px;
+  background-color: $color;
+  color: #fff;
+  cursor: pointer;
+}
