@@ -2,11 +2,15 @@
   <div class="card">
     <div class="card_titleNameDate">
       <h3 class="ellipsis">
-        <i>!</i
-        >鐵人戰情爬蟲API之關關難過、關關不說又關關過鐵人戰情爬蟲API之關關難過、關關不說又關關過
+        <img src="@/assets/projectExperience.svg" alt="專案經驗icon" />
+        鐵人戰情爬蟲API之關關難過、關關不說又關關過鐵人戰情爬蟲API之關關難過、關關不說又關關過
+        鐵人戰情爬蟲API之關關難過、關關不說又關關過鐵人戰情爬蟲API之關關難過、關關不說又關關過
       </h3>
       <div class="card_wrapNameDate">
-        <div class="card_wrapNameDate_name nowrap">號稱165的大叔</div>
+        <div class="card_wrapNameDate_name nowrap">
+          <img src="@/assets/avatar.svg" alt="" />
+          號稱165的大叔
+        </div>
         <div class="card_wrapNameDate_date nowrap">06-09-2055</div>
       </div>
     </div>
@@ -21,10 +25,16 @@
         <div>Javascript</div>
         <div>Vue composition API</div>
       </div>
-
       <div class="card_icon_social nowrap">
-        <span>10</span>
-        <span>10</span>
+        <span>
+          <img src="@/assets/like.svg" alt="" />
+          10</span
+        >
+        <span>
+          <img src="@/assets/content.svg" alt="" />
+          10</span
+        >
+        <img src="@/assets/bookmark.svg" alt="" />
       </div>
     </div>
   </div>
@@ -38,97 +48,127 @@ export default {};
 .nowrap {
   white-space: nowrap;
 }
-.ellipsis {
-  // max-width: 750px;
-  // overflow: hidden;
-  // white-space: nowrap;
-  // text-overflow: ellipsis;
-}
 .card {
   max-width: 100%;
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  padding: 20px 10px;
+  padding: 20px 40px;
   border-bottom: 5px color.$green-400 solid;
+  @include breakpoint.desktop {
+    padding: 20px 10px;
+  }
+  p {
+    margin-bottom: 10px;
+    max-width: 300px;
+    @include breakpoint.tablet {
+      max-width: 750px;
+    }
+    @include breakpoint.desktop {
+      max-width: 750px;
+    }
+  }
+  .ellipsis {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 }
 .card_titleNameDate {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
   text-align: start;
+  flex-direction: column;
   @extend %sub-title;
   h3 {
     @extend %strong-title;
+    margin-bottom: 8px;
+    img {
+      width: 24px;
+      height: 24px;
+    }
+    @include breakpoint.desktop {
+      max-width: 750px;
+    }
   }
   .card_wrapNameDate {
     display: flex;
-    justify-content: center;
-    .card_wrapNameDate_name {
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    @include breakpoint.desktop {
+      margin-left: 50px;
     }
   }
+  @include breakpoint.tablet {
+    .ellipsis {
+      -webkit-line-clamp: 2;
+    }
+  }
+  @include breakpoint.desktop {
+    h3 {
+      max-width: 750px;
+    }
+
+    .ellipsis {
+      -webkit-line-clamp: 1;
+    }
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+.card_wrapTagSocialMedia {
+  @include breakpoint.tablet {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+  }
+  flex-direction: column;
 }
 
-.card_wrapTagSocialMedia {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
 .wannaTag {
   display: flex;
   flex-wrap: wrap;
   & > div {
     line-height: 24px;
     padding: 4px 12px;
-    margin: 8px 12px;
+    margin: 8px 16px 8px 0;
     background-color: color.$green-300;
     color: color.$white;
     text-align: center;
     border-radius: 16px;
-    &:first-of-type {
-      margin-left: 0px;
-    }
+  }
+  &:hover {
+    cursor: pointer;
   }
 }
-.card_icon {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  & > div:first-of-type {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+
+.card_wrapNameDate_name {
+  img {
+    vertical-align: middle;
   }
-  .card_icon_name {
-    svg {
-      width: 30px;
-      height: 30px;
-      vertical-align: middle;
-      color: color.$white;
-      background-color: color.$green-300;
-      border: 2px solid color.$green-300;
-      border-radius: 50%;
-    }
+}
+
+.card_icon_social {
+  @include breakpoint.tablet {
   }
-  .card_icon_social {
-    align-self: end;
-    span {
-      margin-right: 20px;
-    }
+  text-align: start;
+  span {
+    margin-right: 20px;
     @extend %sub-title;
-    svg {
-      cursor: pointer;
-      margin: 0 6px;
-      width: 24px;
-      height: 24px;
-      vertical-align: middle;
-      transition: transform 0.3s;
-      &:hover {
-        transform: scale(1.2);
-      }
-    }
-    svg:last-of-type {
-      margin-right: 0;
+    line-height: 24px;
+  }
+
+  img {
+    cursor: pointer;
+    margin: 0 6px;
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+    transition: transform 0.3s;
+    &:hover {
+      transform: scale(1.2);
     }
   }
 }
