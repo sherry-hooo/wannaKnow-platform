@@ -1,12 +1,5 @@
 <template>
   <div class="calendar">
-    <!-- <router-link
-      :to="{ name: 'ListView' }"
-      class="calendar_icon"
-      target="回列表"
-    >
-      <font-awesome-icon icon="list-alt" size="lg"></font-awesome-icon>
-    </router-link> -->
     <CalendarSelector
       :calendarDay="calendarDay"
       @clickPrevious="clickPrevious"
@@ -19,7 +12,7 @@
         v-for="(day, index) in monthDays"
         :key="index"
         :class="[
-          { today: calendarDay + '-' + day === today },
+          { 'calendar_body_day-active': calendarDay + '-' + day === today },
           'calendar_body_day',
         ]"
       >
@@ -58,7 +51,6 @@
 import CalendarWeekDays from "@/components/calendar/CalendarWeekDays";
 import CalendarSelector from "@/components/calendar/CalendarSelector";
 import CalendarEvent from "@/components/calendar/CalendarEvent";
-// import CalendarDate from "@/components/calendar/CalendarDate";
 import dayjs from "dayjs";
 import weekday from "dayjs/plugin/weekday";
 dayjs.extend(weekday);
@@ -142,14 +134,8 @@ export default {
       this.calendarDay = dayjs(this.calendarDay).add(1, time).format("YYYY-MM");
     },
     selectMonth(time) {
-      console.log(dayjs(time));
       this.calendarDay = dayjs(time);
     },
-    // wannaKnowEvents(date) {
-    //   return this.testWannaKnowList.filter(
-    //     (event) => +dayjs(event.date).format("D") === date
-    //   );
-    // },
     showEvents(day) {
       this.clickDay = day;
     },
@@ -175,14 +161,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.calendar {
-  padding-top: 10px;
-  @include breakpoint.tablet {
-    padding-top: 15px;
-    height: initial;
-  }
-}
-
 .calendar_body {
   // display: grid;
   // grid-template-columns: repeat(7, 1fr);
@@ -196,7 +174,7 @@ export default {
     padding: 2px 5px;
     overflow: auto;
     background: color.$white;
-    border-bottom: 1px solid gray;
+    border-bottom: 1px solid color.$green-300;
     @include breakpoint.tablet {
       min-height: 120px;
       max-height: 180px;
@@ -215,17 +193,14 @@ export default {
   }
 }
 
-.today {
+.calendar_body_day-active {
   > span {
-    background: rgba(211, 211, 211, 0.7);
+    background: color.$green-300;
     border-radius: 50%;
     width: 20px;
     height: 20px;
     padding: 3px;
-    @include breakpoint.tablet {
-      width: 20px;
-      height: 20px;
-    }
+    display: flex;
   }
 }
 .event_mark {

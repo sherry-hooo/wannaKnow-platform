@@ -24,7 +24,8 @@ export default {
   padding: 5px 0;
   li {
     height: 30px;
-    border-bottom: 1px solid gray;
+    border-bottom: 1px solid color.$green-300;
+    font-weight: 500;
   }
 }
 </style>

@@ -32,12 +32,15 @@ export default {
 </script>
 <style scoped lang="scss">
 .wannaKnow {
-  padding: 0 50px;
+  padding: 20px 50px 0;
   position: relative;
+  z-index: 0;
   .layout_toggle_btn {
     position: absolute;
+    z-index: 10;
     top: 10px;
     right: 10px;
+    padding: 10px;
     &:hover {
       transform: scale(1.1);
     }

@@ -33,7 +33,7 @@
           v-for="month in monthsList"
           :key="month"
           :class="[
-            { 'dropDown_months_item-active': selectedMonth === month },
+            { 'dropDown_months_item-active': displayMonth === month },
             'dropDown_months_item',
           ]"
           @click="selectMonth(displayYear, month)"
@@ -77,7 +77,7 @@ export default {
       return dayjs(this.calendarDay).format("YYYY");
     },
     displayMonth() {
-      return dayjs(this.calendarDay).format("MMMM");
+      return dayjs(this.calendarDay).format("MMM");
     },
   },
   methods: {
@@ -109,6 +109,10 @@ export default {
     justify-content: center;
     width: 170px;
     margin: 0 10px;
+    @extend %strong-title;
+    &:hover {
+      color: color.$green-300;
+    }
     > p {
       @extend %title;
       cursor: pointer;
@@ -121,8 +125,8 @@ export default {
     width: 30px;
     height: 30px;
     &:hover {
-      background: rgba(211, 211, 211, 0.5);
-      border-radius: 50%;
+      color: color.$green-300;
+      cursor: pointer;
     }
   }
 }
@@ -140,7 +144,7 @@ export default {
     &-active {
       display: block;
       background-color: color.$white;
-      border-radius: 5px;
+      border-radius: 15px;
       box-shadow: 0 1px 10px 0 rgb(0 0 0 / 25%);
     }
   }
@@ -149,24 +153,37 @@ export default {
   .dropDown {
     &_year {
       padding: 10px 20px;
-      border-bottom: 1px solid color.$white;
+      border-bottom: 3px solid color.$green-300;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      color: color.$green-300;
+      font-weight: 500;
+      @extend %sub-title;
     }
     &_months {
       display: flex;
       flex-wrap: wrap;
+      justify-content: space-between;
       padding: 10px 5px;
+      color: color.$green-300;
+      font-weight: 500;
+
+      @extend %sub-title;
       &_item {
-        width: calc(100% / 4);
-        padding: 5px;
+        width: 24%;
+        padding: 0 5px;
+        margin: 5px 0;
         &:hover {
-          color: color.$green-200;
+          background: color.$green-300;
+          color: color.$white;
+          border-radius: 50px;
           cursor: pointer;
         }
         &-active {
-          color: color.$green-300;
+          background: color.$green-300;
+          color: color.$white;
+          border-radius: 50px;
           font-weight: 700;
         }
       }
