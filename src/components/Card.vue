@@ -27,21 +27,46 @@
       </div>
       <div class="card_icon_social nowrap">
         <span>
-          <img src="@/assets/like.svg" alt="" />
-          10</span
+          <img @click="clickLike" src="@/assets/like.svg" alt="按讚圖示" />
+          {{ likeCount }}</span
         >
         <span>
-          <img src="@/assets/content.svg" alt="" />
-          10</span
+          <img src="@/assets/content.svg" alt="留言圖示" />
+          {{ commentCount }}</span
         >
-        <img src="@/assets/bookmark.svg" alt="" />
+        <img @click="clickArchive" src="@/assets/bookmark.svg" alt="收藏圖示" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      likeImgURL: "",
+      likeCount: 10,
+      likeCard: false,
+      collectImgURL: "",
+      commentCount: 10,
+    };
+  },
+  methods: {
+    clickLike() {
+      this.likeCard = !this.likeCard;
+      if (this.likeCard) {
+        console.log("按讚");
+        this.likeCount++;
+      } else {
+        console.log("取消按讚");
+        this.likeCount--;
+      }
+    },
+    clickArchive() {
+      console.log("收藏");
+    },
+  },
+};
 </script>
 
 <style scoped lang="scss">
