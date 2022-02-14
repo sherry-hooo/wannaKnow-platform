@@ -10,13 +10,7 @@ const routes = [
   {
     path: "/wannaKnow",
     name: "WannaKnow",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(
-        /* webpackChunkName: "about" */ "../views/WannaKnow/WannaKnow.vue"
-      ),
+    component: () => import("../views/WannaKnow/WannaKnow.vue"),
     redirect: { name: "ListView" },
     children: [
       {
@@ -34,18 +28,12 @@ const routes = [
   {
     path: "/apply",
     name: "Apply",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/Apply.vue"),
   },
   {
     path: "/sideBar",
     name: "SideBar",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/SideBar.vue"),
   },

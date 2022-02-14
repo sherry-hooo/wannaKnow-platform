@@ -1,17 +1,37 @@
 <template>
-  <!-- Danny負責 -->
-  <!-- font-aweome icon 可以自由移動位置~ -->
   <ul class="wannaKnowCatalogs">
-    <li>全部</li>
-    <li>專案經驗</li>
-    <li>學習小心得</li>
-    <li>技術剖析</li>
-    <li>職場工作</li>
-    <li>生活頻道</li>
+    <li class="wannaKnowCatalogs-active">
+      <span> 全部</span>
+    </li>
+    <li>
+      <img src="@/assets/projectExperience.svg" alt="" />
+
+      <span> 專案經驗</span>
+    </li>
+    <li>
+      <img src="@/assets/learningExpericence.svg" alt="" />
+
+      <span> 學習小心得</span>
+    </li>
+    <li>
+      <img src="@/assets/technicalAnalysis.svg" alt="" />
+
+      <span> 技術剖析 </span>
+    </li>
+    <li>
+      <img src="@/assets/career.svg" alt="" />
+
+      <span> 職場工作</span>
+    </li>
+    <li>
+      <img src="@/assets/life.svg" alt="" />
+
+      <span> 生活頻道 </span>
+    </li>
   </ul>
 
   <div class="wrapTab">
-    <span>最新</span>
+    <span class="wrapTab-active">最新</span>
     <span>熱門</span>
     <span>追蹤</span>
     <div class="wrapTab_dashed"></div>
@@ -20,25 +40,22 @@
   <section>
     <Card v-for="(card, index) in 10" :key="index"></Card>
   </section>
-  <ul class="pagination">
-    <li>＜</li>
-    <li class="pagination_number pagination_number-active">1</li>
-    <li class="pagination_number">2</li>
-    <li class="pagination_number">3</li>
-    <li class="pagination_number">4</li>
-    <li class="pagination_number">5</li>
-    <li>...</li>
-    <li class="pagination_number pagination_number-twoDigits">100</li>
-    <li>＞</li>
-  </ul>
+  <Pagination></Pagination>
 </template>
 
 <script>
 import Card from "@/components/Card.vue";
+import Pagination from "@/components/Pagination.vue";
 export default {
   name: "ListView",
   components: {
     Card,
+    Pagination,
+  },
+  data() {
+    return {
+      
+    }
   },
 };
 </script>
@@ -53,27 +70,46 @@ export default {
 }
 
 .wannaKnowCatalogs {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
+  white-space: nowrap;
+  overflow-x: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  @include breakpoint.tablet {
+    white-space: normal;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    overflow-x: auto;
+  }
   @extend %title;
-  li:first-of-type {
+
+  &-active {
     background-color: #ffc700;
     color: color.$white;
   }
   li {
-    padding: 8px 24px;
+    // width: auto;
+    display: inline-block;
+    padding: 4px 20px;
+    margin: 12px;
+    @include breakpoint.tablet {
+      // width: 33.333%;
+    }
+    @include breakpoint.desktop {
+      // width: auto;
+      padding: 8px 24px;
+    }
     border: 2px color.$gray dashed;
     border-radius: 30px;
     margin: 16px;
-    @include breakpoint.tablet {
-      padding: 4px 20px;
-      margin: 12px;
+    span {
+      vertical-align: middle;
     }
-    svg {
+    img {
       margin-right: 4px;
-      color: color.$green-300;
+      vertical-align: middle;
     }
     transition: background-color 0.3s;
     &:hover {
@@ -85,21 +121,45 @@ export default {
 }
 .wrapTab {
   @extend %strong-title;
-  margin: 0 auto;
-  text-align: start;
-  // width: 90%;
+  display: flex;
+  color: color.$black;
   span {
-    margin: 0 16px;
+    width: 100%;
+    padding: 4px 16px;
+    transition: background-color 0.3s;
     &:hover {
-      color: color.$green-300;
+      background-color: color.$green-300;
       cursor: pointer;
     }
   }
-  span:first-of-type {
-    color: color.$green-300;
+  border-bottom: 4px solid color.$green-300;
+  &-active {
+    background-color: color.$green-300;
+  }
+  @include breakpoint.tablet {
+    display: block;
+    text-align: start;
+    background-color: color.$white;
+    border-bottom: 0;
+    span {
+      &:hover {
+        background-color: color.$white;
+        color: color.$green-300;
+        cursor: pointer;
+      }
+    }
+    &-active {
+      background-color: color.$white;
+      color: color.$green-300;
+    }
   }
 }
+
 .wrapTab_dashed {
+  display: none;
+  @include breakpoint.tablet {
+    display: block;
+  }
   width: 100%;
   height: 3px;
   margin: 12px 0;
@@ -111,40 +171,5 @@ export default {
   );
   background-size: 50px 3px;
   background-repeat: repeat-x;
-}
-.pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: color.$green-300;
-  margin: 30px 0;
-  li {
-    cursor: pointer;
-  }
-  @extend %body;
-  li:first-of-type,
-  li:last-of-type {
-    @extend %sub-title;
-    font-weight: 900;
-    padding: 4px 8px;
-  }
-  .pagination_number {
-    background-color: color.$white;
-    border-radius: 50%;
-    border: 1px solid color.$green-300;
-    padding: 4px 8px;
-    margin: 0 10px;
-    &:hover {
-      color: color.$white;
-      background-color: color.$green-300;
-    }
-  }
-  .pagination_number-active {
-    color: color.$white;
-    background-color: color.$green-300;
-  }
-  .pagination_number-twoDigits {
-    border-radius: 16px;
-  }
 }
 </style>

@@ -32,7 +32,9 @@ export default {
 </script>
 <style scoped lang="scss">
 .wannaKnow {
-  padding: 20px 50px 0;
+  @include breakpoint.desktop {
+    padding: 0 50px;
+  }
   position: relative;
   z-index: 0;
   .layout_toggle_btn {
