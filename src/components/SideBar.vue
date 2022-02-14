@@ -1,6 +1,6 @@
 <template>
-  <!-- 阿傑負責 -->
-  <section class="sideBar">
+  <section class="sideBar" :class="{ openSideBar: sideBarOpen }">
+    <div @click="sideBarOpen = !sideBarOpen" class="sideBar_toggleBtn">x</div>
     <div class="overflow_container">
       <div class="sideBar_main">
         <div class="sideBar_main_info">
@@ -223,7 +223,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      sideBarOpen: false,
+    };
+  },
+};
 </script>
 
 <style scoped lang="scss">
@@ -253,6 +259,11 @@ export default {};
   max-width: 450px;
   margin-left: auto;
   padding: 0.5rem;
+  position: absolute;
+  z-index: 20;
+  right: 0;
+  top: 0;
+  background: white;
 }
 @include breakpoint.tablet {
   .sideBar {
@@ -353,5 +364,13 @@ export default {};
   > button {
     @include submit-button(color.$green-300);
   }
+}
+
+.openSideBar {
+  right: -100%;
+}
+
+.sideBar_toggleBtn {
+  cursor: pointer;
 }
 </style>

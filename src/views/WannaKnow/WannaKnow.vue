@@ -18,13 +18,15 @@
         color="#79BC89"
       ></font-awesome-icon>
     </router-link>
+    <SideBar></SideBar>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
+import SideBar from "@/components/SideBar.vue";
 export default {
-  components: {},
+  components: { SideBar },
   data() {
     return {};
   },
