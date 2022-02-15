@@ -1,13 +1,23 @@
 <template>
-  <section class="sideBar" :class="{ openSideBar: sideBarOpen }">
-    <div @click="sideBarOpen = !sideBarOpen" class="sideBar_toggleBtn">x</div>
+  <section class="sideBar" :class="{ closeSideBar: closeSideBar }">
+    <div
+      @click="closeSideBar = !closeSideBar"
+      class="sideBar_toggleBtn"
+      :class="{ fade: closeSideBar }"
+    >
+      <font-awesome-icon class="arrow" icon="arrow-right"></font-awesome-icon>
+      <span></span>
+      <span></span>
+    </div>
     <div class="overflow_container">
       <div class="sideBar_main">
         <div class="sideBar_main_info">
           <div class="userInfo">
-            <div class="userInfo_icon">
-              <img src="@/assets/avatar.svg" alt="avatar-icon" />
-            </div>
+            <img
+              class="userInfo_icon"
+              src="@/assets/avatar.svg"
+              alt="avatar-icon"
+            />
             <span class="userInfo_name">號稱165的大叔</span>
             <span class="userInfo_floor">樓主</span>
           </div>
@@ -24,68 +34,45 @@
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ad
             adipisci, placeat ullam cum vitae dignissimos cumque voluptatem
             nobis sunt modi reiciendis! Laboriosam, aliquam. Voluptas quos quo
-            natus minima, laborum provident. Lorem ipsum dolor, sit amet
-            consectetur adipisicing elit. Dolor voluptatem beatae vero placeat
-            voluptatum! Deleniti ipsam expedita, dolorum laboriosam iste sed
-            illum voluptate accusantium magni veritatis enim totam natus
-            necessitatibus culpa earum quibusdam, illo ratione cupiditate nobis
-            dolore aperiam animi, vel incidunt? Explicabo nemo tempore eos, odio
-            officia assumenda voluptatum, consequatur aliquam architecto
-            similique quas aspernatur esse repudiandae placeat. Ipsam porro
-            optio consequuntur voluptatem qui laudantium libero! Doloribus
-            maxime quam optio aperiam labore, dolore vel totam cupiditate saepe
-            amet sed non debitis, exercitationem distinctio facere! Minima
-            maiores hic, at vel suscipit reiciendis. Quos doloremque architecto
-            vitae cum deserunt amet vero perferendis, impedit fugit ducimus
-            cupiditate eius iure aspernatur modi nostrum corrupti repudiandae
-            ipsam eveniet tenetur repellendus! Recusandae deserunt harum rerum
-            fugit sit. Quaerat, sint. Suscipit consequuntur delectus sapiente
-            doloremque non iusto ullam at explicabo eaque, voluptates natus,
-            corrupti ducimus eos tempora, reprehenderit molestias error soluta
-            aut quasi commodi aperiam possimus. Voluptatum recusandae ipsam
-            magni voluptatibus obcaecati quam inventore omnis officia sapiente.
-            Asperiores facere inventore nesciunt iste tenetur commodi autem
-            dignissimos rerum qui odit reiciendis beatae repudiandae fugit iure
-            illum molestiae cupiditate excepturi, voluptates quas quidem totam
-            atque pariatur. Rerum molestias ab, vel iusto animi dolor illum
-            dicta ullam, nihil facilis placeat laborum voluptas maxime libero
-            accusantium ad nostrum perspiciatis atque. Perferendis amet error
-            atque debitis modi aperiam, nam dignissimos sunt illum similique
-            laboriosam dolorum quia praesentium magnam ratione quis in
-            voluptatibus explicabo minus, ex facilis fuga repudiandae aut odio.
-            Blanditiis nam molestiae neque, accusamus atque explicabo culpa
-            eveniet, molestias doloribus temporibus quae nihil architecto
-            inventore, voluptate quo consequuntur. Sapiente ipsum sunt inventore
-            tempore qui maxime nulla laudantium. Ipsam provident libero
-            repellendus magnam aspernatur hic rerum impedit, dolorum,
-            necessitatibus excepturi quia sunt eos maxime facere porro quae?
-            Inventore eveniet quia quibusdam, architecto blanditiis incidunt
-            voluptas aspernatur veritatis sint et facere rerum!
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt
+            blanditiis consectetur hic delectus non dolores repellat! Est neque
+            animi cumque fuga maxime consequatur temporibus? Minus, modi
+            consequatur excepturi recusandae quas nesciunt deserunt quisquam
+            tempore beatae ab enim possimus quaerat! Reiciendis vel iure
+            consequuntur fuga! Et ex sunt neque distinctio ipsum mollitia
+            quibusdam aliquam similique, amet ipsam error incidunt provident,
+            veniam est adipisci aspernatur doloribus molestias! Fugit deserunt
+            excepturi at ratione quos quas incidunt labore! Temporibus
+            exercitationem sit numquam illum praesentium at culpa, hic minima
+            eum, natus error blanditiis non perferendis aliquam voluptate
+            consequatur, quidem voluptas ad labore quisquam dolores voluptatem.
           </p>
         </div>
         <div class="sideBar_main_others">
           <div class="sideBar_icon">
-            <font-awesome-icon :icon="['fas', 'bookmark']" />
+            <img src="@/assets/like.svg" alt="like_icon" />
+            <span>10</span>
           </div>
           <div class="sideBar_icon">
-            <font-awesome-icon :icon="['fas', 'link']" />
+            <img src="@/assets/content.svg" alt="content_icon" />
+            <span>10</span>
+          </div>
+          <div class="sideBar_icon">
+            <img src="@/assets/bookmark.svg" alt="bookmark_icon" />
+          </div>
+          <div class="sideBar_icon">
+            <img src="@/assets/attachment.svg" alt="attachment_icon" />
             <span>附件</span>
-          </div>
-          <div class="sideBar_icon">
-            <font-awesome-icon :icon="['far', 'thumbs-up']" />
-            <span>10</span>
-          </div>
-          <div class="sideBar_icon">
-            <font-awesome-icon :icon="['fas', 'comment-dots']" />
-            <span>10</span>
           </div>
         </div>
       </div>
       <div class="sideBar_comment">
         <div class="userInfo">
-          <div class="userInfo_icon">
-            <img src="@/assets/avatar.svg" alt="avatar-icon" />
-          </div>
+          <img
+            class="userInfo_icon"
+            src="@/assets/avatar.svg"
+            alt="avatar-icon"
+          />
           <span class="userInfo_name">號稱165的大叔</span>
           <span class="userInfo_floor">一樓</span>
         </div>
@@ -96,7 +83,10 @@
             atque consectetur Lorem ipsum dolor sit amet consectetur adipisicing
             elit. Eius nesciunt, quos neque maiores totam necessitatibus
             laudantium animi. Et, voluptatem ab. Nam cum ad impedit accusamus
-            vitae. Eveniet eos alias et!
+            vitae. Eveniet eos alias et! Lorem ipsum, dolor sit amet consectetur
+            adipisicing elit. Dolores, labore! Quo obcaecati dolores repudiandae
+            similique, consectetur voluptatibus nostrum sequi facilis officia
+            incidunt aspernatur molestias perferendis corrupti reiciendis
           </p>
           <div class="sideBar_comment_others">
             <div class="timing">
@@ -104,111 +94,7 @@
               <span class="timing_time">00:00</span>
             </div>
             <div class="sideBar_icon">
-              <font-awesome-icon :icon="['far', 'thumbs-up']" />
-              <span>10</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="sideBar_comment">
-        <div class="userInfo">
-          <div class="userInfo_icon">
-            <img src="@/assets/avatar.svg" alt="avatar-icon" />
-          </div>
-          <span class="userInfo_name">號稱165的大叔</span>
-          <span class="userInfo_floor">一樓</span>
-        </div>
-        <div class="sideBar_comment_content">
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eaque
-            blanditiis officiis eligendi animi voluptatem repellat quidem nulla,
-            atque consectetur
-          </p>
-          <div class="sideBar_comment_others">
-            <div class="timing">
-              <span class="timing_date">06-09-2055</span>
-              <span class="timing_time">00:00</span>
-            </div>
-            <div class="sideBar_icon">
-              <font-awesome-icon :icon="['far', 'thumbs-up']" />
-              <span>10</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="sideBar_comment">
-        <div class="userInfo">
-          <div class="userInfo_icon">
-            <img src="@/assets/avatar.svg" alt="avatar-icon" />
-          </div>
-          <span class="userInfo_name">號稱165的大叔</span>
-          <span class="userInfo_floor">一樓</span>
-        </div>
-        <div class="sideBar_comment_content">
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eaque
-            blanditiis officiis eligendi animi voluptatem repellat quidem nulla,
-            atque consectetur
-          </p>
-          <div class="sideBar_comment_others">
-            <div class="timing">
-              <span class="timing_date">06-09-2055</span>
-              <span class="timing_time">00:00</span>
-            </div>
-            <div class="sideBar_icon">
-              <font-awesome-icon :icon="['far', 'thumbs-up']" />
-              <span>10</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="sideBar_comment">
-        <div class="userInfo">
-          <div class="userInfo_icon">
-            <img src="@/assets/avatar.svg" alt="avatar-icon" />
-          </div>
-          <span class="userInfo_name">號稱165的大叔</span>
-          <span class="userInfo_floor">一樓</span>
-        </div>
-        <div class="sideBar_comment_content">
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eaque
-            blanditiis officiis eligendi animi voluptatem repellat quidem nulla,
-            atque consectetur
-          </p>
-          <div class="sideBar_comment_others">
-            <div class="timing">
-              <span class="timing_date">06-09-2055</span>
-              <span class="timing_time">00:00</span>
-            </div>
-            <div class="sideBar_icon">
-              <font-awesome-icon :icon="['far', 'thumbs-up']" />
-              <span>10</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="sideBar_comment">
-        <div class="userInfo">
-          <div class="userInfo_icon">
-            <img src="@/assets/avatar.svg" alt="avatar-icon" />
-          </div>
-          <span class="userInfo_name">號稱165的大叔</span>
-          <span class="userInfo_floor">一樓</span>
-        </div>
-        <div class="sideBar_comment_content">
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eaque
-            blanditiis officiis eligendi animi voluptatem repellat quidem nulla,
-            atque consectetur
-          </p>
-          <div class="sideBar_comment_others">
-            <div class="timing">
-              <span class="timing_date">06-09-2055</span>
-              <span class="timing_time">00:00</span>
-            </div>
-            <div class="sideBar_icon">
-              <font-awesome-icon :icon="['far', 'thumbs-up']" />
+              <img src="@/assets/like.svg" alt="like_icon" />
               <span>10</span>
             </div>
           </div>
@@ -226,7 +112,7 @@
 export default {
   data() {
     return {
-      sideBarOpen: false,
+      closeSideBar: false,
     };
   },
 };
@@ -234,6 +120,7 @@ export default {
 
 <style scoped lang="scss">
 @use "src/assets/sass/utils/_flex.scss";
+
 %hover {
   transition: filter 0.25s;
   &:hover {
@@ -254,30 +141,38 @@ export default {
   border-bottom: 1px solid #ccc;
 }
 
+// sideBar
 .sideBar {
+  @include flex.flex(between, stretch, column, nowrap);
   min-width: 375px;
-  max-width: 450px;
-  margin-left: auto;
-  padding: 0.5rem;
-  position: absolute;
-  z-index: 20;
+  max-width: 500px;
+  height: 100vh;
+  padding: 2rem;
+  background: white;
+  position: fixed;
+  z-index: 100;
   right: 0;
   top: 0;
-  background: white;
+  transition: 0.5s;
 }
 @include breakpoint.tablet {
   .sideBar {
-    padding: 1rem;
-    box-shadow: -11px 0 10px -10px #888;
+    padding: 1.5rem;
+    box-shadow: -5px 0 4px -4px #555;
   }
 }
+// 中間區塊over-flow
 .overflow_container {
-  height: 80vh;
-  margin-bottom: 1rem;
   overflow: auto;
+  margin-bottom: 0.5rem;
+  transition: 0.4s;
 }
+// 發文區塊
 .sideBar_main {
   @include border-bottom;
+  @include flex.flex(start, stretch, column, nowrap);
+  gap: 1rem;
+  padding: 1rem 0;
 }
 .sideBar_main_info {
   @include flex.flex(start, stretch, row, nowrap);
@@ -286,11 +181,17 @@ export default {
 .userInfo {
   @extend %body;
   @include flex.flex(start, center, column);
-  flex: 0 0 30%;
-  span {
-    margin-top: 0.5rem;
+  flex: 1 0 0;
+  gap: 1rem;
+  &_icon {
+    width: 50px;
+    height: 50px;
+  }
+  &_name {
+    @extend %body;
   }
   &_floor {
+    @extend %body;
     padding: 1px 6px;
     color: #fff;
     background-color: color.$green-300;
@@ -314,35 +215,37 @@ export default {
 }
 .sideBar_main_content {
   @extend %sub-title;
-  padding: 1rem;
   text-align: left;
 }
 .sideBar_main_others {
   @extend %sub-title;
   @include flex.flex(end, center, row, nowrap);
-  .sideBar_icon {
+  gap: 1rem;
+}
+.sideBar_icon {
+  > * {
     display: inline-block;
-    &:nth-child(1) {
-      margin-right: auto;
-    }
-    &:nth-child(2) {
-      margin-right: 1rem;
-      > span {
-        margin-left: 0.25rem;
-      }
-    }
-    &:nth-child(3) {
-      margin-right: 1rem;
-    }
+    vertical-align: middle;
+  }
+  img {
+    width: 24px;
+    height: 24px;
+    margin-right: 0.5rem;
+  }
+  span {
+    @extend %sub-title;
   }
 }
 
+// 留言區塊
 .sideBar_comment {
   @include flex.flex(around, stretch, row, nowrap);
   @include border-bottom;
   padding: 1rem 0;
+  gap: 1rem;
 }
 .sideBar_comment_content {
+  flex: 0 1 70%;
   > p {
     margin-bottom: 1rem;
     text-align: left;
@@ -352,8 +255,10 @@ export default {
   @include flex.flex(between, center, row, nowrap);
 }
 
+// 送出留言
 .sideBar_submit {
   @include flex.flex(between, center, row, nowrap);
+  transition: 0.4s;
   > input {
     flex: 1 0 0;
     margin-right: 1rem;
@@ -366,11 +271,67 @@ export default {
   }
 }
 
-.openSideBar {
-  right: -100%;
+.closeSideBar {
+  right: -600px;
 }
 
 .sideBar_toggleBtn {
+  visibility: visible;
+  transition: visibility 0s, opacity 0.5s;
+  &.fade {
+    visibility: hidden;
+    opacity: 0;
+  }
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: -50px;
+  z-index: 20;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  color: #fff;
   cursor: pointer;
+  opacity: 0.3;
+  &:hover {
+    opacity: 0.5;
+    ~ div {
+      transform: translateX(20px);
+      opacity: 0.7;
+      filter: grayscale(100%);
+    }
+    .arrow {
+      transform: translateX(8px) scaleX(1.6) scaleY(0.7);
+    }
+    span:nth-child(2) {
+      width: 2px;
+      margin-right: 3px;
+      transform: translateX(11px) scaleY(1.2);
+    }
+    span:nth-child(3) {
+      width: 2px;
+      transform: translateX(10px) scaleY(1.4);
+    }
+  }
+  .arrow {
+    margin-right: 8px;
+    transition: 0.4s;
+    filter: drop-shadow(2px 3px 1px #333) drop-shadow(0 0 2px #333);
+  }
+  span {
+    display: inline-block;
+    width: 3px;
+    background-color: #fff;
+    box-shadow: 2px 3px 1px #333, 0 0 2px #333, 0 0 3px #333, 0 0 4px #333;
+    transition: 0.4s;
+  }
+  span:nth-child(2) {
+    margin-right: 5px;
+    height: 25px;
+  }
+  span:nth-child(3) {
+    height: 60px;
+  }
 }
 </style>
