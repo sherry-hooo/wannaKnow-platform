@@ -1,11 +1,19 @@
 <template>
-  <div class="calendar">
+  <div class="calendar" @click="openDropDown = false">
     <CalendarSelector
       :calendarDay="calendarDay"
+      :openDropDown="openDropDown"
       @clickPrevious="clickPrevious"
       @clickNext="clickNext"
       @selectMonth="selectMonth"
-    />
+    >
+      <div
+        class="calendar_header_title"
+        @click.stop="openDropDown = !openDropDown"
+      >
+        <p class="calendar_header_title">{{ calendarDay }}</p>
+      </div>
+    </CalendarSelector>
     <CalendarWeekDays />
     <div class="calendar_body">
       <ul
@@ -54,6 +62,7 @@ import CalendarEvent from "@/components/calendar/CalendarEvent";
 import dayjs from "dayjs";
 import weekday from "dayjs/plugin/weekday";
 dayjs.extend(weekday);
+import api from "@/service/api.js";
 
 export default {
   name: "CalendarView",
@@ -64,7 +73,7 @@ export default {
   },
   data() {
     return {
-      calendarDay: dayjs().format("YYYY-MM"),
+      calendarDay: dayjs().format("YYYY MMMM"),
       today: dayjs().format("YYYY-MM-D"),
       testWannaKnowList: [
         {
@@ -98,6 +107,8 @@ export default {
       device: window.innerWidth > 576 ? "tablet" : "mobile",
       eventsPerDay: [],
       clickDay: "",
+      apiData: [],
+      openDropDown: false,
     };
   },
   computed: {
@@ -128,13 +139,16 @@ export default {
     clickPrevious(time) {
       this.calendarDay = dayjs(this.calendarDay)
         .subtract(1, time)
-        .format("YYYY-MM");
+        .format("YYYY MMMM");
     },
     clickNext(time) {
-      this.calendarDay = dayjs(this.calendarDay).add(1, time).format("YYYY-MM");
+      this.calendarDay = dayjs(this.calendarDay)
+        .add(1, time)
+        .format("YYYY MMMM");
     },
     selectMonth(time) {
-      this.calendarDay = dayjs(time);
+      console.log(time);
+      this.calendarDay = dayjs(time).format("YYYY MMMM");
     },
     showEvents(day) {
       this.clickDay = day;
@@ -150,9 +164,15 @@ export default {
       }
       this.windowWidth = currentWidth;
     },
+    getWannaKnowApi(date) {
+      api
+        .getWannaKnowData(date)
+        .then((res) => (this.apiData = res.data.slice(0, 10)));
+    },
   },
   created() {
     window.addEventListener("resize", this.checkResize);
+    this.getWannaKnowApi();
   },
   unmounted() {
     window.removeEventListener("resize", this.checkResize);

@@ -5,11 +5,7 @@
       :to="{ name: 'CalendarView' }"
       class="layout_toggle_btn"
     >
-      <font-awesome-icon
-        icon="calendar-alt"
-        size="lg"
-        color="#79BC89"
-      ></font-awesome-icon>
+      <img src="@/assets/calendar.svg" alt="日曆icon" />
     </router-link>
     <router-link v-else :to="{ name: 'ListView' }" class="layout_toggle_btn">
       <font-awesome-icon
@@ -34,8 +30,9 @@ export default {
 </script>
 <style scoped lang="scss">
 .wannaKnow {
+  padding: 20px 10px 0;
   @include breakpoint.desktop {
-    padding: 0 50px;
+    padding: 20px 50px 0;
   }
   position: relative;
   z-index: 0;

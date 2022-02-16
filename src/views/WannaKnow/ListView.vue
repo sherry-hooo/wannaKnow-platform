@@ -3,59 +3,84 @@
     <li class="wannaKnowCatalogs-active">
       <span> 全部</span>
     </li>
-    <li>
-      <img src="@/assets/projectExperience.svg" alt="" />
-
-      <span> 專案經驗</span>
-    </li>
-    <li>
-      <img src="@/assets/learningExpericence.svg" alt="" />
-
-      <span> 學習小心得</span>
-    </li>
-    <li>
-      <img src="@/assets/technicalAnalysis.svg" alt="" />
-
-      <span> 技術剖析 </span>
-    </li>
-    <li>
-      <img src="@/assets/career.svg" alt="" />
-
-      <span> 職場工作</span>
-    </li>
-    <li>
-      <img src="@/assets/life.svg" alt="" />
-
-      <span> 生活頻道 </span>
+    <li v-for="category in categoryList" :key="category.name">
+      <img :src="category.img" alt="category.name" />
+      <span>{{ category.name }}</span>
     </li>
   </ul>
 
-  <div class="wrapTab">
-    <span class="wrapTab-active">最新</span>
-    <span>熱門</span>
-    <span>追蹤</span>
-    <div class="wrapTab_dashed"></div>
+  <div class="tabWrapper">
+    <div
+      v-for="filter in filterList"
+      :key="filter"
+      @click="tabFilter(filter.component)"
+      :class="[
+        { 'tabWrapper_item-active': currentFilter === filter.component },
+        'tabWrapper_item',
+      ]"
+    >
+      {{ filter.title }}
+    </div>
   </div>
 
   <section>
-    <Card v-for="(card, index) in 10" :key="index"></Card>
+    <component :is="currentFilter"></component>
   </section>
   <Pagination></Pagination>
 </template>
 
 <script>
-import Card from "@/components/Card.vue";
 import Pagination from "@/components/Pagination.vue";
+import Latest from "@/components/tabs/Latest.vue";
+import Popular from "@/components/tabs/Popular.vue";
+import Favorite from "@/components/tabs/Favorite.vue";
+import api from "@/service/api.js";
 export default {
   name: "ListView",
   components: {
-    Card,
     Pagination,
+    Latest,
+    Popular,
+    Favorite,
   },
   data() {
     return {
-      
-    }
+      categoryList: [
+        { img: require("@/assets/projectExperience.svg"), name: "專案經驗" },
+        {
+          img: require("@/assets/learningExpericence.svg"),
+          name: "學習小心得",
+        },
+        { img: require("@/assets/technicalAnalysis.svg"), name: "技術剖析" },
+        { img: require("@/assets/career.svg"), name: "職場工作" },
+        { img: require("@/assets/life.svg"), name: "生活頻道" },
+      ],
+      currentFilter: "Latest",
+      apiData: [],
+      filterList: [
+        { component: "Latest", title: "最新" },
+        { component: "Popular", title: "熱門" },
+        { component: "Favorite", title: "收藏" },
+      ],
+    };
+  },
+  computed: {
+    cardList() {
+      return this.apiData;
+    },
+  },
+  methods: {
+    getWannaKnowApi() {
+      api
+        .getWannaKnowData()
+        .then((res) => (this.apiData = res.data.slice(0, 10)));
+    },
+    tabFilter(page) {
+      this.currentFilter = page;
+    },
+  },
+  created() {
+    this.getWannaKnowApi();
   },
 };
 </script>
@@ -119,57 +144,44 @@ export default {
     }
   }
 }
-.wrapTab {
-  @extend %strong-title;
+.tabWrapper {
+  @extend %sub-title;
+  font-weight: 500;
   display: flex;
   color: color.$black;
-  span {
-    width: 100%;
-    padding: 4px 16px;
-    transition: background-color 0.3s;
-    &:hover {
-      background-color: color.$green-300;
-      cursor: pointer;
-    }
-  }
-  border-bottom: 4px solid color.$green-300;
-  &-active {
-    background-color: color.$green-300;
-  }
+  border-bottom: 3px solid color.$green-400;
   @include breakpoint.tablet {
-    display: block;
-    text-align: start;
-    background-color: color.$white;
-    border-bottom: 0;
-    span {
-      &:hover {
+    border-bottom: none;
+    padding: 10px 0;
+    // 裝飾線
+    background-image: linear-gradient(
+      to right,
+      color.$green-300 0%,
+      color.$green-300 50%,
+      transparent 50%
+    );
+    background-size: 40px 3px;
+    background-repeat: repeat-x;
+    background-position: left top 100%;
+  }
+  &_item {
+    flex: 1;
+    padding: 3px 0;
+    transition: background-color 0.3s;
+    cursor: pointer;
+    @include breakpoint.tablet {
+      flex: none;
+      padding: 3px 20px;
+    }
+    &:hover,
+    &-active {
+      background-color: color.$green-300;
+      color: color.$white;
+      @include breakpoint.tablet {
         background-color: color.$white;
         color: color.$green-300;
-        cursor: pointer;
       }
     }
-    &-active {
-      background-color: color.$white;
-      color: color.$green-300;
-    }
   }
-}
-
-.wrapTab_dashed {
-  display: none;
-  @include breakpoint.tablet {
-    display: block;
-  }
-  width: 100%;
-  height: 3px;
-  margin: 12px 0;
-  background-image: linear-gradient(
-    to right,
-    color.$green-300 0%,
-    color.$green-300 50%,
-    transparent 50%
-  );
-  background-size: 50px 3px;
-  background-repeat: repeat-x;
 }
 </style>

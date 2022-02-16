@@ -1,6 +1,6 @@
 <template>
-  <section class="sideBar" :class="{ openSideBar: sideBarOpen }">
-    <div @click="sideBarOpen = !sideBarOpen" class="sideBar_toggleBtn">x</div>
+  <section class="sideBar" :class="{ openSideBar: $store.state.isSideBarOpen }">
+    <div @click="toggleSideBar" class="sideBar_toggleBtn">x</div>
     <div class="overflow_container">
       <div class="sideBar_main">
         <div class="sideBar_main_info">
@@ -65,18 +65,18 @@
         </div>
         <div class="sideBar_main_others">
           <div class="sideBar_icon">
-            <font-awesome-icon :icon="['fas', 'bookmark']" />
+            <!-- <font-awesome-icon :icon="['fas', 'bookmark']" /> -->
           </div>
           <div class="sideBar_icon">
-            <font-awesome-icon :icon="['fas', 'link']" />
+            <!-- <font-awesome-icon :icon="['fas', 'link']" /> -->
             <span>附件</span>
           </div>
           <div class="sideBar_icon">
-            <font-awesome-icon :icon="['far', 'thumbs-up']" />
+            <!-- <font-awesome-icon :icon="['far', 'thumbs-up']" /> -->
             <span>10</span>
           </div>
           <div class="sideBar_icon">
-            <font-awesome-icon :icon="['fas', 'comment-dots']" />
+            <!-- <font-awesome-icon :icon="['fas', 'comment-dots']" /> -->
             <span>10</span>
           </div>
         </div>
@@ -104,7 +104,7 @@
               <span class="timing_time">00:00</span>
             </div>
             <div class="sideBar_icon">
-              <font-awesome-icon :icon="['far', 'thumbs-up']" />
+              <!-- <font-awesome-icon :icon="['far', 'thumbs-up']" /> -->
               <span>10</span>
             </div>
           </div>
@@ -130,7 +130,7 @@
               <span class="timing_time">00:00</span>
             </div>
             <div class="sideBar_icon">
-              <font-awesome-icon :icon="['far', 'thumbs-up']" />
+              <!-- <font-awesome-icon :icon="['far', 'thumbs-up']" /> -->
               <span>10</span>
             </div>
           </div>
@@ -156,7 +156,7 @@
               <span class="timing_time">00:00</span>
             </div>
             <div class="sideBar_icon">
-              <font-awesome-icon :icon="['far', 'thumbs-up']" />
+              <!-- <font-awesome-icon :icon="['far', 'thumbs-up']" /> -->
               <span>10</span>
             </div>
           </div>
@@ -182,7 +182,7 @@
               <span class="timing_time">00:00</span>
             </div>
             <div class="sideBar_icon">
-              <font-awesome-icon :icon="['far', 'thumbs-up']" />
+              <!-- <font-awesome-icon :icon="['far', 'thumbs-up']" /> -->
               <span>10</span>
             </div>
           </div>
@@ -208,7 +208,7 @@
               <span class="timing_time">00:00</span>
             </div>
             <div class="sideBar_icon">
-              <font-awesome-icon :icon="['far', 'thumbs-up']" />
+              <!-- <font-awesome-icon :icon="['far', 'thumbs-up']" /> -->
               <span>10</span>
             </div>
           </div>
@@ -225,9 +225,12 @@
 <script>
 export default {
   data() {
-    return {
-      sideBarOpen: false,
-    };
+    return {};
+  },
+  methods: {
+    toggleSideBar() {
+      this.$store.commit("toggleSideBar", false);
+    },
   },
 };
 </script>
@@ -259,11 +262,17 @@ export default {
   max-width: 450px;
   margin-left: auto;
   padding: 0.5rem;
-  position: absolute;
+  position: fixed;
   z-index: 20;
-  right: 0;
+  right: -100%;
   top: 0;
   background: white;
+  transition: 0.5s ease-in-out;
+
+  &.openSideBar {
+    right: 0;
+    transition: 0.5s ease-in-out;
+  }
 }
 @include breakpoint.tablet {
   .sideBar {
@@ -364,10 +373,6 @@ export default {
   > button {
     @include submit-button(color.$green-300);
   }
-}
-
-.openSideBar {
-  right: -100%;
 }
 
 .sideBar_toggleBtn {

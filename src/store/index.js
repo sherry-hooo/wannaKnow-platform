@@ -1,8 +1,14 @@
 import { createStore } from "vuex";
 
 export default createStore({
-  state: {},
-  mutations: {},
+  state: {
+    isSideBarOpen: false,
+  },
+  mutations: {
+    toggleSideBar(state, status) {
+      state.isSideBarOpen = status;
+    },
+  },
   actions: {},
   modules: {},
 });

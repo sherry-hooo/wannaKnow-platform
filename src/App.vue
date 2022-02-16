@@ -1,7 +1,7 @@
 <template>
   <SearchBar @toggleNav="toggleNav" />
-  <NavBar :class="{ showNav: openNav }" @click="openNav = !openNav" />
-  <div class="view-area">
+  <NavBar :class="{ showNav: openNav }" @click="openNav = false" />
+  <div class="view-area" @click="openNav = false">
     <router-view />
   </div>
 </template>

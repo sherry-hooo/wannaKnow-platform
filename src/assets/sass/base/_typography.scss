@@ -22,21 +22,22 @@
 }
 
 %sub-title {
-  font-size: 14px;
+  font-size: 16px;
   @include breakpoint.tablet {
-    font-size: 16px;
-  }
-  @include breakpoint.desktop {
-    font-size: 16px;
+    font-size: 18px;
   }
 }
 
 %body {
+  font-size: 14px;
+  @include breakpoint.tablet {
+    font-size: 16px;
+  }
+}
+
+%remark {
   font-size: 12px;
   @include breakpoint.tablet {
-    font-size: 14px;
-  }
-  @include breakpoint.desktop {
     font-size: 14px;
   }
 }

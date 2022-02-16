@@ -3,9 +3,10 @@
     <div class="calendar_header_chevron" @click="clickPrevious('month')">
       <font-awesome-icon icon="chevron-left"></font-awesome-icon>
     </div>
-    <div class="calendar_header_title" @click="openDropDown = !openDropDown">
-      <p>{{ displayDate }}</p>
-    </div>
+    <!-- <div class="calendar_header_title" @click="openDropDown = !openDropDown"> -->
+    <!-- <p>{{ displayDate }}</p> -->
+    <slot></slot>
+    <!-- </div> -->
     <div class="calendar_header_chevron" @click="clickNext('month')">
       <font-awesome-icon icon="chevron-right"></font-awesome-icon>
     </div>
@@ -48,7 +49,7 @@
 <script>
 import dayjs from "dayjs";
 export default {
-  props: ["calendarDay"],
+  props: ["calendarDay", "openDropDown"],
   data() {
     return {
       monthsList: [
@@ -65,7 +66,6 @@ export default {
         "Nov",
         "Dec",
       ],
-      openDropDown: false,
       selectedMonth: "",
     };
   },
@@ -104,7 +104,7 @@ export default {
   padding: 0px 0 10px;
   margin: 0 auto 20px;
 
-  &_title {
+  ::v-deep &_title {
     display: flex;
     justify-content: center;
     width: 170px;
@@ -116,6 +116,7 @@ export default {
     > p {
       @extend %title;
       cursor: pointer;
+      white-space: nowrap;
     }
   }
   &_chevron {

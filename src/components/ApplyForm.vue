@@ -35,7 +35,7 @@
         </div>
         <div>
           <label>
-            <font-awesome-icon :icon="['fas', 'link']" />
+            <!-- <font-awesome-icon :icon="['fas', 'link']" /> -->
           </label>
           <input type="text" id="attachment" />
         </div>
@@ -64,7 +64,7 @@
     <textarea class="topic_intro" name="" id=""></textarea>
     <!-- 送出鈕 -->
     <button class="applyForm_submit">送出</button>
-    <font-awesome-icon :icon="['fas', 'times-circle']" class="close_btn" />
+    <!-- <font-awesome-icon :icon="['fas', 'times-circle']" class="close_btn" /> -->
   </section>
 </template>
 
