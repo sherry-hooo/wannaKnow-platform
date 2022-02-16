@@ -1,19 +1,14 @@
 <template>
-<<<<<<< HEAD
   <section class="sideBar" :class="{ openSideBar: $store.state.isSideBarOpen }">
-    <div @click="toggleSideBar" class="sideBar_toggleBtn">x</div>
-=======
-  <section class="sideBar" :class="{ closeSideBar: closeSideBar }">
     <div
-      @click="closeSideBar = !closeSideBar"
-      class="sideBar_toggleBtn"
-      :class="{ fade: closeSideBar }"
+      @click="toggleSideBar"
+      :class="[{ fade: openSideBar }, 'sideBar_toggleBtn']"
     >
       <font-awesome-icon class="arrow" icon="arrow-right"></font-awesome-icon>
       <span></span>
       <span></span>
     </div>
->>>>>>> 5372694 (sideBar:fix added close button)
+
     <div class="overflow_container">
       <div class="sideBar_main">
         <div class="sideBar_main_info">
@@ -55,21 +50,6 @@
         </div>
         <div class="sideBar_main_others">
           <div class="sideBar_icon">
-<<<<<<< HEAD
-            <!-- <font-awesome-icon :icon="['fas', 'bookmark']" /> -->
-          </div>
-          <div class="sideBar_icon">
-            <!-- <font-awesome-icon :icon="['fas', 'link']" /> -->
-            <span>附件</span>
-          </div>
-          <div class="sideBar_icon">
-            <!-- <font-awesome-icon :icon="['far', 'thumbs-up']" /> -->
-            <span>10</span>
-          </div>
-          <div class="sideBar_icon">
-            <!-- <font-awesome-icon :icon="['fas', 'comment-dots']" /> -->
-            <span>10</span>
-=======
             <img src="@/assets/like.svg" alt="like_icon" />
             <span>10</span>
           </div>
@@ -82,8 +62,6 @@
           </div>
           <div class="sideBar_icon">
             <img src="@/assets/attachment.svg" alt="attachment_icon" />
-            <span>附件</span>
->>>>>>> 5372694 (sideBar:fix added close button)
           </div>
         </div>
       </div>
@@ -96,6 +74,10 @@
           />
           <span class="userInfo_name">號稱165的大叔</span>
           <span class="userInfo_floor">一樓</span>
+          <div class="timing">
+            <span class="timing_date">06-09-2055</span>
+            <span class="timing_time">00:00</span>
+          </div>
         </div>
         <div class="sideBar_comment_content">
           <p>
@@ -110,120 +92,8 @@
             incidunt aspernatur molestias perferendis corrupti reiciendis
           </p>
           <div class="sideBar_comment_others">
-            <div class="timing">
-              <span class="timing_date">06-09-2055</span>
-              <span class="timing_time">00:00</span>
-            </div>
             <div class="sideBar_icon">
-<<<<<<< HEAD
-              <!-- <font-awesome-icon :icon="['far', 'thumbs-up']" /> -->
-              <span>10</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="sideBar_comment">
-        <div class="userInfo">
-          <div class="userInfo_icon">
-            <img src="@/assets/avatar.svg" alt="avatar-icon" />
-          </div>
-          <span class="userInfo_name">號稱165的大叔</span>
-          <span class="userInfo_floor">一樓</span>
-        </div>
-        <div class="sideBar_comment_content">
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eaque
-            blanditiis officiis eligendi animi voluptatem repellat quidem nulla,
-            atque consectetur
-          </p>
-          <div class="sideBar_comment_others">
-            <div class="timing">
-              <span class="timing_date">06-09-2055</span>
-              <span class="timing_time">00:00</span>
-            </div>
-            <div class="sideBar_icon">
-              <!-- <font-awesome-icon :icon="['far', 'thumbs-up']" /> -->
-              <span>10</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="sideBar_comment">
-        <div class="userInfo">
-          <div class="userInfo_icon">
-            <img src="@/assets/avatar.svg" alt="avatar-icon" />
-          </div>
-          <span class="userInfo_name">號稱165的大叔</span>
-          <span class="userInfo_floor">一樓</span>
-        </div>
-        <div class="sideBar_comment_content">
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eaque
-            blanditiis officiis eligendi animi voluptatem repellat quidem nulla,
-            atque consectetur
-          </p>
-          <div class="sideBar_comment_others">
-            <div class="timing">
-              <span class="timing_date">06-09-2055</span>
-              <span class="timing_time">00:00</span>
-            </div>
-            <div class="sideBar_icon">
-              <!-- <font-awesome-icon :icon="['far', 'thumbs-up']" /> -->
-              <span>10</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="sideBar_comment">
-        <div class="userInfo">
-          <div class="userInfo_icon">
-            <img src="@/assets/avatar.svg" alt="avatar-icon" />
-          </div>
-          <span class="userInfo_name">號稱165的大叔</span>
-          <span class="userInfo_floor">一樓</span>
-        </div>
-        <div class="sideBar_comment_content">
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eaque
-            blanditiis officiis eligendi animi voluptatem repellat quidem nulla,
-            atque consectetur
-          </p>
-          <div class="sideBar_comment_others">
-            <div class="timing">
-              <span class="timing_date">06-09-2055</span>
-              <span class="timing_time">00:00</span>
-            </div>
-            <div class="sideBar_icon">
-              <!-- <font-awesome-icon :icon="['far', 'thumbs-up']" /> -->
-              <span>10</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="sideBar_comment">
-        <div class="userInfo">
-          <div class="userInfo_icon">
-            <img src="@/assets/avatar.svg" alt="avatar-icon" />
-          </div>
-          <span class="userInfo_name">號稱165的大叔</span>
-          <span class="userInfo_floor">一樓</span>
-        </div>
-        <div class="sideBar_comment_content">
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eaque
-            blanditiis officiis eligendi animi voluptatem repellat quidem nulla,
-            atque consectetur
-          </p>
-          <div class="sideBar_comment_others">
-            <div class="timing">
-              <span class="timing_date">06-09-2055</span>
-              <span class="timing_time">00:00</span>
-            </div>
-            <div class="sideBar_icon">
-              <!-- <font-awesome-icon :icon="['far', 'thumbs-up']" /> -->
-=======
               <img src="@/assets/like.svg" alt="like_icon" />
->>>>>>> 5372694 (sideBar:fix added close button)
               <span>10</span>
             </div>
           </div>
@@ -240,18 +110,12 @@
 <script>
 export default {
   data() {
-<<<<<<< HEAD
     return {};
   },
   methods: {
     toggleSideBar() {
       this.$store.commit("toggleSideBar", false);
     },
-=======
-    return {
-      closeSideBar: false,
-    };
->>>>>>> 5372694 (sideBar:fix added close button)
   },
 };
 </script>
@@ -283,32 +147,20 @@ export default {
 .sideBar {
   @include flex.flex(between, stretch, column, nowrap);
   min-width: 375px;
-<<<<<<< HEAD
-  max-width: 450px;
-  margin-left: auto;
-  padding: 0.5rem;
-  position: fixed;
-  z-index: 20;
-  right: -100%;
-  top: 0;
+  max-width: 550px;
+  height: 100vh;
+  padding: 2rem;
   background: white;
+  position: fixed;
+  z-index: 100;
+  right: -600px;
+  top: 0;
   transition: 0.5s ease-in-out;
 
   &.openSideBar {
     right: 0;
     transition: 0.5s ease-in-out;
   }
-=======
-  max-width: 500px;
-  height: 100vh;
-  padding: 2rem;
-  background: white;
-  position: fixed;
-  z-index: 100;
-  right: 0;
-  top: 0;
-  transition: 0.5s;
->>>>>>> 5372694 (sideBar:fix added close button)
 }
 @include breakpoint.tablet {
   .sideBar {
@@ -318,16 +170,16 @@ export default {
 }
 // 中間區塊over-flow
 .overflow_container {
-  overflow: auto;
   margin-bottom: 0.5rem;
   transition: 0.4s;
+  overflow: auto;
 }
 // 發文區塊
 .sideBar_main {
   @include border-bottom;
   @include flex.flex(start, stretch, column, nowrap);
   gap: 1rem;
-  padding: 1rem 0;
+  padding: 1rem;
 }
 .sideBar_main_info {
   @include flex.flex(start, stretch, row, nowrap);
@@ -336,8 +188,8 @@ export default {
 .userInfo {
   @extend %body;
   @include flex.flex(start, center, column);
-  flex: 1 0 0;
   gap: 1rem;
+  flex: 0 1 30%;
   &_icon {
     width: 50px;
     height: 50px;
@@ -347,7 +199,7 @@ export default {
   }
   &_floor {
     @extend %body;
-    padding: 1px 6px;
+    padding: 1px 10px;
     color: #fff;
     background-color: color.$green-300;
     border-radius: 15px;
@@ -378,6 +230,7 @@ export default {
   gap: 1rem;
 }
 .sideBar_icon {
+  cursor: pointer;
   > * {
     display: inline-block;
     vertical-align: middle;
@@ -396,8 +249,17 @@ export default {
 .sideBar_comment {
   @include flex.flex(around, stretch, row, nowrap);
   @include border-bottom;
-  padding: 1rem 0;
+  padding: 1rem;
   gap: 1rem;
+  .timing {
+    span {
+      text-align: left;
+      display: block;
+    }
+    &_date {
+      margin: 0;
+    }
+  }
 }
 .sideBar_comment_content {
   flex: 0 1 70%;
@@ -407,7 +269,10 @@ export default {
   }
 }
 .sideBar_comment_others {
-  @include flex.flex(between, center, row, nowrap);
+  text-align: right;
+  .sideBar_icon {
+    display: inline-block;
+  }
 }
 
 // 送出留言
@@ -418,7 +283,7 @@ export default {
     flex: 1 0 0;
     margin-right: 1rem;
     padding: 6px;
-    border: 2px solid color.$green-300;
+    border: 3px solid color.$green-300;
     border-radius: 15px;
   }
   > button {
@@ -426,13 +291,7 @@ export default {
   }
 }
 
-<<<<<<< HEAD
-=======
-.closeSideBar {
-  right: -600px;
-}
-
->>>>>>> 5372694 (sideBar:fix added close button)
+// 關閉按鈕
 .sideBar_toggleBtn {
   visibility: visible;
   transition: visibility 0s, opacity 0.5s;
@@ -451,9 +310,9 @@ export default {
   font-size: 24px;
   color: #fff;
   cursor: pointer;
-  opacity: 0.3;
+  opacity: 0.5;
   &:hover {
-    opacity: 0.5;
+    opacity: 0.7;
     ~ div {
       transform: translateX(20px);
       opacity: 0.7;
