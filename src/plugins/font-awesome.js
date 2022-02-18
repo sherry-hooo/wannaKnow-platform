@@ -8,6 +8,7 @@ import {
   faBars,
   faSearch,
   faArrowRight,
+  faTimesCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faCalendarAlt as farFaCalendarAlt,
@@ -27,4 +28,5 @@ library.add(farFileAlt);
 library.add(faBars);
 library.add(faSearch);
 library.add(faArrowRight);
+library.add(faTimesCircle);
 export default FontAwesomeIcon;

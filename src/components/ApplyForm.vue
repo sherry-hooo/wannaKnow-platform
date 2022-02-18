@@ -1,9 +1,16 @@
 <template>
   <!-- 阿傑負責 -->
-  <section class="applyForm">
+  <div class="layer" :class="{ collapse: $store.state.isApplyFormOpen }"></div>
+  <section
+    class="applyForm"
+    :class="{ collapse: $store.state.isApplyFormOpen }"
+  >
+    <!-- close button -->
+    <span @click="toggleApplyForm" class="applyForm_closeBtn">
+      <font-awesome-icon :icon="['fa', 'times-circle']" />
+    </span>
     <!-- title -->
     <h3 class="applyForm_title">報名</h3>
-
     <!-- 報名資訊 -->
     <div class="applyForm_info">
       <!-- 主要資訊 -->
@@ -68,6 +75,19 @@
   </section>
 </template>
 
+<script>
+export default {
+  data() {
+    return {};
+  },
+  methods: {
+    toggleApplyForm() {
+      this.$store.commit("toggleApplyForm", true);
+    },
+  },
+};
+</script>
+
 <style scoped lang="scss">
 // 引入flex小工具
 @use "src/assets/sass/utils/_flex.scss";
@@ -100,17 +120,35 @@
   flex: 0 1 $basis;
 }
 
+.layer {
+  @include flex.flex(center, center, row, nowrap);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -100;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  &.collapse {
+    display: none;
+  }
+}
+
 // 表單尺寸 & 關閉按鈕
 .applyForm {
   box-shadow: 0 0 10px #555;
   position: relative;
+  z-index: 10;
   width: 100%;
   max-width: 750px;
   max-height: 800px;
-  margin: 0 auto;
+  margin: 2rem auto 0 auto;
   padding: 0.5rem;
   border-radius: 40px;
-  .close_btn {
+  background-color: #fff;
+
+  &_closeBtn {
     @extend %hover;
     position: absolute;
     top: 1.5rem;
@@ -121,6 +159,9 @@
       size: 1.5rem;
       weight: 100;
     }
+  }
+  &.collapse {
+    display: none;
   }
 }
 @include breakpoint.tablet {
@@ -177,6 +218,9 @@
       flex: 0 1 75%;
       max-width: 220px;
       padding: 0.5rem;
+      &[type="date"] {
+        background-color: #fff;
+      }
       &:focus {
         box-shadow: 0 0 3px color.$green-300;
       }
@@ -186,6 +230,7 @@
       flex: 0 1 75%;
       max-width: 220px;
       padding: 0.5rem;
+      background-color: #fff;
       &:focus {
         box-shadow: 0 0 3px color.$green-300;
       }
