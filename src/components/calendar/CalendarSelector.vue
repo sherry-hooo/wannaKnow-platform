@@ -3,10 +3,7 @@
     <div class="calendar_header_chevron" @click="clickPrevious('month')">
       <font-awesome-icon icon="chevron-left"></font-awesome-icon>
     </div>
-    <!-- <div class="calendar_header_title" @click="openDropDown = !openDropDown"> -->
-    <!-- <p>{{ displayDate }}</p> -->
     <slot></slot>
-    <!-- </div> -->
     <div class="calendar_header_chevron" @click="clickNext('month')">
       <font-awesome-icon icon="chevron-right"></font-awesome-icon>
     </div>

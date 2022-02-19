@@ -1,5 +1,5 @@
 <template>
-  <div class="calendar" @click="openDropDown = false">
+  <div class="calendar" @click.self="openDropDown = false">
     <CalendarSelector
       :calendarDay="calendarDay"
       :openDropDown="openDropDown"
