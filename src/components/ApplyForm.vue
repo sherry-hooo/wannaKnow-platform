@@ -1,10 +1,7 @@
 <template>
   <!-- 阿傑負責 -->
-  <div class="layer" :class="{ collapse: $store.state.isApplyFormOpen }"></div>
-  <section
-    class="applyForm"
-    :class="{ collapse: $store.state.isApplyFormOpen }"
-  >
+  <div class="layer" :class="{ show: $store.state.isApplyFormOpen }"></div>
+  <section class="applyForm" :class="{ show: $store.state.isApplyFormOpen }">
     <!-- close button -->
     <span @click="toggleApplyForm" class="applyForm_closeBtn">
       <font-awesome-icon :icon="['fa', 'times-circle']" />
@@ -82,7 +79,7 @@ export default {
   },
   methods: {
     toggleApplyForm() {
-      this.$store.commit("toggleApplyForm", true);
+      this.$store.commit("toggleApplyForm", false);
     },
   },
 };
@@ -122,6 +119,7 @@ export default {
 
 .layer {
   @include flex.flex(center, center, row, nowrap);
+  display: none;
   position: absolute;
   top: 0;
   left: 0;
@@ -130,13 +128,14 @@ export default {
   z-index: -100;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.6);
-  &.collapse {
-    display: none;
+  &.show {
+    display: block;
   }
 }
 
 // 表單尺寸 & 關閉按鈕
 .applyForm {
+  display: none;
   box-shadow: 0 0 10px #555;
   position: relative;
   z-index: 10;
@@ -160,8 +159,8 @@ export default {
       weight: 100;
     }
   }
-  &.collapse {
-    display: none;
+  &.show {
+    display: block;
   }
 }
 @include breakpoint.tablet {

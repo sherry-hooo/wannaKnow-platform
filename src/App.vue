@@ -2,6 +2,7 @@
   <SearchBar @toggleNav="toggleNav" />
   <NavBar :class="{ showNav: openNav }" @click="openNav = false" />
   <div class="view-area" @click="openNav = false">
+    <ApplyButton />
     <router-view />
   </div>
 </template>
@@ -9,12 +10,14 @@
 <script>
 import NavBar from "@/components/NavBar.vue";
 import SearchBar from "@/components/SearchBar.vue";
+import ApplyButton from "@/components/ApplyButton.vue";
 
 export default {
   name: "Home",
   components: {
     NavBar,
     SearchBar,
+    ApplyButton,
   },
   data() {
     return { openNav: false };
