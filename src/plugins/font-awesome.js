@@ -10,7 +10,6 @@ import {
   faArrowRight,
   faTimesCircle,
   faAngleDoubleDown,
-  faChevronCircleDown,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faCalendarAlt as farFaCalendarAlt,
@@ -32,5 +31,5 @@ library.add(faSearch);
 library.add(faArrowRight);
 library.add(faTimesCircle);
 library.add(faAngleDoubleDown);
-library.add(faChevronCircleDown);
+
 export default FontAwesomeIcon;

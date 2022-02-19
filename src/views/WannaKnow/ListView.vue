@@ -1,18 +1,24 @@
 <template>
-  <ul class="filterTab">
-    <li class="filterTab_item">
-      <span class="filterTab_text">全部</span>
+  <ul class="filter">
+    <li class="filter_item filter_item-whole">
+      <span class="filter_text">全部</span>
     </li>
-    <div class="filterTab_content">
+    <div class="filter_moreBtn" @click="toggleMoreFilter">
+      <font-awesome-icon
+        :icon="['fas', 'angle-double-down']"
+        class="filter_moreIcon"
+      />
+    </div>
+    <div class="filter_content" :class="{ show: moreFilterOpen }">
       <li
         v-for="category in categoryList"
         :key="category.name"
-        class="filterTab_item"
+        class="filter_item"
       >
-        <div class="filterTab_img">
+        <div class="filter_img">
           <img :src="category.img" alt="category.name" />
         </div>
-        <span class="filterTab_text">{{ category.name }}</span>
+        <span class="filter_text">{{ category.name }}</span>
       </li>
     </div>
   </ul>
@@ -70,6 +76,7 @@ export default {
         { component: "Popular", title: "熱門" },
         { component: "Favorite", title: "收藏" },
       ],
+      moreFilterOpen: false,
     };
   },
   computed: {
@@ -85,6 +92,9 @@ export default {
     },
     tabFilter(page) {
       this.currentFilter = page;
+    },
+    toggleMoreFilter() {
+      this.moreFilterOpen = !this.moreFilterOpen;
     },
   },
   created() {
@@ -102,25 +112,69 @@ export default {
     transform: scale(1.2);
   }
 }
-// 分類篩選tab
-.filterTab {
-  // border: 1px solid #000;
-  margin: 20px 0;
-  &_content {
-    @include flex.flex(start, center, row, nowrap);
-    display: none;
-    white-space: nowrap;
-    overflow: scroll;
+// 篩選器
+.filter {
+  @include flex.flex(start, center, row, wrap);
+  margin-bottom: 10px;
+  padding: 10px;
+}
+@include breakpoint.tablet {
+  .filter {
+    flex-wrap: nowrap;
+    width: 90%;
+    max-width: 900px;
+    margin-bottom: 0;
+  }
+}
+@include breakpoint.desktop {
+  .filter {
+    max-width: 90%;
+  }
+}
+
+// 更多篩選按鈕
+.filter_moreBtn {
+  padding: 5px;
+  font-size: 25px;
+  cursor: pointer;
+  transition: transform 0.3s;
+  &:hover {
+    transform: translateY(3px);
   }
 }
 @include breakpoint.tablet {
-  .filterTab {
-    width: 95%;
+  .filter_moreBtn {
+    display: none;
   }
 }
-.filterTab_item {
+
+// 更多篩選區塊
+.filter_content {
+  @include flex.flex(start, center, row, nowrap);
+  gap: 15px;
+  flex: 0 0 100%;
+  max-height: 0;
+  margin-top: 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+  overflow: scroll;
+  transition: 0.3s;
+  &.show {
+    max-height: 50px;
+  }
+}
+@include breakpoint.tablet {
+  .filter_content {
+    max-height: 50px;
+    flex: 1 0 0;
+    margin-top: 0;
+  }
+}
+
+// 篩選tab
+.filter_item {
   display: inline-block;
-  padding: 2px 20px;
+  padding: 1px 20px;
   border: 2px dashed color.$gray;
   border-radius: 25px;
   cursor: pointer;
@@ -128,10 +182,8 @@ export default {
   &:hover {
     background-color: #ffc700;
   }
-  &:not(:last-child) {
-    margin-right: 15px;
-  }
-  .filterTab_img {
+
+  .filter_img {
     display: inline-block;
     width: 20px;
     height: 20px;
@@ -143,11 +195,19 @@ export default {
       object-fit: contain;
     }
   }
-  .filterTab_text {
+  .filter_text {
     @extend %title;
     vertical-align: middle;
   }
 }
+@include breakpoint.tablet {
+  .filter_item {
+    &-whole {
+      margin-right: 15px;
+    }
+  }
+}
+
 // .filterTab {
 //   white-space: nowrap;
 //   overflow-x: scroll;
