@@ -4,6 +4,7 @@ export default createStore({
   state: {
     isSideBarOpen: false,
     isApplyFormOpen: false,
+    isFilterOpen: false,
   },
   mutations: {
     toggleSideBar(state, status) {
@@ -11,6 +12,9 @@ export default createStore({
     },
     toggleApplyForm(state, status) {
       state.isApplyFormOpen = status;
+    },
+    toggleFilter(state, status) {
+      state.isFilterOpen = status;
     },
   },
   actions: {},

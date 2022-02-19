@@ -1,12 +1,20 @@
 <template>
-  <ul class="wannaKnowCatalogs">
-    <li class="wannaKnowCatalogs-active">
-      <span> 全部</span>
+  <ul class="filterTab">
+    <li class="filterTab_item">
+      <span class="filterTab_text">全部</span>
     </li>
-    <li v-for="category in categoryList" :key="category.name">
-      <img :src="category.img" alt="category.name" />
-      <span>{{ category.name }}</span>
-    </li>
+    <div class="filterTab_content">
+      <li
+        v-for="category in categoryList"
+        :key="category.name"
+        class="filterTab_item"
+      >
+        <div class="filterTab_img">
+          <img :src="category.img" alt="category.name" />
+        </div>
+        <span class="filterTab_text">{{ category.name }}</span>
+      </li>
+    </div>
   </ul>
 
   <div class="tabWrapper">
@@ -86,6 +94,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@use "src/assets/sass/utils/flex";
 .calendarView {
   color: color.$green-300;
   transition: transform 0.3s;
@@ -93,57 +102,103 @@ export default {
     transform: scale(1.2);
   }
 }
-
-.wannaKnowCatalogs {
-  white-space: nowrap;
-  overflow-x: scroll;
-  &::-webkit-scrollbar {
+// 分類篩選tab
+.filterTab {
+  // border: 1px solid #000;
+  margin: 20px 0;
+  &_content {
+    @include flex.flex(start, center, row, nowrap);
     display: none;
-  }
-  @include breakpoint.tablet {
-    white-space: normal;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    overflow-x: auto;
-  }
-  @extend %title;
-
-  &-active {
-    background-color: #ffc700;
-    color: color.$white;
-  }
-  li {
-    // width: auto;
-    display: inline-block;
-    padding: 4px 20px;
-    margin: 12px;
-    @include breakpoint.tablet {
-      // width: 33.333%;
-    }
-    @include breakpoint.desktop {
-      // width: auto;
-      padding: 8px 24px;
-    }
-    border: 2px color.$gray dashed;
-    border-radius: 30px;
-    margin: 16px;
-    span {
-      vertical-align: middle;
-    }
-    img {
-      margin-right: 4px;
-      vertical-align: middle;
-    }
-    transition: background-color 0.3s;
-    &:hover {
-      background-color: #ffc700;
-      color: color.$white;
-      cursor: pointer;
-    }
+    white-space: nowrap;
+    overflow: scroll;
   }
 }
+@include breakpoint.tablet {
+  .filterTab {
+    width: 95%;
+  }
+}
+.filterTab_item {
+  display: inline-block;
+  padding: 2px 20px;
+  border: 2px dashed color.$gray;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.4s;
+  &:hover {
+    background-color: #ffc700;
+  }
+  &:not(:last-child) {
+    margin-right: 15px;
+  }
+  .filterTab_img {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+    vertical-align: middle;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+  .filterTab_text {
+    @extend %title;
+    vertical-align: middle;
+  }
+}
+// .filterTab {
+//   white-space: nowrap;
+//   overflow-x: scroll;
+//   &::-webkit-scrollbar {
+//     display: none;
+//   }
+//   @include breakpoint.tablet {
+//     white-space: normal;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     flex-wrap: wrap;
+//     overflow-x: auto;
+//   }
+//   @extend %title;
+
+//   &-active {
+//     background-color: #ffc700;
+//     color: color.$white;
+//   }
+//   li {
+//     // width: auto;
+//     display: inline-block;
+//     padding: 4px 20px;
+//     margin: 12px;
+//     @include breakpoint.tablet {
+//       // width: 33.333%;
+//     }
+//     @include breakpoint.desktop {
+//       // width: auto;
+//       padding: 8px 24px;
+//     }
+//     border: 2px color.$gray dashed;
+//     border-radius: 30px;
+//     margin: 16px;
+//     span {
+//       vertical-align: middle;
+//     }
+//     img {
+//       margin-right: 4px;
+//       vertical-align: middle;
+//     }
+//     transition: background-color 0.3s;
+//     &:hover {
+//       background-color: #ffc700;
+//       color: color.$white;
+//       cursor: pointer;
+//     }
+//   }
+// }
+
 .tabWrapper {
   @extend %sub-title;
   font-weight: 500;
