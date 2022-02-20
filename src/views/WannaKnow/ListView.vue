@@ -1,10 +1,16 @@
 <template>
   <ul class="wannaKnowCatalogs">
-    <li class="wannaKnowCatalogs-active">
-      <span> 全部</span>
-    </li>
-    <li v-for="category in categoryList" :key="category.name">
-      <img :src="category.img" alt="category.name" />
+    <li
+      v-for="category in categoryList"
+      :key="category.name"
+      :class="{ 'wannaKnowCatalogs-active': tabCategory === category }"
+      @click="filterCategory(category)"
+    >
+      <img
+        :src="category.img"
+        alt="category.name"
+        v-if="category.name !== '全部'"
+      />
       <span>{{ category.name }}</span>
     </li>
   </ul>
@@ -13,7 +19,7 @@
     <div
       v-for="filter in filterList"
       :key="filter"
-      @click="tabFilter(filter.component)"
+      @click="filterOrder(filter.component)"
       :class="[
         { 'tabWrapper_item-active': currentFilter === filter.component },
         'tabWrapper_item',
@@ -34,7 +40,7 @@ import Pagination from "@/components/Pagination.vue";
 import Latest from "@/components/tabs/Latest.vue";
 import Popular from "@/components/tabs/Popular.vue";
 import Favorite from "@/components/tabs/Favorite.vue";
-import api from "@/service/api.js";
+// import api from "@/service/api.js";
 export default {
   name: "ListView",
   components: {
@@ -45,7 +51,9 @@ export default {
   },
   data() {
     return {
+      tabCategory: "全部",
       categoryList: [
+        { img: "", name: "全部" },
         { img: require("@/assets/projectExperience.svg"), name: "專案經驗" },
         {
           img: require("@/assets/learningExpericence.svg"),
@@ -70,17 +78,15 @@ export default {
     },
   },
   methods: {
-    getWannaKnowApi() {
-      api
-        .getWannaKnowData()
-        .then((res) => (this.apiData = res.data.slice(0, 10)));
+    filterOrder(orderBy) {
+      this.currentFilter = orderBy;
     },
-    tabFilter(page) {
-      this.currentFilter = page;
+    filterCategory(category) {
+      this.tabCategory = category;
     },
   },
   created() {
-    this.getWannaKnowApi();
+    // this.getWannaKnowApi();
   },
 };
 </script>

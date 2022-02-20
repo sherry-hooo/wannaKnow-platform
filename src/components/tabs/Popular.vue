@@ -17,9 +17,7 @@ export default {
   },
   methods: {
     getCardApi() {
-      api
-        .getWannaKnowData()
-        .then((res) => (this.cardList = res.data.slice(10, 20)));
+      api.getWannaKnowData().then((res) => (this.cardList = res.data.data));
     },
   },
   created() {

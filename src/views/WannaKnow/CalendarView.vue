@@ -17,7 +17,7 @@
     <CalendarWeekDays />
     <div class="calendar_body">
       <ul
-        v-for="(day, index) in monthDays"
+        v-for="(day, index) in daysInMonth"
         :key="index"
         :class="[
           { 'calendar_body_day-active': calendarDay + '-' + day === today },
@@ -29,14 +29,14 @@
         </span>
         <template v-if="device !== 'mobile'">
           <CalendarEvent
-            v-for="event in wannaKnowEventsObj[day]"
+            v-for="event in thisMonthWannaKnowEventsObj[day]"
             :key="event.id"
             :wannaKnowEvent="event"
           ></CalendarEvent>
         </template>
         <template v-else>
           <div
-            v-if="wannaKnowEventsObj[day]"
+            v-if="thisMonthWannaKnowEventsObj[day]"
             class="event_mark"
             @click="showEvents(day)"
           ></div>
@@ -47,7 +47,7 @@
   <div class="calendar_events_detail" v-if="device === 'mobile'">
     <ul>
       <CalendarEvent
-        v-for="event in wannaKnowEventsObj[clickDay]"
+        v-for="event in thisMonthWannaKnowEventsObj[clickDay]"
         :key="event.id"
         :wannaKnowEvent="event"
       ></CalendarEvent>
@@ -75,44 +75,19 @@ export default {
     return {
       calendarDay: dayjs().format("YYYY MMMM"),
       today: dayjs().format("YYYY-MM-D"),
-      testWannaKnowList: [
-        {
-          id: 0,
-          title: "有好多好多在這裡之SASS迴圈又來了",
-          speaker: "Jim",
-          date: "2/4",
-        },
-        { id: 1, title: "你所不知道的JS", speaker: "Chris", date: "2/4" },
-        {
-          id: 2,
-          title: "與設計師溝通的經驗分享溝通",
-          speaker: "Chris",
-          date: "2/4",
-        },
-        {
-          id: 3,
-          title:
-            "Javascript 你是誰我是誰誰是誰(call by value、reference)javascript",
-          speaker: "PG",
-          date: "2/28",
-        },
-        {
-          id: 4,
-          title: "你所不知道的javascript",
-          speaker: "PG",
-          date: "2/15",
-        },
-      ],
+      wannaKnowApiData: [],
       windowWidth: window.innerWidth,
       device: window.innerWidth > 576 ? "tablet" : "mobile",
-      eventsPerDay: [],
       clickDay: "",
-      apiData: [],
       openDropDown: false,
+      test: 1,
     };
   },
   computed: {
-    monthDays() {
+    selectedYear() {
+      return dayjs(this.calendarDay).format("YYYY");
+    },
+    daysInMonth() {
       const firstWeekDayOfMonth = dayjs(this.calendarDay).weekday();
       const emptyBeginCols =
         firstWeekDayOfMonth === 0
@@ -124,15 +99,37 @@ export default {
         .map((day, index) => index + 1);
       return [...emptyBeginCols, ...totalDaysInMonthArr];
     },
-    wannaKnowEventsObj() {
-      return this.testWannaKnowList.reduce((acc, dateObj) => {
-        let key = dayjs(dateObj.date).format("D");
-        if (!acc[key]) {
-          acc[key] = [];
-        }
-        acc[key].push(dateObj);
-        return acc;
-      }, {});
+    thisMonthWannaKnowList() {
+      return this.wannaKnowApiData
+        .map((wannaKnow) => {
+          wannaKnow["month"] = dayjs(wannaKnow.date).format("MMMM");
+          return wannaKnow;
+        })
+        .filter(
+          (wannaKnow) =>
+            wannaKnow.month === dayjs(this.calendarDay).format("MMMM")
+        );
+    },
+    thisMonthWannaKnowEventsObj() {
+      return (
+        this.thisMonthWannaKnowList
+          // .map((wannaKnow) => {
+          //   wannaKnow["month"] = dayjs(wannaKnow.date).format("MMMM");
+          //   return wannaKnow;
+          // })
+          // .filter(
+          //   (wannaKnow) =>
+          //     wannaKnow.month === dayjs(this.calendarDay).format("MMMM")
+          // )
+          .reduce((acc, dateObj) => {
+            let key = dayjs(dateObj.date).format("D");
+            if (!acc[key]) {
+              acc[key] = [];
+            }
+            acc[key].push(dateObj);
+            return acc;
+          }, {})
+      );
     },
   },
   methods: {
@@ -147,7 +144,6 @@ export default {
         .format("YYYY MMMM");
     },
     selectMonth(time) {
-      console.log(time);
       this.calendarDay = dayjs(time).format("YYYY MMMM");
     },
     showEvents(day) {
@@ -164,18 +160,26 @@ export default {
       }
       this.windowWidth = currentWidth;
     },
-    getWannaKnowApi(date) {
+    getWannaKnowDataByYear(year) {
       api
-        .getWannaKnowData(date)
-        .then((res) => (this.apiData = res.data.slice(0, 10)));
+        .getWannaKnowDataByYear(year)
+        .then((res) => (this.wannaKnowApiData = res.data));
     },
   },
-  created() {
+  async created() {
     window.addEventListener("resize", this.checkResize);
-    this.getWannaKnowApi();
+    const thisYear = dayjs().format("YYYY");
+    console.log(thisYear);
+    this.getWannaKnowDataByYear(thisYear);
   },
   unmounted() {
     window.removeEventListener("resize", this.checkResize);
+  },
+  watch: {
+    selectedYear() {
+      console.log("改變年份");
+      this.getWannaKnowDataByYear(this.selectedYear);
+    },
   },
 };
 </script>

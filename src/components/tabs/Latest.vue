@@ -1,6 +1,10 @@
 <template>
   <div>
-    <Card v-for="(card, index) in cardList" :key="index" :card="card"></Card>
+    <Card
+      v-for="card in cardList"
+      :key="card.wanna_know_id"
+      :card="card"
+    ></Card>
   </div>
 </template>
 
@@ -73,14 +77,12 @@ export default {
     };
   },
   methods: {
-    getCardApi() {
-      api
-        .getWannaKnowData()
-        .then((res) => (this.cardList = res.data.slice(0, 10)));
+    getCardApi(page) {
+      api.getWannaKnowData(page).then((res) => (this.cardList = res.data.data));
     },
   },
   created() {
-    this.getCardApi();
+    this.getCardApi(1);
   },
 };
 </script>

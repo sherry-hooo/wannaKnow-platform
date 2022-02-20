@@ -146,14 +146,8 @@ export default {
     },
   },
   created() {
-    console.log("created", this.card.title);
+    console.log("created", this.card);
     this.checkInFavoriteList();
-  },
-  watch: {
-    isFavorite() {
-      console.log("watch 收藏", this.card.title, this.isFavorite);
-      // this.checkInFavoriteList();
-    },
   },
 };
 </script>
