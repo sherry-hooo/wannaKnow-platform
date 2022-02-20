@@ -1,4 +1,5 @@
 <template>
+  <!-- 篩選器 -->
   <ul class="filter">
     <li class="filter_item filter_item-whole">
       <span class="filter_text">全部</span>
@@ -24,14 +25,15 @@
     </div>
   </ul>
 
-  <div class="tabWrapper">
+  <!-- 最新, 熱門, 收藏tab -->
+  <div class="tabs">
     <div
       v-for="filter in filterList"
       :key="filter"
       @click="tabFilter(filter.component)"
       :class="[
-        { 'tabWrapper_item-active': currentFilter === filter.component },
-        'tabWrapper_item',
+        { 'tabs_item-active': currentFilter === filter.component },
+        'tabs_item',
       ]"
     >
       {{ filter.title }}
@@ -117,10 +119,8 @@ export default {
 .filter {
   @include flex.flex(start, center, row, wrap);
   width: calc(100% - 80px);
-  padding: 10px;
-}
-@include breakpoint.tablet {
-  .filter {
+  padding: 15px 10px;
+  @include breakpoint.tablet {
     flex-wrap: nowrap;
     margin-bottom: 0;
   }
@@ -151,9 +151,7 @@ export default {
     vertical-align: top;
     color: #aaa;
   }
-}
-@include breakpoint.tablet {
-  .filter_moreBtn {
+  @include breakpoint.tablet {
     display: none;
   }
 }
@@ -171,9 +169,7 @@ export default {
   &.show {
     max-height: 50px;
   }
-}
-@include breakpoint.tablet {
-  .filter_content {
+  @include breakpoint.tablet {
     max-height: 50px;
     flex: 1 0 0;
     margin-top: 0;
@@ -183,7 +179,7 @@ export default {
 // 篩選tab
 .filter_item {
   display: inline-block;
-  padding: 1px 20px;
+  padding: 0 15px;
   border: 2px dashed color.$gray;
   border-radius: 25px;
   cursor: pointer;
@@ -204,12 +200,10 @@ export default {
     }
   }
   .filter_text {
-    @extend %title;
+    @extend %sub-title;
     vertical-align: middle;
   }
-}
-@include breakpoint.tablet {
-  .filter_item {
+  @include breakpoint.tablet {
     &-whole {
       margin-right: 15px;
     }
@@ -267,10 +261,10 @@ export default {
 //   }
 // }
 
-.tabWrapper {
+.tabs {
   @extend %sub-title;
-  font-weight: 500;
-  display: flex;
+  font-weight: 400;
+  @include flex.flex(start, stretch, row, nowrap);
   color: color.$black;
   border-bottom: 3px solid color.$green-400;
   @include breakpoint.tablet {
@@ -288,12 +282,12 @@ export default {
     background-position: left top 100%;
   }
   &_item {
-    flex: 1;
+    flex: 1 0 0;
     padding: 3px 0;
     transition: background-color 0.3s;
     cursor: pointer;
     @include breakpoint.tablet {
-      flex: none;
+      flex: 0 0 auto;
       padding: 3px 20px;
     }
     &:hover,
