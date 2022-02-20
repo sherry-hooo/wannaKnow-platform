@@ -4,6 +4,7 @@
       <span class="filter_text">全部</span>
     </li>
     <div class="filter_moreBtn" @click="toggleMoreFilter">
+      <span>more...</span>
       <font-awesome-icon
         :icon="['fas', 'angle-double-down']"
         class="filter_moreIcon"
@@ -115,31 +116,40 @@ export default {
 // 篩選器
 .filter {
   @include flex.flex(start, center, row, wrap);
-  margin-bottom: 10px;
+  width: calc(100% - 80px);
   padding: 10px;
 }
 @include breakpoint.tablet {
   .filter {
     flex-wrap: nowrap;
-    width: 90%;
-    max-width: 900px;
     margin-bottom: 0;
-  }
-}
-@include breakpoint.desktop {
-  .filter {
-    max-width: 90%;
   }
 }
 
 // 更多篩選按鈕
 .filter_moreBtn {
-  padding: 5px;
+  padding: 5px 5px 0 5px;
   font-size: 25px;
+  color: #888;
   cursor: pointer;
+  align-self: flex-end;
   transition: transform 0.3s;
+  line-height: 16px;
   &:hover {
-    transform: translateY(3px);
+    .filter_moreIcon {
+      transform: translateY(3px);
+    }
+  }
+  > * {
+    font-size: 14px;
+  }
+  span {
+    margin-right: 3px;
+    vertical-align: bottom;
+  }
+  .filter_moreIcon {
+    vertical-align: top;
+    color: #aaa;
   }
 }
 @include breakpoint.tablet {
@@ -154,8 +164,7 @@ export default {
   gap: 15px;
   flex: 0 0 100%;
   max-height: 0;
-  margin-top: 10px;
-  border-radius: 20px;
+  margin-top: 15px;
   white-space: nowrap;
   overflow: scroll;
   transition: 0.3s;
@@ -182,7 +191,6 @@ export default {
   &:hover {
     background-color: #ffc700;
   }
-
   .filter_img {
     display: inline-block;
     width: 20px;
