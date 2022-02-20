@@ -118,9 +118,10 @@ export default {
 // 篩選器
 .filter {
   @include flex.flex(start, center, row, wrap);
-  width: calc(100% - 80px);
+  width: 100%;
   padding: 15px 10px;
   @include breakpoint.tablet {
+    width: calc(100% - 80px);
     flex-wrap: nowrap;
     margin-bottom: 0;
   }
@@ -160,30 +161,40 @@ export default {
 .filter_content {
   @include flex.flex(start, center, row, nowrap);
   gap: 15px;
-  flex: 0 0 100%;
+  flex: 0 1 100%;
   max-height: 0;
   margin-top: 15px;
   white-space: nowrap;
   overflow: scroll;
   transition: 0.3s;
-  &.show {
-    max-height: 50px;
-  }
+  overflow-x: scroll;
   @include breakpoint.tablet {
     max-height: 50px;
     flex: 1 0 0;
     margin-top: 0;
+  }
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  &.show {
+    max-height: 50px;
   }
 }
 
 // 篩選tab
 .filter_item {
   display: inline-block;
-  padding: 0 15px;
+  padding: 2px 15px;
   border: 2px dashed color.$gray;
   border-radius: 25px;
   cursor: pointer;
   transition: background-color 0.4s;
+  @include breakpoint.tablet {
+    padding: 2px 20px;
+  }
+  @include breakpoint.desktop {
+    padding: 2px 25px;
+  }
   &:hover {
     background-color: #ffc700;
   }
@@ -200,8 +211,14 @@ export default {
     }
   }
   .filter_text {
-    @extend %sub-title;
+    font-size: 16px;
     vertical-align: middle;
+    @include breakpoint.tablet {
+      font-size: 18px;
+    }
+    @include breakpoint.desktop {
+      font-size: 20px;
+    }
   }
   @include breakpoint.tablet {
     &-whole {
