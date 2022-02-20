@@ -1,19 +1,27 @@
 <template>
-  <div>
+  <div class="cards_wrapper">
     <Card
       v-for="card in cardList"
       :key="card.wanna_know_id"
       :card="card"
     ></Card>
   </div>
+  <Pagination
+    v-if="totalPage != 0"
+    @changePage="changePage"
+    :totalPage="totalPage"
+    :currentPage="currentPage"
+  ></Pagination>
 </template>
 
 <script>
 import Card from "@/components/Card.vue";
+import Pagination from "@/components/Pagination.vue";
+
 import api from "@/service/api.js";
 
 export default {
-  components: { Card },
+  components: { Card, Pagination },
   data() {
     return {
       cardList: [
@@ -74,15 +82,24 @@ export default {
           year: 2017,
         },
       ],
+      currentPage: 1,
+      totalPage: 0,
     };
   },
   methods: {
     getCardApi(page) {
-      api.getWannaKnowData(page).then((res) => (this.cardList = res.data.data));
+      api.getWannaKnowData(page).then((res) => {
+        this.cardList = res.data.data;
+        this.totalPage = +res.data.total_page;
+      });
+    },
+    changePage(page) {
+      this.currentPage = page;
+      this.getCardApi(page);
     },
   },
   created() {
-    this.getCardApi(1);
+    this.getCardApi(this.currentPage);
   },
 };
 </script>

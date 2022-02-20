@@ -146,7 +146,6 @@ export default {
     },
   },
   created() {
-    console.log("created", this.card);
     this.checkInFavoriteList();
   },
 };

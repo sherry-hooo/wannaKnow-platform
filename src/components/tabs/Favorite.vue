@@ -1,22 +1,25 @@
 <template>
-  <div>
-    <!-- 待改為 :key="card.id" -->
+  <div class="cards_wrapper">
     <Card
       v-for="card in favoriteList"
-      :key="card.title"
+      :key="card.wanna_know_id"
       :card="card"
       @setFavoriteList="setFavoriteList"
     ></Card>
   </div>
+  <Pagination @changePage="changePage"></Pagination>
 </template>
 
 <script>
 import Card from "@/components/Card.vue";
+import Pagination from "@/components/Pagination.vue";
+
 export default {
-  components: { Card },
+  components: { Card, Pagination },
   data() {
     return {
       favoriteList: [],
+      currentPage: 1,
     };
   },
   methods: {
@@ -25,6 +28,9 @@ export default {
     },
     setFavoriteList(favoriteList) {
       this.favoriteList = favoriteList;
+    },
+    changePage(page) {
+      this.currentPage = page;
     },
   },
   created() {

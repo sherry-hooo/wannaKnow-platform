@@ -1,6 +1,10 @@
 <template>
-  <div>
-    <Card v-for="(card, index) in cardList" :key="index" :card="card"></Card>
+  <div class="cards_wrapper">
+    <Card
+      v-for="card in cardList"
+      :key="card.wanna_know_id"
+      :card="card"
+    ></Card>
   </div>
 </template>
 

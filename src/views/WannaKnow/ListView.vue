@@ -28,23 +28,18 @@
       {{ filter.title }}
     </div>
   </div>
-
   <section>
     <component :is="currentFilter"></component>
   </section>
-  <Pagination></Pagination>
 </template>
 
 <script>
-import Pagination from "@/components/Pagination.vue";
 import Latest from "@/components/tabs/Latest.vue";
 import Popular from "@/components/tabs/Popular.vue";
 import Favorite from "@/components/tabs/Favorite.vue";
-// import api from "@/service/api.js";
 export default {
   name: "ListView",
   components: {
-    Pagination,
     Latest,
     Popular,
     Favorite,
@@ -85,9 +80,7 @@ export default {
       this.tabCategory = category;
     },
   },
-  created() {
-    // this.getWannaKnowApi();
-  },
+  created() {},
 };
 </script>
 
