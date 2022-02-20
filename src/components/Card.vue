@@ -7,7 +7,7 @@
       </h3>
       <div class="card_wrapNameDate">
         <div class="card_wrapNameDate_name nowrap">
-          <img src="@/assets/avatar.svg" alt="" />
+          <img src="@/assets/avatar.svg" alt="人像icon" />
           {{ card.speaker }}
         </div>
         <div class="card_wrapNameDate_date nowrap">

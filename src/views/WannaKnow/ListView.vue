@@ -29,7 +29,7 @@
     </div>
   </div>
   <section>
-    <component :is="currentFilter"></component>
+    <component :is="currentFilter"> </component>
   </section>
 </template>
 
@@ -37,6 +37,7 @@
 import Latest from "@/components/tabs/Latest.vue";
 import Popular from "@/components/tabs/Popular.vue";
 import Favorite from "@/components/tabs/Favorite.vue";
+
 export default {
   name: "ListView",
   components: {
