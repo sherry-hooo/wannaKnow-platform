@@ -81,7 +81,6 @@ export default {
   props: {
     card: {
       type: Object,
-      required: true,
     },
   },
   data() {

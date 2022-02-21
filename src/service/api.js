@@ -7,7 +7,6 @@ const apiClient = axios.create({
 });
 
 const categoryQuery = {
-  全部: "",
   專案經驗: "project",
   學習小心得: "learning",
   技術剖析: "technic",
@@ -15,20 +14,21 @@ const categoryQuery = {
   生活頻道: "life",
 };
 export default {
-  getWannaKnowData(page, category, tags, orderBy) {
-    const params = filterEmptyParams(
-      { page: page },
-      { category: categoryQuery[category] },
-      { tags: tags },
-      { orderBy: orderBy }
-    );
-    console.log(params);
+  getWannaKnowByCategory(params) {
+    if (params.category === "全部") {
+      delete params["category"];
+    } else {
+      params["category"] = categoryQuery[params["category"]];
+    }
     return apiClient.get(
       "https://script.google.com/macros/s/AKfycbyL_N-SK7iwC5Cwydj8gL1zQJxtK9Qf5wsc3HnjZFC-yo1wFKcHO9vyh_dQSh1H7s2I/exec?",
       {
         params: params,
       }
     );
+  },
+  getWannaKnowByTag(params) {
+    console.log(params);
   },
   getWannaKnowDataByYear(year) {
     return apiClient.get(
@@ -42,13 +42,13 @@ export default {
   },
 };
 
-function filterEmptyParams(...queryParams) {
-  return queryParams.reduce((acc, obj) => {
-    for (const key in obj) {
-      if (obj[key]) {
-        acc[key] = obj[key];
-      }
-    }
-    return acc;
-  }, {});
-}
+// function filterEmptyParams(queryParams) {
+//   return queryParams.reduce((acc, obj) => {
+//     for (const key in obj) {
+//       if (obj[key]) {
+//         acc[key] = obj[key];
+//       }
+//     }
+//     return acc;
+//   }, {});
+// }

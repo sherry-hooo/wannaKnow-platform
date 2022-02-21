@@ -23,7 +23,6 @@
 import Card from "@/components/Card.vue";
 import Pagination from "@/components/Pagination.vue";
 import LoadingCard from "@/components/LoadingCard.vue";
-
 import api from "@/service/api.js";
 
 export default {
@@ -40,13 +39,18 @@ export default {
       currentPage: 1,
       totalPage: 0,
       isLoading: true,
+      orderBy: "date",
     };
   },
   methods: {
-    getCardApi(page) {
+    getCardData() {
       this.isLoading = true;
+      const queryObj = {
+        page: this.currentPage,
+        category: this.tabCategory,
+      };
       api
-        .getWannaKnowData(page, this.tabCategory)
+        .getWannaKnowByCategory(queryObj)
         .then((res) => {
           this.cardList = res.data.data;
           this.totalPage = +res.data.total_page;
@@ -55,17 +59,17 @@ export default {
     },
     changePage(page) {
       this.currentPage = page;
-      this.getCardApi(page);
+      this.getCardData();
     },
   },
   created() {
-    this.getCardApi(this.currentPage);
+    this.getCardData();
   },
   watch: {
     tabCategory() {
       // 重新篩選類別後從第一頁開始渲染
       this.currentPage = 1;
-      this.getCardApi(1, this.category);
+      this.getCardData();
     },
   },
 };

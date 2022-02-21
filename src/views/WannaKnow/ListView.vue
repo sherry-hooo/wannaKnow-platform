@@ -2,7 +2,12 @@
   <!-- 篩選器 -->
   <ul class="filter">
     <li class="filter_item filter_item-whole">
-      <span class="filter_text" @click="filterCategory('全部')">全部</span>
+      <span
+        class="filter_text"
+        @click="filterCategory('全部')"
+        :class="{ 'filterTab-active': tabCategory === '全部' }"
+        >全部</span
+      >
     </li>
     <div class="filter_moreBtn" @click="toggleMoreFilter">
       <span>more...</span>
@@ -16,7 +21,7 @@
         v-for="category in categoryList"
         :key="category.name"
         class="filter_item"
-        :class="{ 'wannaKnowCatalogs-active': tabCategory === category }"
+        :class="{ 'filterTab-active': tabCategory === category }"
         @click="filterCategory(category.name)"
       >
         <div class="filter_img">
@@ -222,26 +227,27 @@ export default {
   }
 }
 
-// .filterTab {
-//   white-space: nowrap;
-//   overflow-x: scroll;
-//   &::-webkit-scrollbar {
-//     display: none;
-//   }
-//   @include breakpoint.tablet {
-//     white-space: normal;
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     flex-wrap: wrap;
-//     overflow-x: auto;
-//   }
-//   @extend %title;
+.filterTab {
+  //   white-space: nowrap;
+  //   overflow-x: scroll;
+  //   &::-webkit-scrollbar {
+  //     display: none;
+  //   }
+  //   @include breakpoint.tablet {
+  //     white-space: normal;
+  //     display: flex;
+  //     justify-content: center;
+  //     align-items: center;
+  //     flex-wrap: wrap;
+  //     overflow-x: auto;
+  //   }
+  //   @extend %title;
 
-//   &-active {
-//     background-color: #ffc700;
-//     color: color.$white;
-//   }
+  &-active {
+    background-color: #ffc700;
+    color: color.$white;
+  }
+}
 //   li {
 //     // width: auto;
 //     display: inline-block;

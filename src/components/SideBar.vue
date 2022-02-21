@@ -2,7 +2,7 @@
   <section class="sideBar" :class="{ openSideBar: $store.state.isSideBarOpen }">
     <div
       @click="toggleSideBar"
-      :class="[{ fade: openSideBar }, 'sideBar_toggleBtn']"
+      :class="[{ fade: $store.state.isSideBarOpen }, 'sideBar_toggleBtn']"
     >
       <font-awesome-icon class="arrow" icon="arrow-right"></font-awesome-icon>
       <span></span>
