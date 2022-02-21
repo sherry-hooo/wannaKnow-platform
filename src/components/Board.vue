@@ -14,9 +14,9 @@
   </div>
 </template>
 <script>
-import News from "@/components/board/News.vue";
-import ComingEvent from "@/components/board/ComingEvent.vue";
-import WishBoard from "@/components/board/WishBoard.vue";
+import News from "@/components/homePage/News.vue";
+import ComingEvent from "@/components/homePage/ComingEvent.vue";
+import WishBoard from "@/components/homePage/WishBoard.vue";
 export default {
   components: { News, ComingEvent, WishBoard },
   data() {

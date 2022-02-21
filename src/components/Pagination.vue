@@ -40,7 +40,6 @@ export default {
     totalPage: Number,
     currentPage: {
       type: Number,
-      default: 5,
     },
   },
   data() {
@@ -120,8 +119,8 @@ export default {
     &:hover {
       @extend %hightLight-page;
     }
-    &:not(:first-child):not(:last-child) {
-      margin: 0 5px;
+    & + & {
+      margin-left: 5px;
     }
   }
 }

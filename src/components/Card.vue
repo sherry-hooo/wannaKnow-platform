@@ -15,18 +15,18 @@
         </div>
       </div>
     </div>
-    <!-- 待改為 card.description -->
     <p class="ellipsis" @click="toggleSideBar">
+      {{ card.description }}
       Firebase節省掉後端複雜的服務器建置，作為NodeJs及MongoDB的另外一種替代品，使我們製作產品的時候更專注於前端開發大部分的功能對於小型個人網站可以免費使用。
     </p>
     <div class="card_wrapTagSocialMedia">
-      <!-- 待改為 card.tags -->
       <div class="wannaTag">
-        <div>前端</div>
+        <div v-for="(tag, index) in card.tages" :key="index">{{ tag }}</div>
+        <!-- <div>前端</div>
         <div>IOS</div>
         <div>UICollectionView</div>
         <div>Javascript</div>
-        <div>Vue composition API</div>
+        <div>Vue composition API</div> -->
       </div>
       <div class="card_icon_social nowrap">
         <span>

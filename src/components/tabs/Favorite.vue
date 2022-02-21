@@ -1,18 +1,23 @@
 <template>
   <div class="cards_wrapper">
     <template v-if="isLoading">
-      <LoadingCard v-for="card in loadingCardCout" :key="card"></LoadingCard>
+      <LoadingCard v-for="card in loadingCardCount" :key="card"></LoadingCard>
     </template>
     <template v-else>
       <Card
-        v-for="card in favoriteList"
+        v-for="card in renderList"
         :key="card.wanna_know_id"
         :card="card"
         @setFavoriteList="setFavoriteList"
       ></Card>
     </template>
   </div>
-  <Pagination @changePage="changePage"></Pagination>
+  <Pagination
+    v-if="favoriteList.length > 10"
+    @changePage="changePage"
+    :totalPage="totalPage"
+    :currentPage="currentPage"
+  ></Pagination>
 </template>
 
 <script>
@@ -27,8 +32,22 @@ export default {
       favoriteList: [],
       currentPage: 1,
       isLoading: true,
-      loadingCardCout: JSON.parse(localStorage.getItem("favoriteList")).length,
+      loadingCardCount: JSON.parse(localStorage.getItem("favoriteList"))
+        ? JSON.parse(localStorage.getItem("favoriteList")).length
+        : 0,
+      perPageCount: 10,
     };
+  },
+  computed: {
+    totalPage() {
+      return Math.ceil(this.favoriteList.length / this.perPageCount);
+    },
+    renderList() {
+      return this.favoriteList.slice(
+        this.perPageCount * (this.currentPage - 1),
+        this.perPageCount * this.currentPage
+      );
+    },
   },
   methods: {
     getLocalStorage() {
