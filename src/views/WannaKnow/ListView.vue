@@ -21,7 +21,7 @@
         v-for="category in categoryList"
         :key="category.name"
         class="filter_item"
-        :class="{ 'filterTab-active': tabCategory === category }"
+        :class="{ 'filterTab-active': tabCategory === category.name }"
         @click="filterCategory(category.name)"
       >
         <div class="filter_img">
