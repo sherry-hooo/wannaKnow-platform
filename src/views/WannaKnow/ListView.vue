@@ -121,9 +121,12 @@ export default {
   width: 100%;
   padding: 15px 10px;
   @include breakpoint.tablet {
-    width: calc(100% - 80px);
+    width: calc(100vw - 120px - 90px);
     flex-wrap: nowrap;
     margin-bottom: 0;
+  }
+  @include breakpoint.desktop {
+    width: calc(100vw - 160px - 90px);
   }
 }
 

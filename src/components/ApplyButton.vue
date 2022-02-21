@@ -2,13 +2,15 @@
   <div class="applyButton" @click="toggleApplyForm">
     <img src="@/assets/floatingButton.svg" alt="apply-floating-button" />
   </div>
-  <p class="test" v-if="isApplyFormOpen">123</p>
-  <!-- <ApplyForm></ApplyForm> -->
+  <!-- <p class="test" v-if="isApplyFormOpen">123</p> -->
+  <ApplyForm v-if="isApplyFormOpen" />
 </template>
 <script>
-// import ApplyForm from "@/components/ApplyForm.vue";
+import ApplyForm from "@/components/ApplyForm.vue";
 export default {
-  components: {},
+  components: {
+    ApplyForm,
+  },
   data() {
     return {
       isApplyFormOpen: false,
@@ -23,25 +25,33 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-.test {
-  position: fixed;
-  width: 100vw;
-  height: 100vh;
-  z-index: 19;
-  background: rgba(128, 128, 128, 0.37);
-}
+// .test {
+//   position: fixed;
+//   width: 100vw;
+//   height: 100vh;
+//   z-index: 19;
+//   background: rgba(128, 128, 128, 0.37);
+// }
 .applyButton {
   position: fixed;
   z-index: 20;
   bottom: 20px;
-  left: 100px;
+  left: 20px;
   width: 60px;
   height: 60px;
   cursor: pointer;
   transition: 0.4s;
+  opacity: 0.8;
+  @include breakpoint.tablet {
+    left: 95px;
+  }
+  @include breakpoint.desktop {
+    left: 100px;
+  }
   &:hover {
     filter: brightness(110%) contrast(120%);
     transform: translate(-1px, -2px);
+    opacity: 1;
   }
   img {
     width: 100%;

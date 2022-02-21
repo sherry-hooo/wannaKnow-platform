@@ -176,7 +176,7 @@ export default {
     text-align: left;
     cursor: pointer;
     @include breakpoint.tablet {
-      flex: 0 1 70%;
+      flex: 0 1 75%;
     }
     > * {
       display: inline-block;
@@ -223,9 +223,16 @@ export default {
     margin-top: 15px;
     color: #666;
     @include breakpoint.tablet {
-      flex: 0 1 30%;
+      @include flex.flex(start, end, column, nowrap);
+      gap: 10px;
+      flex: 0 0 25%;
       margin-top: 0;
     }
+    @include breakpoint.desktop {
+      @include flex.flex(between, center, row, nowrap);
+      gap: 0;
+    }
+
     .card_speaker {
       > * {
         display: inline-block;
@@ -241,8 +248,6 @@ export default {
           object-fit: contain;
         }
       }
-    }
-    .card_date {
     }
   }
 }
@@ -266,7 +271,7 @@ export default {
 
 // tag跟讚數留言
 .card_others {
-  @include flex.flex(start, center, row, wrap);
+  @include flex.flex(start, end, row, wrap);
 }
 .card_tags {
   @extend %remark;
@@ -274,7 +279,7 @@ export default {
   flex: 0 0 100%;
   gap: 0.5rem;
   @include breakpoint.tablet {
-    flex: 0 1 70%;
+    flex: 0 1 65%;
   }
   .card_tagsItem {
     display: inline-block;
@@ -296,7 +301,7 @@ export default {
   gap: 1rem;
   margin-top: 1rem;
   @include breakpoint.tablet {
-    flex: 0 1 30%;
+    flex: 0 0 35%;
     margin-top: 0;
   }
   .card_socialItem {
