@@ -6,14 +6,27 @@ const apiClient = axios.create({
   // },
 });
 
+const categoryQuery = {
+  全部: "",
+  專案經驗: "project",
+  學習小心得: "learning",
+  技術剖析: "technic",
+  職場工作: "career",
+  生活頻道: "life",
+};
 export default {
-  getWannaKnowData(page) {
+  getWannaKnowData(page, category, tags, orderBy) {
+    const params = filterEmptyParams(
+      { page: page },
+      { category: categoryQuery[category] },
+      { tags: tags },
+      { orderBy: orderBy }
+    );
+    console.log(params);
     return apiClient.get(
-      "https://script.google.com/macros/s/AKfycbwozbAxlvnE2VBAGXmsoX2w-e8UCixobZ7JeS9J2BJ5gustU7JNP00-9X4ptXWO4RzS/exec",
+      "https://script.google.com/macros/s/AKfycbyL_N-SK7iwC5Cwydj8gL1zQJxtK9Qf5wsc3HnjZFC-yo1wFKcHO9vyh_dQSh1H7s2I/exec?",
       {
-        params: {
-          page: page,
-        },
+        params: params,
       }
     );
   },
@@ -28,3 +41,14 @@ export default {
     );
   },
 };
+
+function filterEmptyParams(...queryParams) {
+  return queryParams.reduce((acc, obj) => {
+    for (const key in obj) {
+      if (obj[key]) {
+        acc[key] = obj[key];
+      }
+    }
+    return acc;
+  }, {});
+}

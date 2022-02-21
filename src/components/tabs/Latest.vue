@@ -28,6 +28,12 @@ import api from "@/service/api.js";
 
 export default {
   components: { Card, Pagination, LoadingCard },
+  props: {
+    tabCategory: {
+      type: String,
+      default: "全部",
+    },
+  },
   data() {
     return {
       cardList: [],
@@ -40,7 +46,7 @@ export default {
     getCardApi(page) {
       this.isLoading = true;
       api
-        .getWannaKnowData(page)
+        .getWannaKnowData(page, this.tabCategory)
         .then((res) => {
           this.cardList = res.data.data;
           this.totalPage = +res.data.total_page;
@@ -54,6 +60,13 @@ export default {
   },
   created() {
     this.getCardApi(this.currentPage);
+  },
+  watch: {
+    tabCategory() {
+      // 重新篩選類別後從第一頁開始渲染
+      this.currentPage = 1;
+      this.getCardApi(1, this.category);
+    },
   },
 };
 </script>

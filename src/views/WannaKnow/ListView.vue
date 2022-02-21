@@ -2,7 +2,7 @@
   <!-- 篩選器 -->
   <ul class="filter">
     <li class="filter_item filter_item-whole">
-      <span class="filter_text">全部</span>
+      <span class="filter_text" @click="filterCategory('全部')">全部</span>
     </li>
     <div class="filter_moreBtn" @click="toggleMoreFilter">
       <span>more...</span>
@@ -17,7 +17,7 @@
         :key="category.name"
         class="filter_item"
         :class="{ 'wannaKnowCatalogs-active': tabCategory === category }"
-        @click="filterCategory(category)"
+        @click="filterCategory(category.name)"
       >
         <div class="filter_img">
           <img :src="category.img" alt="category.name" />
@@ -42,7 +42,7 @@
     </div>
   </div>
   <section>
-    <component :is="currentFilter"> </component>
+    <component :is="currentFilter" :tabCategory="tabCategory"></component>
   </section>
 </template>
 
@@ -60,7 +60,7 @@ export default {
   },
   data() {
     return {
-      tabCategory: "",
+      tabCategory: "全部",
       categoryList: [
         { img: require("@/assets/projectExperience.svg"), name: "專案經驗" },
         {

@@ -13,7 +13,7 @@
     </template>
   </div>
   <Pagination
-    v-if="favoriteList.length > 10"
+    v-if="favoriteListByCategory.length > 10"
     @changePage="changePage"
     :totalPage="totalPage"
     :currentPage="currentPage"
@@ -27,6 +27,12 @@ import Pagination from "@/components/Pagination.vue";
 
 export default {
   components: { Card, Pagination, LoadingCard },
+  props: {
+    tabCategory: {
+      type: String,
+      default: "全部",
+    },
+  },
   data() {
     return {
       favoriteList: [],
@@ -39,11 +45,18 @@ export default {
     };
   },
   computed: {
+    favoriteListByCategory() {
+      return this.tabCategory === "全部"
+        ? this.favoriteList
+        : this.favoriteList.filter(
+            (wannaKnow) => wannaKnow.category === this.tabCategory
+          );
+    },
     totalPage() {
-      return Math.ceil(this.favoriteList.length / this.perPageCount);
+      return Math.ceil(this.favoriteListByCategory.length / this.perPageCount);
     },
     renderList() {
-      return this.favoriteList.slice(
+      return this.favoriteListByCategory.slice(
         this.perPageCount * (this.currentPage - 1),
         this.perPageCount * this.currentPage
       );
