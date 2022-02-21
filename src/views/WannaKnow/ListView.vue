@@ -1,28 +1,41 @@
 <template>
-  <ul class="wannaKnowCatalogs">
-    <li
-      v-for="category in categoryList"
-      :key="category.name"
-      :class="{ 'wannaKnowCatalogs-active': tabCategory === category }"
-      @click="filterCategory(category)"
-    >
-      <img
-        :src="category.img"
-        alt="category.name"
-        v-if="category.name !== '全部'"
-      />
-      <span>{{ category.name }}</span>
+  <!-- 篩選器 -->
+  <ul class="filter">
+    <li class="filter_item filter_item-whole">
+      <span class="filter_text">全部</span>
     </li>
+    <div class="filter_moreBtn" @click="toggleMoreFilter">
+      <span>more...</span>
+      <font-awesome-icon
+        :icon="['fas', 'angle-double-down']"
+        class="filter_moreIcon"
+      />
+    </div>
+    <div class="filter_content" :class="{ show: moreFilterOpen }">
+      <li
+        v-for="category in categoryList"
+        :key="category.name"
+        class="filter_item"
+        :class="{ 'wannaKnowCatalogs-active': tabCategory === category }"
+        @click="filterCategory(category)"
+      >
+        <div class="filter_img">
+          <img :src="category.img" alt="category.name" />
+        </div>
+        <span class="filter_text">{{ category.name }}</span>
+      </li>
+    </div>
   </ul>
 
-  <div class="tabWrapper">
+  <!-- 最新, 熱門, 收藏tab -->
+  <div class="tabs">
     <div
       v-for="filter in filterList"
       :key="filter"
       @click="filterOrder(filter.component)"
       :class="[
-        { 'tabWrapper_item-active': currentFilter === filter.component },
-        'tabWrapper_item',
+        { 'tabs_item-active': currentFilter === filter.component },
+        'tabs_item',
       ]"
     >
       {{ filter.title }}
@@ -47,9 +60,8 @@ export default {
   },
   data() {
     return {
-      tabCategory: "全部",
+      tabCategory: "",
       categoryList: [
-        { img: "", name: "全部" },
         { img: require("@/assets/projectExperience.svg"), name: "專案經驗" },
         {
           img: require("@/assets/learningExpericence.svg"),
@@ -66,6 +78,7 @@ export default {
         { component: "Popular", title: "熱門" },
         { component: "Favorite", title: "收藏" },
       ],
+      moreFilterOpen: false,
     };
   },
   computed: {
@@ -80,12 +93,16 @@ export default {
     filterCategory(category) {
       this.tabCategory = category;
     },
+    toggleMoreFilter() {
+      this.moreFilterOpen = !this.moreFilterOpen;
+    },
   },
   created() {},
 };
 </script>
 
 <style scoped lang="scss">
+@use "src/assets/sass/utils/flex";
 .calendarView {
   color: color.$green-300;
   transition: transform 0.3s;
@@ -93,61 +110,173 @@ export default {
     transform: scale(1.2);
   }
 }
+// 篩選器
+.filter {
+  @include flex.flex(start, center, row, wrap);
+  width: 100%;
+  padding: 15px 10px;
+  @include breakpoint.tablet {
+    width: calc(100% - 80px);
+    flex-wrap: nowrap;
+    margin-bottom: 0;
+  }
+}
 
-.wannaKnowCatalogs {
+// 更多篩選按鈕
+.filter_moreBtn {
+  padding: 5px 5px 0 5px;
+  font-size: 25px;
+  color: #888;
+  cursor: pointer;
+  align-self: flex-end;
+  transition: transform 0.3s;
+  line-height: 16px;
+  &:hover {
+    .filter_moreIcon {
+      transform: translateY(3px);
+    }
+  }
+  > * {
+    font-size: 14px;
+  }
+  span {
+    margin-right: 3px;
+    vertical-align: bottom;
+  }
+  .filter_moreIcon {
+    vertical-align: top;
+    color: #aaa;
+  }
+  @include breakpoint.tablet {
+    display: none;
+  }
+}
+
+// 更多篩選區塊
+.filter_content {
+  @include flex.flex(start, center, row, nowrap);
+  gap: 15px;
+  flex: 0 1 100%;
+  max-height: 0;
+  margin-top: 15px;
   white-space: nowrap;
+  overflow: scroll;
+  transition: 0.3s;
   overflow-x: scroll;
+  @include breakpoint.tablet {
+    max-height: 50px;
+    flex: 1 0 0;
+    margin-top: 0;
+  }
   &::-webkit-scrollbar {
     display: none;
   }
-  @include breakpoint.tablet {
-    white-space: normal;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    overflow-x: auto;
+  &.show {
+    max-height: 50px;
   }
-  @extend %title;
+}
 
-  &-active {
-    background-color: #ffc700;
-    color: color.$white;
+// 篩選tab
+.filter_item {
+  display: inline-block;
+  padding: 2px 15px;
+  border: 2px dashed color.$gray;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.4s;
+  @include breakpoint.tablet {
+    padding: 2px 20px;
   }
-  li {
-    // width: auto;
+  @include breakpoint.desktop {
+    padding: 2px 25px;
+  }
+  &:hover {
+    background-color: #ffc700;
+  }
+  .filter_img {
     display: inline-block;
-    padding: 4px 20px;
-    margin: 12px;
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+    vertical-align: middle;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+  .filter_text {
+    font-size: 16px;
+    vertical-align: middle;
     @include breakpoint.tablet {
-      // width: 33.333%;
+      font-size: 18px;
     }
     @include breakpoint.desktop {
-      // width: auto;
-      padding: 8px 24px;
+      font-size: 20px;
     }
-    border: 2px color.$gray dashed;
-    border-radius: 30px;
-    margin: 16px;
-    span {
-      vertical-align: middle;
-    }
-    img {
-      margin-right: 4px;
-      vertical-align: middle;
-    }
-    transition: background-color 0.3s;
-    &:hover {
-      background-color: #ffc700;
-      color: color.$white;
-      cursor: pointer;
+  }
+  @include breakpoint.tablet {
+    &-whole {
+      margin-right: 15px;
     }
   }
 }
-.tabWrapper {
+
+// .filterTab {
+//   white-space: nowrap;
+//   overflow-x: scroll;
+//   &::-webkit-scrollbar {
+//     display: none;
+//   }
+//   @include breakpoint.tablet {
+//     white-space: normal;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     flex-wrap: wrap;
+//     overflow-x: auto;
+//   }
+//   @extend %title;
+
+//   &-active {
+//     background-color: #ffc700;
+//     color: color.$white;
+//   }
+//   li {
+//     // width: auto;
+//     display: inline-block;
+//     padding: 4px 20px;
+//     margin: 12px;
+//     @include breakpoint.tablet {
+//       // width: 33.333%;
+//     }
+//     @include breakpoint.desktop {
+//       // width: auto;
+//       padding: 8px 24px;
+//     }
+//     border: 2px color.$gray dashed;
+//     border-radius: 30px;
+//     margin: 16px;
+//     span {
+//       vertical-align: middle;
+//     }
+//     img {
+//       margin-right: 4px;
+//       vertical-align: middle;
+//     }
+//     transition: background-color 0.3s;
+//     &:hover {
+//       background-color: #ffc700;
+//       color: color.$white;
+//       cursor: pointer;
+//     }
+//   }
+// }
+
+.tabs {
   @extend %sub-title;
-  font-weight: 500;
-  display: flex;
+  font-weight: 400;
+  @include flex.flex(start, stretch, row, nowrap);
   color: color.$black;
   border-bottom: 3px solid color.$green-400;
   @include breakpoint.tablet {
@@ -165,12 +294,12 @@ export default {
     background-position: left top 100%;
   }
   &_item {
-    flex: 1;
+    flex: 1 0 0;
     padding: 3px 0;
     transition: background-color 0.3s;
     cursor: pointer;
     @include breakpoint.tablet {
-      flex: none;
+      flex: 0 0 auto;
       padding: 3px 20px;
     }
     &:hover,

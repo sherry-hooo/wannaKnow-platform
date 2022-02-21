@@ -2,20 +2,34 @@
   <div class="applyButton" @click="toggleApplyForm">
     <img src="@/assets/floatingButton.svg" alt="apply-floating-button" />
   </div>
+  <p class="test" v-if="isApplyFormOpen">123</p>
+  <!-- <ApplyForm></ApplyForm> -->
 </template>
 <script>
+// import ApplyForm from "@/components/ApplyForm.vue";
 export default {
+  components: {},
   data() {
-    return {};
+    return {
+      isApplyFormOpen: false,
+    };
   },
   methods: {
     toggleApplyForm() {
-      this.$store.commit("toggleApplyForm", true);
+      this.isApplyFormOpen = !this.isApplyFormOpen;
+      // this.$store.commit("toggleApplyForm", true);
     },
   },
 };
 </script>
 <style scoped lang="scss">
+.test {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 19;
+  background: rgba(128, 128, 128, 0.37);
+}
 .applyButton {
   position: fixed;
   z-index: 20;

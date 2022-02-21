@@ -1,7 +1,7 @@
 @use "../utils/breakpoint";
 
 %strong-title {
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 700;
   @include breakpoint.tablet {
     font-size: 22px;

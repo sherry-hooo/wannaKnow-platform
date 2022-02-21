@@ -30,9 +30,12 @@ export default {
 </script>
 <style scoped lang="scss">
 .wannaKnow {
-  padding: 20px 10px 0;
+  padding: 10px 0;
+  @include breakpoint.tablet {
+    padding: 20px 30px 0;
+  }
   @include breakpoint.desktop {
-    padding: 20px 50px 0;
+    padding: 30px 80px 0;
   }
   position: relative;
   z-index: 0;

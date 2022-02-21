@@ -1,76 +1,74 @@
 <template>
   <div class="card" v-if="card">
-    <div class="card_titleNameDate">
-      <h3 class="ellipsis" @click="toggleSideBar">
-        <img src="@/assets/projectExperience.svg" alt="專案經驗icon" />
-        {{ card.title }}
-      </h3>
-      <div class="card_wrapNameDate">
-        <div class="card_wrapNameDate_name nowrap">
-          <img src="@/assets/avatar.svg" alt="人像icon" />
-          {{ card.speaker }}
+    <div class="card_titleArea">
+      <div class="card_title" @click="toggleSideBar">
+        <div class="card_titleIcon">
+          <img src="@/assets/projectExperience.svg" alt="專案經驗icon" />
         </div>
-        <div class="card_wrapNameDate_date nowrap">
+        <h3>{{ card.title }}</h3>
+      </div>
+      <div class="card_info">
+        <div class="card_speaker">
+          <div class="card_speakerIcon">
+            <img src="@/assets/avatar.svg" alt="" />
+          </div>
+          <span>{{ card.speaker }}</span>
+        </div>
+        <span class="card_date">
           {{ wannaKnowDate }}
-        </div>
+        </span>
       </div>
     </div>
-    <p class="ellipsis" @click="toggleSideBar">
-      {{ card.description }}
+    <!-- 待改為 card.description -->
+    <p class="card_description" @click="toggleSideBar">
       Firebase節省掉後端複雜的服務器建置，作為NodeJs及MongoDB的另外一種替代品，使我們製作產品的時候更專注於前端開發大部分的功能對於小型個人網站可以免費使用。
     </p>
-    <div class="card_wrapTagSocialMedia">
-      <div class="wannaTag">
-        <div v-for="(tag, index) in card.tages" :key="index">{{ tag }}</div>
-        <!-- <div>前端</div>
-        <div>IOS</div>
-        <div>UICollectionView</div>
-        <div>Javascript</div>
-        <div>Vue composition API</div> -->
+    <div class="card_others">
+      <!-- 待改為 card.tags -->
+      <div class="card_tags">
+        <span class="card_tagsItem">前端</span>
+        <span class="card_tagsItem">IOS</span>
+        <span class="card_tagsItem">UICollectionView</span>
+        <span class="card_tagsItem">Javascript</span>
+        <span class="card_tagsItem">Vue composition API</span>
       </div>
-      <div class="card_icon_social nowrap">
-        <span>
-          <img
-            v-if="isLike"
-            src="@/assets/like-fill.svg"
-            alt="按讚圖示"
-            @click="clickLike"
-          />
-          <img
-            v-else
-            src="@/assets/like.svg"
-            alt="按讚圖示"
-            @click="clickLike"
-          />
-          {{ likeCount }}</span
+      <div class="card_social">
+        <div class="card_socialItem card_socialItem-like" @click="clickLike">
+          <div class="card_socialIcon">
+            <img v-if="isLike" src="@/assets/like-fill.svg" alt="按讚圖示" />
+            <img v-else src="@/assets/like.svg" alt="按讚圖示" />
+          </div>
+          <span>{{ likeCount }}</span>
+        </div>
+        <div
+          class="card_socialItem card_socialItem-comment"
+          @click="toggleSideBar"
         >
-        <span>
-          <img
-            v-if="$store.state.isSideBarOpen"
-            src="@/assets/content.svg"
-            alt="留言圖示"
-            @click="toggleSideBar"
-          />
-          <img
-            v-else
-            src="@/assets/content.svg"
-            alt="留言圖示"
-            @click="toggleSideBar"
-          />
-          {{ commentCount }}</span
-        >
-        <img
-          v-if="!isFavorite"
+          <div class="card_socialIcon">
+            <img
+              v-if="$store.state.isSideBarOpen"
+              src="@/assets/content.svg"
+              alt="留言圖示"
+            />
+            <img v-else src="@/assets/content.svg" alt="留言圖示" />
+          </div>
+          <span>{{ commentCount }}</span>
+        </div>
+        <div
+          class="card_socialItem card_socialItem-favorite"
           @click="setFavorite(true)"
-          src="@/assets/bookmark.svg"
-          alt="未收藏圖示"
-        />
-        <img
-          v-else
-          @click="setFavorite(false)"
-          src="@/assets/bookmark-fill.svg"
-          alt="已收藏圖示"
-        />
+        >
+          <div class="card_socialIcon">
+            <img
+              v-if="!isFavorite"
+              src="@/assets/bookmark.svg"
+              alt="未收藏圖示"
+            />
+            <img v-else src="@/assets/bookmark-fill.svg" alt="已收藏圖示" />
+          </div>
+        </div>
+
+        <!-- <div class="card_socialItem card_socialItem-attachment"></div> -->
       </div>
     </div>
   </div>
@@ -152,112 +150,173 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.nowrap {
-  white-space: nowrap;
+@use "src/assets/sass/utils/flex";
+@mixin ellipsis($clamp) {
+  display: -webkit-box;
+  -webkit-line-clamp: $clamp;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
+// card
 .card {
-  max-width: 100%;
-  display: flex;
-  flex-direction: column;
-  margin: 0 auto;
-  padding: 20px 40px;
-  border-bottom: 5px color.$green-400 solid;
+  @include flex.flex(start, stretch, column, nowrap);
+  gap: 1rem;
+  padding: 20px;
+  border-bottom: 3px color.$green-400 solid;
   @include breakpoint.desktop {
     padding: 20px 10px;
   }
-  p {
-    margin-bottom: 10px;
-    max-width: 300px;
-    @include breakpoint.tablet {
-      max-width: 750px;
-    }
-    @include breakpoint.desktop {
-      max-width: 750px;
-    }
-  }
-  .ellipsis {
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+}
+
+// 上半部title 區域
+.card_titleArea {
+  @include flex.flex(between, center, row, wrap);
+  // title
+  .card_title {
+    flex: 0 0 100%;
+    text-align: left;
     cursor: pointer;
-    &:hover {
-      color: color.$green-300;
+    @include breakpoint.tablet {
+      flex: 0 1 70%;
     }
-  }
-}
-.card_titleNameDate {
-  display: flex;
-  text-align: start;
-  flex-direction: column;
-  @extend %sub-title;
-  h3 {
-    @extend %strong-title;
-    margin-bottom: 8px;
-    img {
-      width: 24px;
-      height: 24px;
+    > * {
+      display: inline-block;
+      vertical-align: middle;
     }
-    @include breakpoint.desktop {
-      max-width: 750px;
+    .card_titleIcon {
+      width: 36px;
+      height: 36px;
+      margin-right: 0.5rem;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
     }
-  }
-  .card_wrapNameDate {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 8px;
-    @include breakpoint.desktop {
-      margin-left: 50px;
-    }
-  }
-  @include breakpoint.tablet {
-    .ellipsis {
-      -webkit-line-clamp: 2;
-    }
-  }
-  @include breakpoint.desktop {
     h3 {
-      max-width: 750px;
+      @extend %strong-title;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      width: 70%;
+      max-width: 250px;
+      transition: 0.3s;
+      font-size: 22px;
+      font-weight: 500;
+      @include breakpoint.tablet {
+        max-width: 500px;
+      }
+      @include breakpoint.desktop {
+        max-width: 800px;
+      }
     }
-
-    .ellipsis {
-      -webkit-line-clamp: 1;
+    &:hover {
+      h3 {
+        color: color.$green-400;
+        filter: contrast(200%) brightness(50%);
+      }
     }
-    flex-direction: row;
-    justify-content: space-between;
+  }
+  // 作者跟時間
+  .card_info {
+    @include flex.flex(between, center, row, nowrap);
+    flex: 0 1 100%;
+    margin-top: 15px;
+    color: #666;
+    @include breakpoint.tablet {
+      flex: 0 1 30%;
+      margin-top: 0;
+    }
+    .card_speaker {
+      > * {
+        display: inline-block;
+        vertical-align: middle;
+      }
+      .card_speakerIcon {
+        width: 20px;
+        height: 20px;
+        margin-right: 0.5rem;
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+        }
+      }
+    }
+    .card_date {
+    }
   }
 }
-.card_wrapTagSocialMedia {
+
+// 簡介
+.card_description {
+  @include ellipsis(2);
+  @extend %sub-title;
+  text-align: left;
+  width: 80%;
+  transition: color 0.3s;
+  cursor: pointer;
   @include breakpoint.tablet {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row;
-    align-items: center;
+    width: 65%;
   }
-  flex-direction: column;
+  &:hover {
+    color: color.$green-400;
+    filter: contrast(200%) brightness(50%);
+  }
 }
 
-.wannaTag {
-  @extend %body;
-  display: flex;
-  flex-wrap: wrap;
-  & > div {
+// tag跟讚數留言
+.card_others {
+  @include flex.flex(start, center, row, wrap);
+}
+.card_tags {
+  @extend %remark;
+  @include flex.flex(start, center, row, wrap);
+  flex: 0 0 100%;
+  gap: 0.5rem;
+  @include breakpoint.tablet {
+    flex: 0 1 70%;
+  }
+  .card_tagsItem {
+    display: inline-block;
     padding: 2px 10px;
-    margin: 8px 16px 8px 0;
     background-color: color.$green-300;
     color: color.$white;
     text-align: center;
     border-radius: 16px;
-  }
-  &:hover {
     cursor: pointer;
+    transition: filter 0.3s;
+    &:hover {
+      filter: contrast(130%);
+    }
   }
 }
-
-.card_wrapNameDate_name {
-  img {
-    vertical-align: middle;
+.card_social {
+  @include flex.flex(end, center, row, nowrap);
+  flex: 0 0 100%;
+  gap: 1rem;
+  margin-top: 1rem;
+  @include breakpoint.tablet {
+    flex: 0 1 30%;
+    margin-top: 0;
+  }
+  .card_socialItem {
+    cursor: pointer;
+    padding: 5px;
+    > * {
+      vertical-align: middle;
+    }
+    .card_socialIcon {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      margin-right: 5px;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+    }
   }
 }
 
