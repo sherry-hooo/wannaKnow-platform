@@ -1,14 +1,15 @@
 <template>
   <!-- 篩選器 -->
   <ul class="filter">
-    <li class="filter_item filter_item-whole">
+    <span class="filter_currentTab">{{ tabCategory }}</span>
+    <!-- <li class="filter_item filter_item-whole">
       <span
         class="filter_text"
         @click="filterCategory('全部')"
         :class="{ 'filterTab-active': tabCategory === '全部' }"
         >全部</span
       >
-    </li>
+    </li> -->
     <div class="filter_moreBtn" @click="toggleMoreFilter">
       <span>more...</span>
       <font-awesome-icon
@@ -115,18 +116,38 @@ export default {
     transform: scale(1.2);
   }
 }
+* {
+  // outline: 1px solid #fa0;
+}
 // 篩選器
 .filter {
-  @include flex.flex(start, center, row, wrap);
-  width: 100%;
-  padding: 15px 10px;
+  @include flex.flex(start, center, row, nowrap);
+  position: relative;
+  width: 200px;
+  margin: 15px 20px;
+  @include breakpoint.desktop {
+    width: calc(100% - 50px);
+    margin: 0 0 20px 0;
+  }
+  // @include breakpoint.tablet {
+  //   width: calc(100vw - 120px - 90px);
+  //   flex-wrap: nowrap;
+  //   margin-bottom: 0;
+  // }
+  // @include breakpoint.desktop {
+  //   width: calc(100vw - 160px - 90px);
+  // }
+}
+.filter_currentTab {
+  font-size: 16px;
+  border: 2px dashed color.$gray;
+  border-radius: 25px;
+  padding: 2px 20px;
   @include breakpoint.tablet {
-    width: calc(100vw - 120px - 90px);
-    flex-wrap: nowrap;
-    margin-bottom: 0;
+    font-size: 18px;
   }
   @include breakpoint.desktop {
-    width: calc(100vw - 160px - 90px);
+    display: none;
   }
 }
 
@@ -155,48 +176,64 @@ export default {
     vertical-align: top;
     color: #aaa;
   }
-  @include breakpoint.tablet {
+  @include breakpoint.desktop {
     display: none;
   }
 }
 
 // 更多篩選區塊
 .filter_content {
-  @include flex.flex(start, center, row, nowrap);
-  gap: 15px;
-  flex: 0 1 100%;
+  @include flex.flex(start, stretch, column, wrap);
+  position: absolute;
+  top: 45px;
+  left: 0;
+  width: fit-content;
   max-height: 0;
-  margin-top: 15px;
-  white-space: nowrap;
-  overflow: scroll;
-  transition: 0.3s;
-  overflow-x: scroll;
-  @include breakpoint.tablet {
-    max-height: 50px;
-    flex: 1 0 0;
-    margin-top: 0;
-  }
+  text-align: left;
+  visibility: hidden;
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.6);
+  transition: 0.5s;
   &::-webkit-scrollbar {
-    display: none;
+    width: 0;
+    background: transparent;
+  }
+  @include breakpoint.tablet {
+    flex-direction: row;
+    width: 380px;
+  }
+  @include breakpoint.desktop {
+    @include flex.flex(start, center, row, nowrap);
+    column-gap: 15px;
+    position: static;
+    visibility: visible;
+    width: 100%;
+    max-height: none;
+    margin: 5px;
+    overflow: scroll;
+    background-color: transparent;
+    box-shadow: none;
   }
   &.show {
-    max-height: 50px;
+    visibility: visible;
+    max-height: 200px;
   }
 }
 
 // 篩選tab
 .filter_item {
-  display: inline-block;
-  padding: 2px 15px;
-  border: 2px dashed color.$gray;
-  border-radius: 25px;
+  padding: 10px 35px;
   cursor: pointer;
   transition: background-color 0.4s;
   @include breakpoint.tablet {
-    padding: 2px 20px;
+    flex: 0 1 50%;
   }
   @include breakpoint.desktop {
-    padding: 2px 25px;
+    flex: 0 0 auto;
+    border: 2px dashed color.$gray;
+    border-radius: 25px;
+    padding: 2px 20px;
   }
   &:hover {
     background-color: #ffc700;
@@ -205,7 +242,7 @@ export default {
     display: inline-block;
     width: 20px;
     height: 20px;
-    margin-right: 5px;
+    margin-right: 10px;
     vertical-align: middle;
     img {
       width: 100%;
@@ -221,11 +258,6 @@ export default {
     }
     @include breakpoint.desktop {
       font-size: 20px;
-    }
-  }
-  @include breakpoint.tablet {
-    &-whole {
-      margin-right: 15px;
     }
   }
 }
