@@ -21,9 +21,9 @@
 </template>
 
 <script>
-import Card from "@/components/Card.vue";
-import LoadingCard from "@/components/LoadingCard.vue";
-import Pagination from "@/components/Pagination.vue";
+import Card from "@/components/shared/Card.vue";
+import LoadingCard from "@/components/shared/LoadingCard.vue";
+import Pagination from "@/components/shared/Pagination.vue";
 
 export default {
   components: { Card, Pagination, LoadingCard },

@@ -1,5 +1,7 @@
 <template>
-  <!-- 篩選器 -->
+  <div>
+    
+  </div>
   <ul class="filter">
     <span class="filter_currentTab">{{ tabCategory }}</span>
     <!-- <li class="filter_item filter_item-whole">
@@ -25,7 +27,7 @@
         :class="{ 'filterTab-active': tabCategory === category.name }"
         @click="filterCategory(category.name)"
       >
-        <div class="filter_img">
+        <div v-if="category.img" class="filter_img">
           <img :src="category.img" alt="category.name" />
         </div>
         <span class="filter_text">{{ category.name }}</span>
@@ -76,6 +78,7 @@ export default {
     return {
       tabCategory: "全部",
       categoryList: [
+        { name: "全部" },
         { img: require("@/assets/projectExperience.svg"), name: "專案經驗" },
         {
           img: require("@/assets/learningExpericence.svg"),

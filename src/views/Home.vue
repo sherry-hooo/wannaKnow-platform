@@ -8,8 +8,8 @@
 
 <script>
 // @ is an alias to /src
-import Banner from "@/components/Banner.vue";
-import Board from "@/components/Board.vue";
+import Banner from "@/components/homePage/Banner.vue";
+import Board from "@/components/homePage/Board.vue";
 
 export default {
   components: {

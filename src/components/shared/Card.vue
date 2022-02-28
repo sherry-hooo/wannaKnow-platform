@@ -26,11 +26,18 @@
     <div class="card_others">
       <!-- 待改為 card.tags -->
       <div class="card_tags">
-        <span class="card_tagsItem">前端</span>
+        <span
+          v-for="(tag, index) in card.tags"
+          :key="index"
+          class="card_tagsItem"
+          @click.self="$store.commit('changeFilterTag', tag)"
+          >{{ tag }}</span
+        >
+        <!-- <span class="card_tagsItem">前端</span>
         <span class="card_tagsItem">IOS</span>
         <span class="card_tagsItem">UICollectionView</span>
         <span class="card_tagsItem">Javascript</span>
-        <span class="card_tagsItem">Vue composition API</span>
+        <span class="card_tagsItem">Vue composition API</span> -->
       </div>
       <div class="card_social">
         <div class="card_socialItem card_socialItem-like" @click="clickLike">

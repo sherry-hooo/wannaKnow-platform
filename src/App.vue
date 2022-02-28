@@ -10,7 +10,7 @@
 <script>
 import NavBar from "@/components/NavBar.vue";
 import SearchBar from "@/components/SearchBar.vue";
-import ApplyButton from "@/components/ApplyButton.vue";
+import ApplyButton from "@/components/apply/ApplyButton.vue";
 
 export default {
   name: "Home",
