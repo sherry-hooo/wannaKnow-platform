@@ -31,6 +31,14 @@
         <span class="filter_text">{{ category.name }}</span>
       </li>
     </div>
+    <font-awesome-icon
+      :icon="['fas', 'chevron-left']"
+      class="filter_scrollBtn filter_scrollBtn-prev"
+    />
+    <font-awesome-icon
+      :icon="['fas', 'chevron-right']"
+      class="filter_scrollBtn filter_scrollBtn-next"
+    />
   </ul>
 
   <!-- 最新, 熱門, 收藏tab -->
@@ -124,20 +132,46 @@ export default {
   @include flex.flex(start, center, row, nowrap);
   position: relative;
   width: 200px;
-  margin: 15px 20px;
+  margin: 15px 20px 30px 20px;
+  @include breakpoint.tablet {
+    width: calc(100% - 160px);
+    margin: 15px 40px;
+  }
   @include breakpoint.desktop {
     width: calc(100% - 50px);
-    margin: 0 0 20px 0;
+    margin: 5px 0 30px 0;
   }
-  // @include breakpoint.tablet {
-  //   width: calc(100vw - 120px - 90px);
-  //   flex-wrap: nowrap;
-  //   margin-bottom: 0;
-  // }
-  // @include breakpoint.desktop {
-  //   width: calc(100vw - 160px - 90px);
-  // }
+  .filter_scrollBtn {
+    display: none;
+    @include breakpoint.tablet {
+      display: inline-block;
+      position: absolute;
+      padding: 10px;
+      font-size: 20px;
+      cursor: pointer;
+      transition: 0.25s;
+      &:hover {
+        color: #ffc700;
+      }
+    }
+    @include breakpoint.desktop {
+      display: none;
+    }
+    &-prev {
+      left: -50px;
+      &:hover {
+        transform: translateX(-3px);
+      }
+    }
+    &-next {
+      right: -50px;
+      &:hover {
+        transform: translateX(3px);
+      }
+    }
+  }
 }
+
 .filter_currentTab {
   font-size: 16px;
   border: 2px dashed color.$gray;
@@ -145,8 +179,6 @@ export default {
   padding: 2px 20px;
   @include breakpoint.tablet {
     font-size: 18px;
-  }
-  @include breakpoint.desktop {
     display: none;
   }
 }
@@ -160,9 +192,16 @@ export default {
   align-self: flex-end;
   transition: transform 0.3s;
   line-height: 16px;
+  @include breakpoint.tablet {
+    display: none;
+  }
   &:hover {
+    span {
+      color: #ffc700;
+    }
     .filter_moreIcon {
       transform: translateY(3px);
+      color: #ffc700;
     }
   }
   > * {
@@ -171,13 +210,12 @@ export default {
   span {
     margin-right: 3px;
     vertical-align: bottom;
+    transition: 0.3s;
   }
   .filter_moreIcon {
+    transition: 0.3s;
     vertical-align: top;
     color: #aaa;
-  }
-  @include breakpoint.desktop {
-    display: none;
   }
 }
 
@@ -190,33 +228,22 @@ export default {
   width: fit-content;
   max-height: 0;
   text-align: left;
-  visibility: hidden;
   overflow: hidden;
   background-color: #fff;
   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.6);
   transition: 0.5s;
-  &::-webkit-scrollbar {
-    width: 0;
-    background: transparent;
-  }
   @include breakpoint.tablet {
-    flex-direction: row;
-    width: 380px;
-  }
-  @include breakpoint.desktop {
     @include flex.flex(start, center, row, nowrap);
-    column-gap: 15px;
     position: static;
-    visibility: visible;
+    column-gap: 15px;
     width: 100%;
     max-height: none;
-    margin: 5px;
     overflow: scroll;
     background-color: transparent;
     box-shadow: none;
   }
+
   &.show {
-    visibility: visible;
     max-height: 200px;
   }
 }
@@ -227,14 +254,12 @@ export default {
   cursor: pointer;
   transition: background-color 0.4s;
   @include breakpoint.tablet {
-    flex: 0 1 50%;
-  }
-  @include breakpoint.desktop {
     flex: 0 0 auto;
     border: 2px dashed color.$gray;
     border-radius: 25px;
     padding: 2px 20px;
   }
+
   &:hover {
     background-color: #ffc700;
   }
