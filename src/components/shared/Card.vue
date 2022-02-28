@@ -30,7 +30,7 @@
           v-for="(tag, index) in card.tags"
           :key="index"
           class="card_tagsItem"
-          @click.self="$store.commit('changeFilterTag', tag)"
+          @click.self="$store.commit('changeSearchWord', tag)"
           >{{ tag }}</span
         >
         <!-- <span class="card_tagsItem">前端</span>
@@ -61,17 +61,20 @@
           </div>
           <span>{{ commentCount }}</span>
         </div>
-        <div
-          class="card_socialItem card_socialItem-favorite"
-          @click="setFavorite(true)"
-        >
+        <div class="card_socialItem card_socialItem-favorite">
           <div class="card_socialIcon">
             <img
               v-if="!isFavorite"
               src="@/assets/bookmark.svg"
               alt="未收藏圖示"
+              @click="setFavorite(true)"
             />
-            <img v-else src="@/assets/bookmark-fill.svg" alt="已收藏圖示" />
+            <img
+              v-else
+              src="@/assets/bookmark-fill.svg"
+              alt="已收藏圖示"
+              @click="setFavorite(false)"
+            />
           </div>
         </div>
 
