@@ -124,9 +124,7 @@ export default {
     transform: scale(1.2);
   }
 }
-* {
-  // outline: 1px solid #fa0;
-}
+
 // 篩選器
 .filter {
   @include flex.flex(start, center, row, nowrap);
@@ -225,6 +223,7 @@ export default {
   position: absolute;
   top: 45px;
   left: 0;
+  z-index: 100;
   width: fit-content;
   max-height: 0;
   text-align: left;
@@ -244,7 +243,7 @@ export default {
   }
 
   &.show {
-    max-height: 200px;
+    max-height: 250px;
   }
 }
 
