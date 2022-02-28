@@ -25,18 +25,6 @@ const routes = [
       },
     ],
   },
-  {
-    path: "/apply",
-    name: "Apply",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Apply.vue"),
-  },
-  {
-    path: "/sideBar",
-    name: "SideBar",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/SideBar.vue"),
-  },
 ];
 
 const router = createRouter({

@@ -1,5 +1,18 @@
 <template>
-  <!-- 篩選器 -->
+  <div class="search" v-if="$store.state.isSearch">
+    <div class="search_icon" @click="$store.commit('toggleSearch')">
+      <img src="@/assets/magnifer-white.svg" alt="放大鏡icon" />
+    </div>
+    <div class="search_result">
+      <p class="search_result_title">
+        <span>{{ this.$store.state.searchWord }}</span
+        >相關文章
+      </p>
+      <p class="search_result_body">
+        共有 <span>{{ 0 }}</span> 則文章
+      </p>
+    </div>
+  </div>
   <ul class="filter">
     <span class="filter_currentTab">{{ tabCategory }}</span>
     <!-- <li class="filter_item filter_item-whole">
@@ -25,7 +38,7 @@
         :class="{ 'filterTab-active': tabCategory === category.name }"
         @click="filterCategory(category.name)"
       >
-        <div class="filter_img">
+        <div v-if="category.img" class="filter_img">
           <img :src="category.img" alt="category.name" />
         </div>
         <span class="filter_text">{{ category.name }}</span>
@@ -76,6 +89,7 @@ export default {
     return {
       tabCategory: "全部",
       categoryList: [
+        { name: "全部" },
         { img: require("@/assets/projectExperience.svg"), name: "專案經驗" },
         {
           img: require("@/assets/learningExpericence.svg"),
@@ -375,6 +389,52 @@ export default {
         background-color: color.$white;
         color: color.$green-300;
       }
+    }
+  }
+}
+
+.search {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &_icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: color.$green-300;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    &:hover::before {
+      content: "\2715";
+      display: block;
+      width: 20px;
+      height: 20px;
+      line-height: 20px;
+      font-size: 10px;
+      color: gray;
+      border-radius: 50%;
+      background: rgba(128, 128, 128, 0.26);
+      position: absolute;
+      top: 0;
+      left: -5px;
+    }
+  }
+  &_result {
+    margin-left: 20px;
+    &_title {
+      @extend %strong-title;
+      text-align: start;
+      span {
+        margin-right: 10px;
+        @extend %strong-title;
+        color: color.$green-300;
+      }
+    }
+    &_body {
+      @extend %body;
+      text-align: start;
     }
   }
 }

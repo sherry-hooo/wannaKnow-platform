@@ -6,7 +6,7 @@
   <ApplyForm v-if="isApplyFormOpen" />
 </template>
 <script>
-import ApplyForm from "@/components/ApplyForm.vue";
+import ApplyForm from "@/components/apply/ApplyForm.vue";
 export default {
   components: {
     ApplyForm,

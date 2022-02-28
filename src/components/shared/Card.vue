@@ -26,11 +26,18 @@
     <div class="card_others">
       <!-- 待改為 card.tags -->
       <div class="card_tags">
-        <span class="card_tagsItem">前端</span>
+        <span
+          v-for="(tag, index) in card.tags"
+          :key="index"
+          class="card_tagsItem"
+          @click.self="$store.commit('changeSearchWord', tag)"
+          >{{ tag }}</span
+        >
+        <!-- <span class="card_tagsItem">前端</span>
         <span class="card_tagsItem">IOS</span>
         <span class="card_tagsItem">UICollectionView</span>
         <span class="card_tagsItem">Javascript</span>
-        <span class="card_tagsItem">Vue composition API</span>
+        <span class="card_tagsItem">Vue composition API</span> -->
       </div>
       <div class="card_social">
         <div class="card_socialItem card_socialItem-like" @click="clickLike">
@@ -54,17 +61,20 @@
           </div>
           <span>{{ commentCount }}</span>
         </div>
-        <div
-          class="card_socialItem card_socialItem-favorite"
-          @click="setFavorite(true)"
-        >
+        <div class="card_socialItem card_socialItem-favorite">
           <div class="card_socialIcon">
             <img
               v-if="!isFavorite"
               src="@/assets/bookmark.svg"
               alt="未收藏圖示"
+              @click="setFavorite(true)"
             />
-            <img v-else src="@/assets/bookmark-fill.svg" alt="已收藏圖示" />
+            <img
+              v-else
+              src="@/assets/bookmark-fill.svg"
+              alt="已收藏圖示"
+              @click="setFavorite(false)"
+            />
           </div>
         </div>
 

@@ -3,18 +3,19 @@ import { createStore } from "vuex";
 export default createStore({
   state: {
     isSideBarOpen: false,
-    isApplyFormOpen: false,
-    isFilterOpen: false,
+    searchWord: "",
+    isSearch: false,
   },
   mutations: {
     toggleSideBar(state, status) {
       state.isSideBarOpen = status;
     },
-    toggleApplyForm(state, status) {
-      state.isApplyFormOpen = status;
+    changeSearchWord(state, status) {
+      state.searchWord = status;
+      state.isSearch = true;
     },
-    toggleFilter(state, status) {
-      state.isFilterOpen = status;
+    toggleSearch(state) {
+      state.isSearch = false;
     },
   },
   actions: {},

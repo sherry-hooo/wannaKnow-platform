@@ -20,9 +20,9 @@
 </template>
 
 <script>
-import Card from "@/components/Card.vue";
-import Pagination from "@/components/Pagination.vue";
-import LoadingCard from "@/components/LoadingCard.vue";
+import Card from "@/components/shared/Card.vue";
+import Pagination from "@/components/shared/Pagination.vue";
+import LoadingCard from "@/components/shared/LoadingCard.vue";
 import api from "@/service/api.js";
 
 export default {

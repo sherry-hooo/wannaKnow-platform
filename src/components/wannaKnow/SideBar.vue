@@ -1,9 +1,6 @@
 <template>
   <section class="sideBar" :class="{ openSideBar: $store.state.isSideBarOpen }">
-    <div
-      @click="toggleSideBar"
-      :class="[{ fade: $store.state.isSideBarOpen }, 'sideBar_toggleBtn']"
-    >
+    <div @click="toggleSideBar" :class="['sideBar_toggleBtn']">
       <font-awesome-icon class="arrow" icon="arrow-right"></font-awesome-icon>
       <span></span>
       <span></span>
@@ -295,10 +292,6 @@ export default {
 .sideBar_toggleBtn {
   visibility: visible;
   transition: visibility 0s, opacity 0.5s;
-  &.fade {
-    visibility: hidden;
-    opacity: 0;
-  }
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
