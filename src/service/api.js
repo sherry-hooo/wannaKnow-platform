@@ -40,6 +40,12 @@ export default {
       }
     );
   },
+  getComments(wanna_know_id) {
+    return apiClient.get(
+      "https://script.google.com/macros/s/AKfycbwNKoMxg2VJP4dXk4iAGRxsnUIEySV7r3WOm7gWHb7rbiZW2t3DAEmlCWW1QfHFj_Fu3Q/exec",
+      { params: { wanna_know_id } }
+    );
+  },
 };
 
 // function filterEmptyParams(queryParams) {
