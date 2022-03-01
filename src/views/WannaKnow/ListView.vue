@@ -244,7 +244,7 @@ export default {
   overflow: hidden;
   background-color: #fff;
   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.6);
-  transition: 0.5s;
+  transition: max-height 0.5s;
   @include breakpoint.tablet {
     @include flex.flex(start, center, row, nowrap);
     position: static;
@@ -257,7 +257,7 @@ export default {
   }
 
   &.show {
-    max-height: 250px;
+    max-height: 300px;
   }
 }
 
@@ -265,7 +265,7 @@ export default {
 .filter_item {
   padding: 10px 35px;
   cursor: pointer;
-  transition: background-color 0.4s;
+  transition: background-color 0.3s;
   @include breakpoint.tablet {
     flex: 0 0 auto;
     border: 2px dashed color.$gray;
