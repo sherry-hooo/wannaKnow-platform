@@ -6,6 +6,10 @@
       <span></span>
     </div>
 
+    <div @click="toggleSideBar" class="sideBar_toggleBtn-mobile">
+      <img src="@/assets/close-button.svg" alt="close-button" />
+    </div>
+
     <div class="overflow_container">
       <div class="sideBar_main">
         <div class="sideBar_main_info">
@@ -144,25 +148,25 @@ export default {
 .sideBar {
   @include flex.flex(between, stretch, column, nowrap);
   min-width: 375px;
-  max-width: 550px;
   height: 100vh;
-  padding: 2rem;
+  padding: 50px 1rem 1rem 1rem;
   background: white;
   position: fixed;
-  z-index: 100;
+  z-index: 800;
   right: -600px;
   top: 0;
   transition: 0.5s ease-in-out;
-
+  @include breakpoint.tablet {
+    max-width: 400px;
+    padding: 1rem;
+    box-shadow: -5px 0 4px -4px #555;
+  }
+  @include breakpoint.desktop {
+    max-width: 500px;
+  }
   &.openSideBar {
     right: 0;
     transition: 0.5s ease-in-out;
-  }
-}
-@include breakpoint.tablet {
-  .sideBar {
-    padding: 1.5rem;
-    box-shadow: -5px 0 4px -4px #555;
   }
 }
 // 中間區塊over-flow
@@ -303,9 +307,9 @@ export default {
   font-size: 24px;
   color: #fff;
   cursor: pointer;
-  opacity: 0.5;
+  opacity: 0.6;
   &:hover {
-    opacity: 0.7;
+    opacity: 0.8;
     ~ div {
       transform: translateX(20px);
       opacity: 0.7;
@@ -342,6 +346,27 @@ export default {
   }
   span:nth-child(3) {
     height: 60px;
+  }
+}
+
+// 關閉按鈕-手機
+.sideBar_toggleBtn-mobile {
+  position: absolute;
+  top: 55px;
+  // right: 5px;
+  left: 2rem;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  opacity: 0.8;
+  @include breakpoint.tablet {
+    display: none;
+  }
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    @extend %hover;
   }
 }
 </style>
