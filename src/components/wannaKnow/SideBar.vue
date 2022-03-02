@@ -9,98 +9,86 @@
     <div @click="toggleSideBar" class="sideBar_toggleBtn-mobile">
       <img src="@/assets/close-button.svg" alt="close-button" />
     </div>
-
-    <div class="overflow_container">
-      <div class="sideBar_main">
-        <div class="sideBar_main_info">
-          <div class="userInfo">
-            <img
-              class="userInfo_icon"
-              src="@/assets/avatar.svg"
-              alt="avatar-icon"
-            />
-            <span class="userInfo_name">號稱165的大叔</span>
-            <span class="userInfo_floor">樓主</span>
-          </div>
-          <div class="title">
-            <h4>狼若回頭, 不是報恩就是報仇</h4>
-            <div class="timing">
-              <span class="timing_date">06-09-2055</span>
-              <span class="timing_time">00:00</span>
+    <LoadingComment v-if="isLoading" />
+    <template v-else>
+      <div class="overflow_container">
+        <div class="sideBar_main">
+          <div class="sideBar_main_info">
+            <div class="userInfo">
+              <img
+                class="userInfo_icon"
+                src="@/assets/avatar.svg"
+                alt="avatar-icon"
+              />
+              <span class="userInfo_name">{{ cardInfo.speaker }}</span>
+              <span class="userInfo_floor">樓主</span>
+            </div>
+            <div class="title">
+              <h4>{{ cardInfo.title }}</h4>
+              <div class="timing">
+                <span class="timing_date">{{ cardInfo.date }}</span>
+                <span class="timing_time">00:00</span>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="sideBar_main_content">
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ad
-            adipisci, placeat ullam cum vitae dignissimos cumque voluptatem
-            nobis sunt modi reiciendis! Laboriosam, aliquam. Voluptas quos quo
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt
-            blanditiis consectetur hic delectus non dolores repellat! Est neque
-            animi cumque fuga maxime consequatur temporibus? Minus, modi
-            consequatur excepturi recusandae quas nesciunt deserunt quisquam
-            tempore beatae ab enim possimus quaerat! Reiciendis vel iure
-            consequuntur fuga! Et ex sunt neque distinctio ipsum mollitia
-            quibusdam aliquam similique, amet ipsam error incidunt provident,
-            veniam est adipisci aspernatur doloribus molestias! Fugit deserunt
-            excepturi at ratione quos quas incidunt labore! Temporibus
-            exercitationem sit numquam illum praesentium at culpa, hic minima
-            eum, natus error blanditiis non perferendis aliquam voluptate
-            consequatur, quidem voluptas ad labore quisquam dolores voluptatem.
-          </p>
-        </div>
-        <div class="sideBar_main_others">
-          <div class="sideBar_icon">
-            <img src="@/assets/like.svg" alt="like_icon" />
-            <span>10</span>
+          <div class="sideBar_main_content">
+            <p>
+              {{ cardInfo.description }}
+            </p>
           </div>
-          <div class="sideBar_icon">
-            <img src="@/assets/content.svg" alt="content_icon" />
-            <span>10</span>
-          </div>
-          <div class="sideBar_icon">
-            <img src="@/assets/bookmark.svg" alt="bookmark_icon" />
-          </div>
-          <div class="sideBar_icon">
-            <img src="@/assets/attachment.svg" alt="attachment_icon" />
-          </div>
-        </div>
-      </div>
-      <div class="sideBar_comment">
-        <div class="userInfo">
-          <img
-            class="userInfo_icon"
-            src="@/assets/avatar.svg"
-            alt="avatar-icon"
-          />
-          <span class="userInfo_name">號稱165的大叔</span>
-          <span class="userInfo_floor">一樓</span>
-          <div class="timing">
-            <span class="timing_date">06-09-2055</span>
-            <span class="timing_time">00:00</span>
-          </div>
-        </div>
-        <div class="sideBar_comment_content">
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eaque
-            blanditiis officiis eligendi animi voluptatem repellat quidem nulla,
-            atque consectetur Lorem ipsum dolor sit amet consectetur adipisicing
-            elit. Eius nesciunt, quos neque maiores totam necessitatibus
-            laudantium animi. Et, voluptatem ab. Nam cum ad impedit accusamus
-            vitae. Eveniet eos alias et! Lorem ipsum, dolor sit amet consectetur
-            adipisicing elit. Dolores, labore! Quo obcaecati dolores repudiandae
-            similique, consectetur voluptatibus nostrum sequi facilis officia
-            incidunt aspernatur molestias perferendis corrupti reiciendis
-          </p>
-          <div class="sideBar_comment_others">
+          <div class="sideBar_main_others">
             <div class="sideBar_icon">
               <img src="@/assets/like.svg" alt="like_icon" />
-              <span>10</span>
+              <span>{{ cardInfo.like }}</span>
+            </div>
+            <div class="sideBar_icon">
+              <img src="@/assets/content.svg" alt="content_icon" />
+              <span>{{ cardInfo.comment_amount }}</span>
+            </div>
+            <div class="sideBar_icon">
+              <img src="@/assets/bookmark.svg" alt="bookmark_icon" />
+            </div>
+            <div class="sideBar_icon">
+              <img src="@/assets/attachment.svg" alt="attachment_icon" />
             </div>
           </div>
         </div>
+        <section>
+          <div
+            class="sideBar_comment"
+            v-for="(comment, index) in commentsList"
+            :key="comment.id"
+          >
+            <div class="userInfo">
+              <img
+                class="userInfo_icon"
+                src="@/assets/avatar.svg"
+                alt="avatar-icon"
+              />
+              <span class="userInfo_name">{{
+                comment.messager || "大叔"
+              }}</span>
+              <span class="userInfo_floor">{{ index + 1 }}樓</span>
+              <div class="timing">
+                <span class="timing_date">06-09-2055</span>
+                <span class="timing_time">00:00</span>
+              </div>
+            </div>
+            <div class="sideBar_comment_content">
+              <p>
+                {{ comment.content }}
+              </p>
+              <div class="sideBar_comment_others">
+                <div class="sideBar_icon">
+                  <img src="@/assets/like.svg" alt="like_icon" />
+                  <span>{{ comment.like }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
-    </div>
+    </template>
     <div class="sideBar_submit">
       <input type="text" />
       <button>送出</button>
@@ -109,13 +97,26 @@
 </template>
 
 <script>
+import LoadingComment from "@/components/wannaKnow/LoadingComment.vue";
 export default {
+  components: { LoadingComment },
   data() {
     return {};
   },
   methods: {
     toggleSideBar() {
       this.$store.commit("toggleSideBar", false);
+    },
+  },
+  computed: {
+    commentsList() {
+      return this.$store.state.commentsData;
+    },
+    cardInfo() {
+      return this.$store.state.cardInfo;
+    },
+    isLoading() {
+      return this.$store.state.isCommentLoading;
     },
   },
 };
