@@ -28,7 +28,12 @@ export default {
     );
   },
   getWannaKnowByTag(params) {
-    console.log(params);
+    return apiClient.get(
+      "https://script.google.com/macros/s/AKfycbyL_N-SK7iwC5Cwydj8gL1zQJxtK9Qf5wsc3HnjZFC-yo1wFKcHO9vyh_dQSh1H7s2I/exec?",
+      {
+        params: params,
+      }
+    );
   },
   getWannaKnowDataByYear(year) {
     return apiClient.get(
