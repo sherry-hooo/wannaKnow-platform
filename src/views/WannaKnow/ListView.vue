@@ -1,33 +1,57 @@
 <template>
-  <div class="search" v-if="$store.state.isSearch">
-    <div class="search_icon" @click="$store.commit('toggleSearch')">
-      <img src="@/assets/magnifer-white.svg" alt="放大鏡icon" />
+  <template v-if="$store.state.isSearch">
+    <div class="search">
+      <div class="search_backBtn" @click="cancelSearch">
+        <img src="@/assets/backIcon.svg" alt="上一頁icon" />
+      </div>
+      <div class="search_main">
+        <div class="search_icon">
+          <img src="@/assets/magnifer-white.svg" alt="放大鏡icon" />
+        </div>
+        <div class="search_result">
+          <p class="search_result_title">
+            <span>{{ searchWord }}</span
+            >相關文章
+          </p>
+          <p class="search_result_body">
+            共有 <span>{{ searchResultCount }}</span> 則文章
+          </p>
+        </div>
+      </div>
     </div>
-    <div class="search_result">
-      <p class="search_result_title">
-        <span>{{ this.$store.state.searchWord }}</span
-        >相關文章
-      </p>
-      <p class="search_result_body">
-        共有 <span>{{ 0 }}</span> 則文章
-      </p>
-    </div>
-  </div>
-  <ul class="filter">
-    <span class="filter_currentTab">{{ tabCategory }}</span>
-    <!-- <li class="filter_item filter_item-whole">
-      <span
-        class="filter_text"
-        @click="filterCategory('全部')"
-        :class="{ 'filterTab-active': tabCategory === '全部' }"
-        >全部</span
+  </template>
+  <template v-else>
+    <ul class="filter">
+      <span class="filter_currentTab">{{ tabCategory }}</span>
+      <div class="filter_moreBtn" @click="toggleMoreFilter">
+        <span>more...</span>
+        <font-awesome-icon
+          :icon="['fas', 'angle-double-down']"
+          class="filter_moreIcon"
+        />
+      </div>
+      <div
+        class="filter_content"
+        :class="{ show: moreFilterOpen }"
+        ref="filterContent"
       >
-    </li> -->
-    <div class="filter_moreBtn" @click="toggleMoreFilter">
-      <span>more...</span>
+        <li
+          v-for="category in categoryList"
+          :key="category.name"
+          class="filter_item"
+          :class="{ 'filterTab-active': tabCategory === category.name }"
+          @click="filterCategory(category.name)"
+        >
+          <div v-if="category.img" class="filter_img">
+            <img :src="category.img" alt="category.name" />
+          </div>
+          <span class="filter_text">{{ category.name }}</span>
+        </li>
+      </div>
       <font-awesome-icon
-        :icon="['fas', 'angle-double-down']"
-        class="filter_moreIcon"
+        :icon="['fas', 'chevron-left']"
+        class="filter_scrollBtn filter_scrollBtn-prev"
+        @click="scrollToBegin(30)"
       />
     </div>
     <div
@@ -59,6 +83,8 @@
       @click="scrollFilter(120)"
     />
   </ul>
+  </template>
+  
 
   <!-- 最新, 熱門, 收藏tab -->
   <div class="tabs">
@@ -83,7 +109,7 @@
 import Latest from "@/components/tabs/Latest.vue";
 import Popular from "@/components/tabs/Popular.vue";
 import Favorite from "@/components/tabs/Favorite.vue";
-
+import api from "@/service/api";
 export default {
   name: "ListView",
   components: {
@@ -123,6 +149,12 @@ export default {
     filterRect() {
       return this.$refs.scrollFilter.getBoundingClientRect();
     },
+    searchWord() {
+      return this.$store.state.searchWord;
+    },
+    searchResultCount() {
+      return this.$store.state.searchResultCount;
+    },
   },
   methods: {
     filterOrder(orderBy) {
@@ -130,6 +162,7 @@ export default {
     },
     filterCategory(category) {
       this.tabCategory = category;
+      api.getComments().then((res) => console.log(res));
     },
     toggleMoreFilter() {
       this.moreFilterOpen = !this.moreFilterOpen;
@@ -150,7 +183,36 @@ export default {
       if (this.currentPosition > maxWidth) {
         this.currentPosition = maxWidth;
         console.log(this.currentPosition);
+      }},
+    scrollToEnd(x) {
+      // console.log(this.$refs);
+      // this.$ref.tabCategory.scrollInToView({
+      //   behavior: "smooth",
+      //   block: "end",
+      //   inline: "nearest",
+      // });
+      console.log(this.$refs);
+      if (this.scrollXPosition >= 530) {
+        return;
+      } else {
+        this.$refs.filterContent.scroll((this.scrollXPosition += x), 0);
       }
+      console.log(this.scrollXPosition);
+    },
+    scrollToBegin(x) {
+      if (this.scrollXPosition >= 0) {
+        return;
+      } else {
+        this.$refs.filterContent.scroll((this.scrollXPosition -= x), 0);
+      }
+      console.log(this.scrollXPosition);
+    },
+    cancelSearch() {
+      this.$store.commit("toggleSearch");
+      this.$store.dispatch("getWannaKnowByCategory", {
+        page: 1,
+        category: "全部",
+      });
     },
   },
   created() {},
@@ -333,56 +395,11 @@ export default {
 }
 
 .filterTab {
-  //   white-space: nowrap;
-  //   overflow-x: scroll;
-  //   &::-webkit-scrollbar {
-  //     display: none;
-  //   }
-  //   @include breakpoint.tablet {
-  //     white-space: normal;
-  //     display: flex;
-  //     justify-content: center;
-  //     align-items: center;
-  //     flex-wrap: wrap;
-  //     overflow-x: auto;
-  //   }
-  //   @extend %title;
-
   &-active {
     background-color: #ffc700;
     color: color.$white;
   }
 }
-//   li {
-//     // width: auto;
-//     display: inline-block;
-//     padding: 4px 20px;
-//     margin: 12px;
-//     @include breakpoint.tablet {
-//       // width: 33.333%;
-//     }
-//     @include breakpoint.desktop {
-//       // width: auto;
-//       padding: 8px 24px;
-//     }
-//     border: 2px color.$gray dashed;
-//     border-radius: 30px;
-//     margin: 16px;
-//     span {
-//       vertical-align: middle;
-//     }
-//     img {
-//       margin-right: 4px;
-//       vertical-align: middle;
-//     }
-//     transition: background-color 0.3s;
-//     &:hover {
-//       background-color: #ffc700;
-//       color: color.$white;
-//       cursor: pointer;
-//     }
-//   }
-// }
 
 .tabs {
   @extend %sub-title;
@@ -429,6 +446,11 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  &_main {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+  }
   &_icon {
     width: 60px;
     height: 60px;
@@ -438,20 +460,6 @@ export default {
     justify-content: center;
     align-items: center;
     position: relative;
-    &:hover::before {
-      content: "\2715";
-      display: block;
-      width: 20px;
-      height: 20px;
-      line-height: 20px;
-      font-size: 10px;
-      color: gray;
-      border-radius: 50%;
-      background: rgba(128, 128, 128, 0.26);
-      position: absolute;
-      top: 0;
-      left: -5px;
-    }
   }
   &_result {
     margin-left: 20px;
@@ -470,4 +478,6 @@ export default {
     }
   }
 }
+
+// 搜尋解果
 </style>
