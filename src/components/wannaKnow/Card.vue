@@ -1,7 +1,7 @@
 <template>
   <div class="card" v-if="card">
     <div class="card_titleArea">
-      <div class="card_title" @click="toggleSideBar">
+      <div class="card_title" @click="toggleSideBar(), getCardComments()">
         <div class="card_titleIcon">
           <img src="@/assets/projectExperience.svg" alt="專案經驗icon" />
         </div>
@@ -10,7 +10,7 @@
       <div class="card_info">
         <div class="card_speaker">
           <div class="card_speakerIcon">
-            <img src="@/assets/avatar.svg" alt="" />
+            <img src="@/assets/avatar.svg" alt="使用者頭像" />
           </div>
           <span>{{ card.speaker }}</span>
         </div>
@@ -24,7 +24,6 @@
       Firebase節省掉後端複雜的服務器建置，作為NodeJs及MongoDB的另外一種替代品，使我們製作產品的時候更專注於前端開發大部分的功能對於小型個人網站可以免費使用。
     </p>
     <div class="card_others">
-      <!-- 待改為 card.tags -->
       <div class="card_tags">
         <span
           v-for="(tag, index) in card.tags"
@@ -33,11 +32,6 @@
           @click.self="$store.commit('changeSearchWord', tag)"
           >{{ tag }}</span
         >
-        <!-- <span class="card_tagsItem">前端</span>
-        <span class="card_tagsItem">IOS</span>
-        <span class="card_tagsItem">UICollectionView</span>
-        <span class="card_tagsItem">Javascript</span>
-        <span class="card_tagsItem">Vue composition API</span> -->
       </div>
       <div class="card_social">
         <div class="card_socialItem card_socialItem-like" @click="clickLike">
@@ -49,7 +43,7 @@
         </div>
         <div
           class="card_socialItem card_socialItem-comment"
-          @click="toggleSideBar"
+          @click="toggleSideBar(), getCardComments()"
         >
           <div class="card_socialIcon">
             <img
@@ -131,6 +125,7 @@ export default {
       this.$emit("setFavoriteList", favoriteList);
     },
     toggleSideBar() {
+      console.log("toggle");
       this.$store.commit("toggleSideBar", true);
     },
     setLocalStorage(storageList) {
@@ -150,6 +145,9 @@ export default {
           .includes(this.card.title);
         // console.log(this.isFavorite, this.card.title);
       }
+    },
+    getCardComments() {
+      this.$store.dispatch("getCardComments", this.card.wanna_know_id);
     },
   },
   created() {
