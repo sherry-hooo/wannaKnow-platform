@@ -32,7 +32,7 @@ export default {
   },
   computed: {
     cardList() {
-      return this.$store.state.filteredWannaKnow;
+      return this.$store.state.wannaKnow.filteredWannaKnow;
     },
   },
   methods: {
@@ -43,7 +43,7 @@ export default {
         category: this.tabCategory,
         orderby: "like",
       };
-      this.$store.dispatch("getWannaKnowByCategory", queryObj);
+      this.$store.dispatch("wannaKnow/getWannaKnowByCategory", queryObj);
       setTimeout(() => {
         this.isLoading = false;
       }, 300);

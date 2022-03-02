@@ -1,5 +1,8 @@
 <template>
-  <section class="sideBar" :class="{ openSideBar: $store.state.isSideBarOpen }">
+  <section
+    class="sideBar"
+    :class="{ openSideBar: $store.state.wannaKnow.isSideBarOpen }"
+  >
     <div @click="toggleSideBar" :class="['sideBar_toggleBtn']">
       <font-awesome-icon class="arrow" icon="arrow-right"></font-awesome-icon>
       <span></span>
@@ -105,18 +108,18 @@ export default {
   },
   methods: {
     toggleSideBar() {
-      this.$store.commit("toggleSideBar", false);
+      this.$store.commit("wannaKnow/toggleSideBar", false);
     },
   },
   computed: {
     commentsList() {
-      return this.$store.state.commentsData;
+      return this.$store.state.wannaKnow.commentsData;
     },
     cardInfo() {
-      return this.$store.state.cardInfo;
+      return this.$store.state.wannaKnow.cardInfo;
     },
     isLoading() {
-      return this.$store.state.isCommentLoading;
+      return this.$store.state.wannaKnow.isCommentLoading;
     },
   },
 };

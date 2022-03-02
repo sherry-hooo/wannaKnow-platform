@@ -49,7 +49,7 @@
         >
           <div class="card_socialIcon">
             <img
-              v-if="$store.state.isSideBarOpen"
+              v-if="$store.state.wannaKnow.isSideBarOpen"
               src="@/assets/content.svg"
               alt="留言圖示"
             />
@@ -128,7 +128,7 @@ export default {
     },
     toggleSideBar() {
       console.log("toggle");
-      this.$store.commit("toggleSideBar", true);
+      this.$store.commit("wannaKnow/toggleSideBar", true);
     },
     setLocalStorage(storageList) {
       localStorage.setItem("favoriteList", JSON.stringify(storageList));
@@ -149,15 +149,18 @@ export default {
       }
     },
     getCardComments() {
-      this.$store.dispatch("getWannaKnowComments", this.card.wanna_know_id);
+      this.$store.dispatch(
+        "wannaKnow/getWannaKnowComments",
+        this.card.wanna_know_id
+      );
     },
     updateCardInfo() {
       let _card = this.card;
       _card["date"] = this.wannaKnowDate;
-      this.$store.commit("targetCardInfo", _card);
+      this.$store.commit("wannaKnow/targetCardInfo", _card);
     },
     getWannaKnowByTag(tagName) {
-      this.$store.dispatch("getWannaKnowByTag", {
+      this.$store.dispatch("wannaKnow/getWannaKnowByTag", {
         tags: tagName,
       });
     },

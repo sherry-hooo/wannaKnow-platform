@@ -42,7 +42,7 @@ export default {
   },
   computed: {
     cardList() {
-      return this.$store.state.filteredWannaKnow;
+      return this.$store.state.wannaKnow.filteredWannaKnow;
     },
   },
   methods: {
@@ -52,7 +52,7 @@ export default {
         page: this.currentPage,
         category: this.tabCategory,
       };
-      await this.$store.dispatch("getWannaKnowByCategory", queryObj);
+      await this.$store.dispatch("wannaKnow/getWannaKnowByCategory", queryObj);
       this.isLoading = false;
     },
     changePage(page) {

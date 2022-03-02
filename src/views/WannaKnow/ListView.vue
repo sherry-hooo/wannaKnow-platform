@@ -1,5 +1,5 @@
 <template>
-  <template v-if="$store.state.isSearch">
+  <template v-if="$store.state.wannaKnow.isSearch">
     <div class="search">
       <div class="search_backBtn" @click="cancelSearch">
         <img src="@/assets/backIcon.svg" alt="上一頁icon" />
@@ -30,10 +30,15 @@
           class="filter_moreIcon"
         />
       </div>
+      <font-awesome-icon
+        :icon="['fas', 'chevron-left']"
+        class="filter_scrollBtn filter_scrollBtn-prev"
+        @click="scrollToBegin(30)"
+      />
       <div
         class="filter_content"
         :class="{ show: moreFilterOpen }"
-        ref="filterContent"
+        ref="scrollFilter"
       >
         <li
           v-for="category in categoryList"
@@ -51,40 +56,15 @@
       <font-awesome-icon
         :icon="['fas', 'chevron-left']"
         class="filter_scrollBtn filter_scrollBtn-prev"
-        @click="scrollToBegin(30)"
+        @click="scrollFilter(-120)"
       />
-    </div>
-    <div
-      class="filter_content"
-      :class="{ show: moreFilterOpen }"
-      ref="scrollFilter"
-    >
-      <li
-        v-for="category in categoryList"
-        :key="category.name"
-        class="filter_item"
-        :class="{ 'filterTab-active': tabCategory === category.name }"
-        @click="filterCategory(category.name)"
-      >
-        <div v-if="category.img" class="filter_img">
-          <img :src="category.img" alt="category.name" />
-        </div>
-        <span class="filter_text">{{ category.name }}</span>
-      </li>
-    </div>
-    <font-awesome-icon
-      :icon="['fas', 'chevron-left']"
-      class="filter_scrollBtn filter_scrollBtn-prev"
-      @click="scrollFilter(-120)"
-    />
-    <font-awesome-icon
-      :icon="['fas', 'chevron-right']"
-      class="filter_scrollBtn filter_scrollBtn-next"
-      @click="scrollFilter(120)"
-    />
-  </ul>
+      <font-awesome-icon
+        :icon="['fas', 'chevron-right']"
+        class="filter_scrollBtn filter_scrollBtn-next"
+        @click="scrollFilter(120)"
+      />
+    </ul>
   </template>
-  
 
   <!-- 最新, 熱門, 收藏tab -->
   <div class="tabs">
@@ -150,10 +130,10 @@ export default {
       return this.$refs.scrollFilter.getBoundingClientRect();
     },
     searchWord() {
-      return this.$store.state.searchWord;
+      return this.$store.state.wannaKnow.searchWord;
     },
     searchResultCount() {
-      return this.$store.state.searchResultCount;
+      return this.$store.state.wannaKnow.searchResultCount;
     },
   },
   methods: {
@@ -183,7 +163,8 @@ export default {
       if (this.currentPosition > maxWidth) {
         this.currentPosition = maxWidth;
         console.log(this.currentPosition);
-      }},
+      }
+    },
     scrollToEnd(x) {
       // console.log(this.$refs);
       // this.$ref.tabCategory.scrollInToView({
@@ -209,13 +190,15 @@ export default {
     },
     cancelSearch() {
       this.$store.commit("toggleSearch");
-      this.$store.dispatch("getWannaKnowByCategory", {
+      this.$store.dispatch("wannaKnow/getWannaKnowByCategory", {
         page: 1,
         category: "全部",
       });
     },
   },
-  created() {},
+  created() {
+    console.log(this.$store.state.wannaKnow.isSideBarOpen);
+  },
 };
 </script>
 
