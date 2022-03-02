@@ -21,9 +21,8 @@
 
 <script>
 import Card from "@/components/wannaKnow/Card.vue";
-import Pagination from "@/components/shared/Pagination.vue";
 import LoadingCard from "@/components/wannaKnow/LoadingCard.vue";
-import api from "@/service/api.js";
+import Pagination from "@/components/shared/Pagination.vue";
 
 export default {
   components: { Card, Pagination, LoadingCard },
@@ -35,27 +34,26 @@ export default {
   },
   data() {
     return {
-      cardList: [],
       currentPage: 1,
       totalPage: 0,
       isLoading: true,
       orderBy: "date",
     };
   },
+  computed: {
+    cardList() {
+      return this.$store.state.filteredWannaKnow;
+    },
+  },
   methods: {
-    getCardData() {
+    async getCardData() {
       this.isLoading = true;
       const queryObj = {
         page: this.currentPage,
         category: this.tabCategory,
       };
-      api
-        .getWannaKnowByCategory(queryObj)
-        .then((res) => {
-          this.cardList = res.data.data;
-          this.totalPage = +res.data.total_page;
-        })
-        .then(() => (this.isLoading = false));
+      await this.$store.dispatch("getWannaKnowByCategory", queryObj);
+      this.isLoading = false;
     },
     changePage(page) {
       this.currentPage = page;

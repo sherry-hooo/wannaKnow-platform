@@ -16,7 +16,6 @@
 <script>
 import Card from "@/components/wannaKnow/Card.vue";
 import LoadingCard from "@/components/wannaKnow/LoadingCard.vue";
-import api from "@/service/api.js";
 
 export default {
   components: { LoadingCard, Card },
@@ -28,26 +27,34 @@ export default {
   },
   data() {
     return {
-      cardList: [],
       isLoading: true,
     };
   },
+  computed: {
+    cardList() {
+      return this.$store.state.filteredWannaKnow;
+    },
+  },
   methods: {
-    getCardApi() {
+    getCardData() {
       this.isLoading = true;
-      const params = { orderby: "hot", category: this.tabCategory };
-      api
-        .getWannaKnowByCategory(params)
-        .then((res) => (this.cardList = res.data.data))
-        .then(() => (this.isLoading = false));
+      const queryObj = {
+        page: this.currentPage,
+        category: this.tabCategory,
+        orderby: "like",
+      };
+      this.$store.dispatch("getWannaKnowByCategory", queryObj);
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 300);
     },
   },
   created() {
-    this.getCardApi();
+    this.getCardData();
   },
   watch: {
     tabCategory() {
-      this.getCardApi();
+      this.getCardData();
     },
   },
 };
