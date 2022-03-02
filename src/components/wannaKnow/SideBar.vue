@@ -147,14 +147,14 @@ export default {
 // sideBar
 .sideBar {
   @include flex.flex(between, stretch, column, nowrap);
-  min-width: 375px;
+  width: 100%;
   height: 100vh;
   padding: 50px 1rem 1rem 1rem;
   background: white;
   position: fixed;
-  z-index: 800;
-  right: -600px;
   top: 0;
+  right: -600px;
+  z-index: 800;
   transition: 0.5s ease-in-out;
   @include breakpoint.tablet {
     max-width: 400px;
@@ -294,20 +294,23 @@ export default {
 
 // 關閉按鈕
 .sideBar_toggleBtn {
-  visibility: visible;
-  transition: visibility 0s, opacity 0.5s;
+  display: none;
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
   left: -50px;
+  visibility: visible;
   z-index: 20;
-  display: flex;
+  transition: visibility 0s, opacity 0.5s;
+  transform: translateY(-50%);
   justify-content: center;
   align-items: center;
   font-size: 24px;
   color: #fff;
   cursor: pointer;
   opacity: 0.6;
+  @include breakpoint.tablet {
+    display: flex;
+  }
   &:hover {
     opacity: 0.8;
     ~ div {

@@ -1,9 +1,9 @@
 <template>
   <!-- 阿傑負責 -->
-  <div class="layer" :class="{ show: $store.state.isApplyFormOpen }"></div>
-  <section class="applyForm" :class="{ show: $store.state.isApplyFormOpen }">
+  <!-- <div class="layer"></div> -->
+  <section class="applyForm">
     <!-- close button -->
-    <span @click="toggleApplyForm" class="applyForm_closeBtn">
+    <span class="applyForm_closeBtn">
       <font-awesome-icon :icon="['fa', 'times-circle']" />
     </span>
     <!-- title -->
@@ -11,16 +11,16 @@
     <!-- 報名資訊 -->
     <div class="applyForm_info">
       <!-- 主要資訊 -->
-      <div class="applyForm_info_main">
-        <div>
+      <div class="inputArea">
+        <div class="inputArea_item inputArea_item-speaker">
           <label for="speaker"> 分享人: </label>
           <input type="text" id="speaker" />
         </div>
-        <div>
+        <div class="inputArea_item inputArea_item-date">
           <label for="date"> 日期: </label>
           <input type="date" id="date" />
         </div>
-        <div>
+        <div class="inputArea_item inputArea_item-category">
           <label for="category"> 分類: </label>
           <select id="category">
             <option value=""></option>
@@ -33,19 +33,20 @@
             </option>
           </select>
         </div>
-        <div>
+        <div class="inputArea_item inputArea_item-topic">
           <label for="topic"> 主題: </label>
           <input type="text" class="topic" id="topic" />
         </div>
-        <div>
+        <div class="inputArea_item inputArea_item-topic">
           <label>
-            <!-- <font-awesome-icon :icon="['fas', 'link']" /> -->
+            <img src="@/assets/attachment.svg" alt="attachment_icon" />
           </label>
           <input type="text" id="attachment" />
         </div>
       </div>
-      <!-- 其他資訊 -->
-      <div class="applyForm_info_other">
+
+      <!-- 分享方式 -->
+      <div class="detail">
         <div class="shareWay">
           <span>分享方式:</span>
           <div class="shareWay_radio">
@@ -56,19 +57,28 @@
           </div>
         </div>
         <div class="tagGenerator">
-          <label for="tag_input"> 標籤: </label>
-          <div class="tag_area">
-            <input type="text" id="tag_input" placeholder="add tag here" />
-            <div class="tag_area">tag tag tag</div>
+          <label class="tagGenerator_label" for="tag_input"> 標籤: </label>
+          <div class="tagGenerator_tagArea">
+            <input
+              class="tagGenerator_input"
+              type="text"
+              id="tag_input"
+              placeholder="add tag here"
+            />
+            <div class="tagGenerator_output">
+              <span class="tagGenerator_tag">iOS</span>
+              <span class="tagGenerator_tag">前端</span>
+              <span class="tagGenerator_tag">JavaScript</span>
+              <span class="tagGenerator_tag">Swift</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
     <!-- 主題簡介 -->
-    <textarea class="topic_intro" name="" id=""></textarea>
+    <textarea class="introduction" name="" id=""></textarea>
     <!-- 送出鈕 -->
     <button class="applyForm_submit">送出</button>
-    <!-- <font-awesome-icon :icon="['fas', 'times-circle']" class="close_btn" /> -->
   </section>
 </template>
 
@@ -78,9 +88,9 @@ export default {
     return {};
   },
   methods: {
-    toggleApplyForm() {
-      this.$store.commit("toggleApplyForm", false);
-    },
+    // toggleApplyForm() {
+    //   this.$store.commit("toggleApplyForm", false);
+    // },
   },
 };
 </script>
@@ -112,41 +122,51 @@ export default {
   color: #fff;
   cursor: pointer;
 }
-@mixin flex-size($basis: 30%) {
-  @extend %sub-title;
-  flex: 0 1 $basis;
+%flexItem-left {
+  flex: 0 1 35%;
+}
+%flexItem-right {
+  flex: 0 1 65%;
 }
 
-.layer {
-  @include flex.flex(center, center, row, nowrap);
-  display: none;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: -100;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
-  &.show {
-    display: block;
-  }
-}
+// .layer {
+//   @include flex.flex(center, center, row, nowrap);
+//   display: none;
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   right: 0;
+//   bottom: 0;
+//   z-index: -100;
+//   height: 100%;
+//   background-color: rgba(0, 0, 0, 0.6);
+// }
 
 // 表單尺寸 & 關閉按鈕
 .applyForm {
-  display: none;
-  box-shadow: 0 0 10px #555;
-  position: relative;
+  @include flex.flex(start, center, column, nowrap);
+  position: fixed;
+  top: 0;
   z-index: 10;
   width: 100%;
-  max-width: 750px;
-  max-height: 800px;
-  margin: 2rem auto 0 auto;
-  padding: 0.5rem;
-  border-radius: 40px;
+  height: 100vh;
+  padding: 2rem;
+  overflow: scroll;
+  font-size: 1.25rem;
   background-color: #fff;
-
+  @include breakpoint.tablet {
+    top: 60px;
+    left: calc(50% + 45px);
+    transform: translateX(-50%);
+    width: calc(100% - 90px);
+    max-width: 700px;
+    height: calc(100vh - 70px);
+    max-height: 700px;
+    padding: 1rem;
+    font-size: 1rem;
+    border-radius: 40px;
+    box-shadow: 0 0 10px #555;
+  }
   &_closeBtn {
     @extend %hover;
     position: absolute;
@@ -159,62 +179,49 @@ export default {
       weight: 100;
     }
   }
-  &.show {
-    display: block;
+  &_title {
+    @extend %title;
+    margin-bottom: 2rem;
+    &::after {
+      content: "";
+      display: block;
+      width: 120px;
+      height: 4px;
+      margin: 0.5rem auto 0 auto;
+      background-color: color.$green-400;
+    }
   }
-}
-@include breakpoint.tablet {
-  .applyForm {
-    padding: 2rem;
-  }
-}
-// 表單title
-.applyForm_title {
-  @extend %title;
-  margin-bottom: 3rem;
-  &::after {
-    content: "";
-    display: block;
-    width: 120px;
-    height: 4px;
-    margin: 0.5rem auto 0 auto;
-    background-color: color.$green-400;
-  }
-}
-
-// 表單info
-.applyForm_info {
-  margin-bottom: 1rem;
-}
-
-@include breakpoint.tablet {
-  .applyForm_info {
-    @include flex.flex(center, stretch, row, nowrap);
+  &_info {
+    @include flex.flex(start, stretch, column, nowrap);
     gap: 1rem;
-    &_main {
-      flex: 0 1 50%;
-    }
-    &_other {
-      flex: 0 0 50%;
+    margin-bottom: 1rem;
+    @include breakpoint.tablet {
+      @include flex.flex(center, stretch, row, nowrap);
+      gap: 1rem;
     }
   }
 }
 
-.applyForm_info_main {
-  > div {
+.inputArea {
+  @include breakpoint.tablet {
+    width: 40%;
+  }
+  &_item {
     @include flex.flex(start, center, row, nowrap);
-    gap: 1rem;
+    gap: 2rem;
+    @include breakpoint.tablet {
+      gap: 1rem;
+    }
     &:not(last-child) {
       margin-bottom: 0.5rem;
     }
     label {
-      @extend %sub-title;
-      flex: 0 1 25%;
+      @extend %flexItem-left;
       text-align: right;
     }
     input {
       @include input-border(color.$green-400);
-      flex: 0 1 75%;
+      @extend %flexItem-right;
       max-width: 220px;
       padding: 0.5rem;
       &[type="date"] {
@@ -226,7 +233,7 @@ export default {
     }
     select {
       @include input-border(color.$green-400);
-      flex: 0 1 75%;
+      @extend %flexItem-right;
       max-width: 220px;
       padding: 0.5rem;
       background-color: #fff;
@@ -237,18 +244,23 @@ export default {
   }
 }
 
-// 分享方式
+.detail {
+  @include flex.flex(start, stretch, column, nowrap);
+  margin-bottom: 0.5rem;
+  @include breakpoint.tablet {
+    width: 60%;
+  }
+}
 .shareWay {
   @include flex.flex(start, start, row, nowrap);
-  @extend %sub-title;
   gap: 1rem;
   margin-bottom: 0.5rem;
   span {
-    flex: 0 1 35%;
+    @extend %flexItem-left;
     text-align: right;
   }
   &_radio {
-    flex: 0 1 65%;
+    @extend %flexItem-right;
     text-align: left;
   }
   input[type="radio"] {
@@ -274,28 +286,43 @@ export default {
 // 標籤產生器
 .tagGenerator {
   @include flex.flex(start, start, row, nowrap);
-  @extend %sub-title;
-  gap: 1rem;
-  label {
-    flex: 0 1 35%;
+
+  gap: 2rem;
+  @include breakpoint.tablet {
+    gap: 1rem;
+  }
+  &_label {
+    @extend %flexItem-left;
     text-align: right;
   }
-  input {
-    &::placeholder {
-      color: #ccc;
-    }
+  &_tagArea {
+    @include flex.flex(start, stretch, column, nowrap);
+    @extend %flexItem-right;
+    gap: 0.5rem;
   }
-  .tag_area {
-    flex: 0 1 65%;
-    text-align: left;
+  &_input {
+    padding: 8px;
+    max-width: 220px;
+    @include input-border(color.$green-400);
+  }
+  &_output {
+    @include flex.flex(start, center, row, wrap);
+    gap: 0.5rem;
+  }
+  &_tag {
+    @extend %remark;
+    padding: 3px 8px;
+    border-radius: 20px;
+    background-color: color.$green-300;
+    color: #fff;
   }
 }
 
 // 簡介輸入框
-.topic_intro {
+.introduction {
   display: block;
+  flex: 0 0 200px;
   width: 100%;
-  height: 250px;
   margin: 0 auto 2rem auto;
   padding: 1rem;
   border: 2px solid color.$green-300;
@@ -307,5 +334,6 @@ export default {
 }
 .applyForm_submit {
   @include submit-button(color.$green-300);
+  flex: 0 0 auto;
 }
 </style>

@@ -19,6 +19,8 @@ export default {
   methods: {
     toggleApplyForm() {
       this.isApplyFormOpen = !this.isApplyFormOpen;
+      console.log("applyForm button clicked");
+      console.log(this.isApplyFormOpen);
       // this.$store.commit("toggleApplyForm", true);
     },
   },
