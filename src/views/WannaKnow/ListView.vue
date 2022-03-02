@@ -51,12 +51,12 @@
     <font-awesome-icon
       :icon="['fas', 'chevron-left']"
       class="filter_scrollBtn filter_scrollBtn-prev"
-      @click="scrollFilter(-80)"
+      @click="scrollFilter(-120)"
     />
     <font-awesome-icon
       :icon="['fas', 'chevron-right']"
       class="filter_scrollBtn filter_scrollBtn-next"
-      @click="scrollFilter(80)"
+      @click="scrollFilter(120)"
     />
   </ul>
 
@@ -140,15 +140,16 @@ export default {
       let innerWidth = content.scrollWidth;
       let maxWidth = innerWidth - contentWidth;
       this.currentPosition += perScroll;
-      if (this.currentPosition >= 0 && this.currentPosition <= maxWidth) {
-        content.scroll(this.currentPosition, 0);
-        console.log(this.currentPosition);
-      }
+      content.scroll(this.currentPosition, 0);
+      console.log(this.currentPosition);
+
       if (this.currentPosition < 0) {
         this.currentPosition = 0;
+        console.log(this.currentPosition);
       }
       if (this.currentPosition > maxWidth) {
         this.currentPosition = maxWidth;
+        console.log(this.currentPosition);
       }
     },
   },
