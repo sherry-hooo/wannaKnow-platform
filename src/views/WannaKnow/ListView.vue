@@ -30,7 +30,11 @@
         class="filter_moreIcon"
       />
     </div>
-    <div class="filter_content" :class="{ show: moreFilterOpen }">
+    <div
+      class="filter_content"
+      :class="{ show: moreFilterOpen }"
+      ref="scrollFilter"
+    >
       <li
         v-for="category in categoryList"
         :key="category.name"
@@ -47,10 +51,12 @@
     <font-awesome-icon
       :icon="['fas', 'chevron-left']"
       class="filter_scrollBtn filter_scrollBtn-prev"
+      @click="scrollFilter(-120)"
     />
     <font-awesome-icon
       :icon="['fas', 'chevron-right']"
       class="filter_scrollBtn filter_scrollBtn-next"
+      @click="scrollFilter(120)"
     />
   </ul>
 
@@ -107,11 +113,15 @@ export default {
         { component: "Favorite", title: "收藏" },
       ],
       moreFilterOpen: false,
+      currentPosition: 0,
     };
   },
   computed: {
     cardList() {
       return this.apiData;
+    },
+    filterRect() {
+      return this.$refs.scrollFilter.getBoundingClientRect();
     },
   },
   methods: {
@@ -123,6 +133,24 @@ export default {
     },
     toggleMoreFilter() {
       this.moreFilterOpen = !this.moreFilterOpen;
+    },
+    scrollFilter(perScroll) {
+      let content = this.$refs.scrollFilter;
+      let contentWidth = this.filterRect.width;
+      let innerWidth = content.scrollWidth;
+      let maxWidth = innerWidth - contentWidth;
+      this.currentPosition += perScroll;
+      content.scroll(this.currentPosition, 0);
+      console.log(this.currentPosition);
+
+      if (this.currentPosition < 0) {
+        this.currentPosition = 0;
+        console.log(this.currentPosition);
+      }
+      if (this.currentPosition > maxWidth) {
+        this.currentPosition = maxWidth;
+        console.log(this.currentPosition);
+      }
     },
   },
   created() {},
@@ -242,6 +270,7 @@ export default {
   max-height: 0;
   text-align: left;
   overflow: hidden;
+  scroll-behavior: smooth;
   background-color: #fff;
   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.6);
   transition: max-height 0.5s;
@@ -251,9 +280,12 @@ export default {
     column-gap: 15px;
     width: 100%;
     max-height: none;
-    overflow: scroll;
+    overflow: hidden;
     background-color: transparent;
     box-shadow: none;
+  }
+  @include breakpoint.desktop {
+    overflow: scroll;
   }
 
   &.show {
