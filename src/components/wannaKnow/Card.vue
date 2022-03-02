@@ -1,7 +1,10 @@
 <template>
   <div class="card" v-if="card">
     <div class="card_titleArea">
-      <div class="card_title" @click="toggleSideBar(), getCardComments()">
+      <div
+        class="card_title"
+        @click="toggleSideBar(), getCardComments(), updateCardInfo()"
+      >
         <div class="card_titleIcon">
           <img src="@/assets/projectExperience.svg" alt="專案經驗icon" />
         </div>
@@ -19,9 +22,8 @@
         </span>
       </div>
     </div>
-    <!-- 待改為 card.description -->
     <p class="card_description" @click="toggleSideBar">
-      Firebase節省掉後端複雜的服務器建置，作為NodeJs及MongoDB的另外一種替代品，使我們製作產品的時候更專注於前端開發大部分的功能對於小型個人網站可以免費使用。
+      {{ card.description }}
     </p>
     <div class="card_others">
       <div class="card_tags">
@@ -29,7 +31,7 @@
           v-for="(tag, index) in card.tags"
           :key="index"
           class="card_tagsItem"
-          @click.self="$store.commit('changeSearchWord', tag)"
+          @click.self="getWannaKnowByTag(tag)"
           >{{ tag }}</span
         >
       </div>
@@ -147,7 +149,17 @@ export default {
       }
     },
     getCardComments() {
-      this.$store.dispatch("getCardComments", this.card.wanna_know_id);
+      this.$store.dispatch("getWannaKnowComments", this.card.wanna_know_id);
+    },
+    updateCardInfo() {
+      let _card = this.card;
+      _card["date"] = this.wannaKnowDate;
+      this.$store.commit("targetCardInfo", _card);
+    },
+    getWannaKnowByTag(tagName) {
+      this.$store.dispatch("getWannaKnowByTag", {
+        tags: tagName,
+      });
     },
   },
   created() {
