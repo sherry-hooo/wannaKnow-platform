@@ -14,8 +14,8 @@
 </template>
 
 <script>
-import Card from "@/components/shared/Card.vue";
-import LoadingCard from "@/components/shared/LoadingCard.vue";
+import Card from "@/components/wannaKnow/Card.vue";
+import LoadingCard from "@/components/wannaKnow/LoadingCard.vue";
 import api from "@/service/api.js";
 
 export default {
