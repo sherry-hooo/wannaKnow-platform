@@ -23,7 +23,7 @@
         <div class="inputArea_item inputArea_item-category">
           <label for="category"> 分類: </label>
           <select id="category">
-            <option value=""></option>
+            <option value="">請選擇分類</option>
             <option value="experience">專案經驗(踩雷經驗、溝通之術)</option>
             <option value="thoughts">學習小心得</option>
             <option value="technique">技術剖析</option>
